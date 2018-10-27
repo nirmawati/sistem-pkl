@@ -52,6 +52,11 @@ $config = [
         ],
         */
     ],
+    'modules' => [
+        'pkl' => [
+            'class' => 'app\modules\pkl\pkl',
+        ],
+    ],
     'params' => $params,
 ];
 
