@@ -1,11 +1,11 @@
 <?php
 
-namespace app\modules\pkl\controllers;
+namespace app\modules\BimbinganPKL\controllers;
 
 use yii\web\Controller;
 
 /**
- * Default controller for the `pkl` module
+ * Default controller for the `BimbinganPKL` module
  */
 class DefaultController extends Controller
 {

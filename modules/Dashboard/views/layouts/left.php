@@ -2,6 +2,18 @@
 
     <section class="sidebar">
 
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+            </div>
+            <div class="pull-left info">
+                <p>Nirmawati</p>
+
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+        </div>
+
         <!-- search form -->
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
@@ -21,8 +33,8 @@
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
+                    ['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/Dashboard']],
                     ['label' => 'Daftar Mahasiswa PKL', 'icon' => 'dashboard', 'url' => ['/DaftarMahasiswaPKL']],
-                    ['label' => 'Pengajuan PKL', 'icon' => 'dashboard', 'url' => ['/PengajuanPKL']],
                     ['label' => 'Bimbingan PKL', 'icon' => 'dashboard', 'url' => ['/BimbinganPKL']],
                     ['label' => 'Penilaian PKL', 'icon' => 'dashboard', 'url' => ['/PenilaianPKL']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],

@@ -53,8 +53,17 @@ $config = [
         */
     ],
     'modules' => [
-        'pkl' => [
-            'class' => 'app\modules\pkl\pkl',
+        'DaftarMahasiswaPKL' => [
+            'class' => 'app\modules\DaftarMahasiswaPKL\DaftarMahasiswaPKL',
+        ],
+        'BimbinganPKL' => [
+            'class' => 'app\modules\BimbinganPKL\BimbinganPKL',
+        ],
+        'PenilaianPKL' => [
+            'class' => 'app\modules\PenilaianPKL\PenilaianPKL',
+        ],
+        'PengajuanPKL' => [
+            'class' => 'app\modules\PengajuanPKL\PengajuanPKL',
         ],
     ],
     'params' => $params,

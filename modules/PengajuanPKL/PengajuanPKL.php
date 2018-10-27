@@ -1,16 +1,16 @@
 <?php
 
-namespace app\modules\pkl;
+namespace app\modules\PengajuanPKL;
 
 /**
- * pkl module definition class
+ * PengajuanPKL module definition class
  */
-class pkl extends \yii\base\Module
+class PengajuanPKL extends \yii\base\Module
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'app\modules\pkl\controllers';
+    public $controllerNamespace = 'app\modules\PengajuanPKL\controllers';
 
     /**
      * {@inheritdoc}
