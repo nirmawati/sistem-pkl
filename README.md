@@ -1,3 +1,18 @@
+Notes:
+Untuk menggunakan:
+1. git clone https://github.com/nirmawati/sistem-pkl
+2. cd sistem-pkl/
+3. composer install
+4. cd web/
+5. ls -l
+6. sudo chgrp www-data assets/
+7. sudo chmod g+w assets/
+8. cd ..
+9. mkdir modules
+10. cd modules/
+11. mkdir pkl
+
+
 <p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
