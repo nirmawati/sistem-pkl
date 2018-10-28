@@ -16,7 +16,7 @@ use dmstr\widgets\Alert;
                     echo \yii\helpers\Inflector::camel2words(
                         \yii\helpers\Inflector::id2camel($this->context->module->id)
                     );
-                    echo ($this->context->module->id !== \Yii::$app->id) ? '<small>Module</small>' : '';
+                    echo ($this->context->module->id !== \Yii::$app->id) ? '' : '';
                 } ?>
             </h1>
         <?php } ?>

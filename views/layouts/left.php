@@ -18,13 +18,21 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
+                    ['label' => 'Home', 'icon' => 'dashboard', 'url' => ['/']],
+                    [
+                        'label' => 'Praktek Kerja Lapangan',
+                        'icon' => 'share',
+                        'url' => ['/PKL'],
+                        'items' => [
+                            ['label' => 'Daftar Mahasiswa PKL', 'icon' => 'dashboard', 'url' => ['/DaftarMahasiswaPKL']],
+                            ['label' => 'Pengajuan PKL', 'icon' => 'dashboard', 'url' => ['/PengajuanPKL']],
+                            ['label' => 'Bimbingan PKL', 'icon' => 'dashboard', 'url' => ['/BimbinganPKL']],
+                            ['label' => 'Penilaian PKL', 'icon' => 'dashboard', 'url' => ['/PenilaianPKL']],
+                        ],
+                    ],
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
-                    ['label' => 'Daftar Mahasiswa PKL', 'icon' => 'dashboard', 'url' => ['/DaftarMahasiswaPKL']],
-                    ['label' => 'Pengajuan PKL', 'icon' => 'dashboard', 'url' => ['/PengajuanPKL']],
-                    ['label' => 'Bimbingan PKL', 'icon' => 'dashboard', 'url' => ['/BimbinganPKL']],
-                    ['label' => 'Penilaian PKL', 'icon' => 'dashboard', 'url' => ['/PenilaianPKL']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
                         'label' => 'Some tools',
