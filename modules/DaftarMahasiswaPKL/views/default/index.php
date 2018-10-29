@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ListMahasiswaPklSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Daftar Mahasiswa PKL';
+$this->title = 'Mahasiswa PKL';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="list-mahasiswa-pkl-index">
