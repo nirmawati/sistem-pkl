@@ -24,10 +24,10 @@
                         'icon' => 'share',
                         'url' => ['/PKL'],
                         'items' => [
+                            ['label' => 'Informasi PKL', 'icon' => 'dashboard', 'url' => ['/InfoPKL']],
                             ['label' => 'Daftar Mahasiswa PKL', 'icon' => 'dashboard', 'url' => ['/DaftarMahasiswaPKL']],
                             ['label' => 'Pengajuan PKL', 'icon' => 'dashboard', 'url' => ['/PengajuanPKL']],
-                            ['label' => 'Bimbingan PKL', 'icon' => 'dashboard', 'url' => ['/BimbinganPKL']],
-                            ['label' => 'Penilaian PKL', 'icon' => 'dashboard', 'url' => ['/PenilaianPKL']],
+                            ['label' => 'Kegiatan PKL', 'icon' => 'dashboard', 'url' => ['/KegiatanPKL']],
                         ],
                     ],
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],

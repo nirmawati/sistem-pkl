@@ -1,12 +1,37 @@
-<div class="DaftarMahasiswaPKL-default-index">
-    <h1><?= $this->context->action->uniqueId ?></h1>
+<?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\ListMahasiswaPklSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Daftar Mahasiswa PKL';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="list-mahasiswa-pkl-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
     <p>
-        This is the view content for action "<?= $this->context->action->id ?>".
-        The action belongs to the controller "<?= get_class($this->context) ?>"
-        in the "<?= $this->context->module->id ?>" module.
+        <?= Html::a('Tambah Daftar Mahasiswa PKL', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <p>
-        You may customize this page by editing the following file:<br>
-        <code><?= __FILE__ ?></code>
-    </p>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'id',
+            'mahasiswa_id',
+            'kegiatan_id',
+            'tgl_mulai',
+            'tgl_selesai',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
 </div>

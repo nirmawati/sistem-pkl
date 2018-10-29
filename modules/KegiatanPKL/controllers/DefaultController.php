@@ -1,16 +1,16 @@
 <?php
 
-namespace app\modules\DaftarMahasiswaPKL\controllers;
+namespace app\modules\KegiatanPKL\controllers;
 
 use Yii;
-use app\models\ListMahasiswaPkl;
-use app\models\ListMahasiswaPklSearch;
+use app\models\KegiatanPkl;
+use app\models\KegiatanPklSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * DefaultController implements the CRUD actions for ListMahasiswaPkl model.
+ * DefaultController implements the CRUD actions for KegiatanPkl model.
  */
 class DefaultController extends Controller
 {
@@ -30,12 +30,12 @@ class DefaultController extends Controller
     }
 
     /**
-     * Lists all ListMahasiswaPkl models.
+     * Lists all KegiatanPkl models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ListMahasiswaPklSearch();
+        $searchModel = new KegiatanPklSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * Displays a single ListMahasiswaPkl model.
+     * Displays a single KegiatanPkl model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class DefaultController extends Controller
     }
 
     /**
-     * Creates a new ListMahasiswaPkl model.
+     * Creates a new KegiatanPkl model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new ListMahasiswaPkl();
+        $model = new KegiatanPkl();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +76,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * Updates an existing ListMahasiswaPkl model.
+     * Updates an existing KegiatanPkl model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * Deletes an existing ListMahasiswaPkl model.
+     * Deletes an existing KegiatanPkl model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class DefaultController extends Controller
     }
 
     /**
-     * Finds the ListMahasiswaPkl model based on its primary key value.
+     * Finds the KegiatanPkl model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return ListMahasiswaPkl the loaded model
+     * @return KegiatanPkl the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = ListMahasiswaPkl::findOne($id)) !== null) {
+        if (($model = KegiatanPkl::findOne($id)) !== null) {
             return $model;
         }
 
