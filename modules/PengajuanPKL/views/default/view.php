@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\PengajuanPkl */
 
-$this->title = $model->id;
+$this->title = $model->tujuan_pengirim;
 $this->params['breadcrumbs'][] = ['label' => 'Pengajuan PKL', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,8 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Ubah', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Hapus', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -28,14 +28,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'mahasiswa_id',
+            // 'id',
+            'mahasiswa.nama:text:Nama',
+            'mahasiswa.nim:text:NIM',
             'alamat_pkl',
             'tujuan_pengirim',
             'topik_pkl',
             'file_krs',
             'file_transkip',
-            'status_id',
+            'status.nama:text:Status',
             'tgl_mulai',
             'tgl_selesai',
         ],

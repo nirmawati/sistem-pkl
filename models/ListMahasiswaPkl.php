@@ -48,8 +48,8 @@ class ListMahasiswaPkl extends \yii\db\ActiveRecord
             'id' => 'ID',
             'mahasiswa_id' => 'Mahasiswa ID',
             'kegiatan_id' => 'Kegiatan ID',
-            'tgl_mulai' => 'Tgl Mulai',
-            'tgl_selesai' => 'Tgl Selesai',
+            'tgl_mulai' => 'Tanggal Mulai',
+            'tgl_selesai' => 'Tanggal Selesai',
         ];
     }
 

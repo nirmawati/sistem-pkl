@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\KegiatanPklSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Kegiatan PKL';
+$this->title = 'Daftar Kegiatan PKL';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="kegiatan-pkl-index">
@@ -25,14 +25,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            // 'id',
             'tanggal',
             'waktu_datang',
             'waktu_pulang',
             'kegiatan',
-            //'materi',
-            //'masukan',
-            //'keterangan',
+            'materi',
+            'masukan',
+            'keterangan',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

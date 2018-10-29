@@ -8,6 +8,7 @@ use app\models\PengajuanPklSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * DefaultController implements the CRUD actions for PengajuanPkl model.

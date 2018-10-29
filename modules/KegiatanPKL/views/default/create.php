@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\KegiatanPkl */
 
-$this->title = 'Create Kegiatan Pkl';
-$this->params['breadcrumbs'][] = ['label' => 'Kegiatan Pkls', 'url' => ['index']];
+$this->title = 'Tambah Kegiatan PKL';
+$this->params['breadcrumbs'][] = ['label' => 'Kegiatan PKL', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="kegiatan-pkl-create">

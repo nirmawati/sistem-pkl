@@ -23,6 +23,7 @@ use Yii;
  */
 class PengajuanPkl extends \yii\db\ActiveRecord
 {
+    public $image;
     /**
      * {@inheritdoc}
      */
@@ -42,6 +43,10 @@ class PengajuanPkl extends \yii\db\ActiveRecord
             [['alamat_pkl', 'tujuan_pengirim', 'topik_pkl', 'file_krs', 'file_transkip'], 'string', 'max' => 45],
             [['mahasiswa_id'], 'exist', 'skipOnError' => true, 'targetClass' => Mahasiswa::className(), 'targetAttribute' => ['mahasiswa_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::className(), 'targetAttribute' => ['status_id' => 'id']],
+            [['image'], 'safe'],
+            [['image'], 'file', 'extensions'=>'pdf'],
+            [['image'], 'file', 'maxSize'=>'100000'],
+            [['file_krs', 'file_transkip'], 'string', 'max' => 255],
         ];
     }
 
@@ -55,7 +60,7 @@ class PengajuanPkl extends \yii\db\ActiveRecord
             'mahasiswa_id' => 'Mahasiswa ID',
             'alamat_pkl' => 'Alamat PKL',
             'tujuan_pengirim' => 'Tujuan Pengirim',
-            'topik_pkl' => 'Topik Pkl',
+            'topik_pkl' => 'Topik PKL',
             'file_krs' => 'File KRS',
             'file_transkip' => 'File Transkip',
             'status_id' => 'Status',

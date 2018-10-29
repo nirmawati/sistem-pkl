@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\ListMahasiswaPkl */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'List Mahasiswa Pkls', 'url' => ['index']];
+$this->title = $model->nama;
+$this->params['breadcrumbs'][] = ['label' => 'Mahasiswa PKL', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="list-mahasiswa-pkl-view">
