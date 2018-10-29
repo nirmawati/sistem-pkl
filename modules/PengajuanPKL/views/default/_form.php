@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Status;
+use app\models\Mahasiswa;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PengajuanPkl */
@@ -24,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'file_transkip')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status_id')->textInput() ?>
+    <?= $form->field($model, 'status_id')->dropDownList(ArrayHelper::map(Status::find()->select(['nama','id'])->all(), 'id', 'nama'),['class' => 'form-control inline-block']); ?>
 
     <?= $form->field($model, 'tgl_mulai')->textInput() ?>
 

@@ -53,14 +53,14 @@ class PengajuanPkl extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'mahasiswa_id' => 'Mahasiswa ID',
-            'alamat_pkl' => 'Alamat Pkl',
+            'alamat_pkl' => 'Alamat PKL',
             'tujuan_pengirim' => 'Tujuan Pengirim',
             'topik_pkl' => 'Topik Pkl',
-            'file_krs' => 'File Krs',
+            'file_krs' => 'File KRS',
             'file_transkip' => 'File Transkip',
-            'status_id' => 'Status ID',
-            'tgl_mulai' => 'Tgl Mulai',
-            'tgl_selesai' => 'Tgl Selesai',
+            'status_id' => 'Status',
+            'tgl_mulai' => 'Tanggal Mulai',
+            'tgl_selesai' => 'Tanggal Selesai',
         ];
     }
 

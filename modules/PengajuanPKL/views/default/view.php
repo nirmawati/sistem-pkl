@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\PengajuanPkl */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Pengajuan Pkls', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Pengajuan PKL', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pengajuan-pkl-view">
