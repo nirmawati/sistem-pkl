@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\PengajuanPklSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Daftar Pengajuan PKL';
+$this->title = 'Pengajuan PKL';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pengajuan-pkl-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Tambah Pengajuan PKL', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Pengajuan Pkl', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,17 +25,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            // 'id',
-            'mahasiswa.nama:text:Nama',
-            'mahasiswa.nim:text:NIM',
-            'alamat_pkl',
-            'tujuan_pengirim',
-            'topik_pkl',
-            'file_krs',
-            'file_transkip',
-            'status.nama:text:Status',
-            'tgl_mulai',
-            'tgl_selesai',
+            'id',
+            'tanggal',
+            'mitra_id',
+            'mulai',
+            'selesai',
+            'status',
+            'semester',
+            'mhs_id',
+            'dosen_id',
+            //'topik_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

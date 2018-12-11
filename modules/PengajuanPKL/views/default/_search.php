@@ -17,23 +17,23 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'mahasiswa_id') ?>
+    <?= $form->field($model, 'tanggal') ?>
 
-    <?= $form->field($model, 'alamat_pkl') ?>
+    <?= $form->field($model, 'mitra_id') ?>
 
-    <?= $form->field($model, 'tujuan_pengirim') ?>
+    <?= $form->field($model, 'mulai') ?>
 
-    <?= $form->field($model, 'topik_pkl') ?>
+    <?= $form->field($model, 'selesai') ?>
 
-    <?php // echo $form->field($model, 'file_krs') ?>
+    <?php // echo $form->field($model, 'status') ?>
 
-    <?php // echo $form->field($model, 'file_transkip') ?>
+    <?php // echo $form->field($model, 'semester') ?>
 
-    <?php // echo $form->field($model, 'status_id') ?>
+    <?php // echo $form->field($model, 'mhs_id') ?>
 
-    <?php // echo $form->field($model, 'tgl_mulai') ?>
+    <?php // echo $form->field($model, 'dosen_id') ?>
 
-    <?php // echo $form->field($model, 'tgl_selesai') ?>
+    <?php // echo $form->field($model, 'topik_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

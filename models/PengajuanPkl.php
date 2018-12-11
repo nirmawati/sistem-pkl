@@ -8,22 +8,25 @@ use Yii;
  * This is the model class for table "pengajuan_pkl".
  *
  * @property int $id
- * @property int $mahasiswa_id
- * @property string $alamat_pkl
- * @property string $tujuan_pengirim
- * @property string $topik_pkl
- * @property string $file_krs
- * @property string $file_transkip
- * @property int $status_id
- * @property string $tgl_mulai
- * @property string $tgl_selesai
+ * @property string $tanggal
+ * @property int $mitra_id
+ * @property string $mulai
+ * @property string $selesai
+ * @property int $status
+ * @property int $semester
+ * @property int $mhs_id
+ * @property int $dosen_id
+ * @property int $topik_id
  *
- * @property Mahasiswa $mahasiswa
- * @property Status $status
+ * @property DetailPkl[] $detailPkls
+ * @property LogPkl[] $logPkls
+ * @property Dosen $dosen
+ * @property Mahasiswa $mhs
+ * @property MitraPkl $mitra
+ * @property TopikPkl $topik
  */
 class PengajuanPkl extends \yii\db\ActiveRecord
 {
-    public $image;
     /**
      * {@inheritdoc}
      */
@@ -38,15 +41,13 @@ class PengajuanPkl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['mahasiswa_id', 'status_id'], 'integer'],
-            [['tgl_mulai', 'tgl_selesai'], 'safe'],
-            [['alamat_pkl', 'tujuan_pengirim', 'topik_pkl', 'file_krs', 'file_transkip'], 'string', 'max' => 45],
-            [['mahasiswa_id'], 'exist', 'skipOnError' => true, 'targetClass' => Mahasiswa::className(), 'targetAttribute' => ['mahasiswa_id' => 'id']],
-            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::className(), 'targetAttribute' => ['status_id' => 'id']],
-            [['image'], 'safe'],
-            [['image'], 'file', 'extensions'=>'pdf'],
-            [['image'], 'file', 'maxSize'=>'100000'],
-            [['file_krs', 'file_transkip'], 'string', 'max' => 255],
+            [['tanggal', 'mulai', 'selesai'], 'safe'],
+            [['mitra_id', 'status', 'semester', 'mhs_id', 'dosen_id', 'topik_id'], 'default', 'value' => null],
+            [['mitra_id', 'status', 'semester', 'mhs_id', 'dosen_id', 'topik_id'], 'integer'],
+            [['dosen_id'], 'exist', 'skipOnError' => true, 'targetClass' => Dosen::className(), 'targetAttribute' => ['dosen_id' => 'id']],
+            [['mhs_id'], 'exist', 'skipOnError' => true, 'targetClass' => Mahasiswa::className(), 'targetAttribute' => ['mhs_id' => 'mhsid']],
+            [['mitra_id'], 'exist', 'skipOnError' => true, 'targetClass' => MitraPkl::className(), 'targetAttribute' => ['mitra_id' => 'id']],
+            [['topik_id'], 'exist', 'skipOnError' => true, 'targetClass' => TopikPkl::className(), 'targetAttribute' => ['topik_id' => 'id']],
         ];
     }
 
@@ -57,31 +58,63 @@ class PengajuanPkl extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'mahasiswa_id' => 'Mahasiswa ID',
-            'alamat_pkl' => 'Alamat PKL',
-            'tujuan_pengirim' => 'Tujuan Pengirim',
-            'topik_pkl' => 'Topik PKL',
-            'file_krs' => 'File KRS',
-            'file_transkip' => 'File Transkip',
-            'status_id' => 'Status',
-            'tgl_mulai' => 'Tanggal Mulai',
-            'tgl_selesai' => 'Tanggal Selesai',
+            'tanggal' => 'Tanggal',
+            'mitra_id' => 'Mitra ID',
+            'mulai' => 'Mulai',
+            'selesai' => 'Selesai',
+            'status' => 'Status',
+            'semester' => 'Semester',
+            'mhs_id' => 'Mhs ID',
+            'dosen_id' => 'Dosen ID',
+            'topik_id' => 'Topik ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMahasiswa()
+    public function getDetailPkls()
     {
-        return $this->hasOne(Mahasiswa::className(), ['id' => 'mahasiswa_id']);
+        return $this->hasMany(DetailPkl::className(), ['pkl_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStatus()
+    public function getLogPkls()
     {
-        return $this->hasOne(Status::className(), ['id' => 'status_id']);
+        return $this->hasMany(LogPkl::className(), ['pkl_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDosen()
+    {
+        return $this->hasOne(Dosen::className(), ['id' => 'dosen_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMhs()
+    {
+        return $this->hasOne(Mahasiswa::className(), ['mhsid' => 'mhs_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMitra()
+    {
+        return $this->hasOne(MitraPkl::className(), ['id' => 'mitra_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTopik()
+    {
+        return $this->hasOne(TopikPkl::className(), ['id' => 'topik_id']);
     }
 }

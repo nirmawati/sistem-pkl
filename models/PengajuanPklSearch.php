@@ -18,8 +18,8 @@ class PengajuanPklSearch extends PengajuanPkl
     public function rules()
     {
         return [
-            [['id', 'mahasiswa_id', 'status_id'], 'integer'],
-            [['alamat_pkl', 'tujuan_pengirim', 'topik_pkl', 'file_krs', 'file_transkip', 'tgl_mulai', 'tgl_selesai'], 'safe'],
+            [['id', 'mitra_id', 'status', 'semester', 'mhs_id', 'dosen_id', 'topik_id'], 'integer'],
+            [['tanggal', 'mulai', 'selesai'], 'safe'],
         ];
     }
 
@@ -60,17 +60,16 @@ class PengajuanPklSearch extends PengajuanPkl
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'mahasiswa_id' => $this->mahasiswa_id,
-            'status_id' => $this->status_id,
-            'tgl_mulai' => $this->tgl_mulai,
-            'tgl_selesai' => $this->tgl_selesai,
+            'tanggal' => $this->tanggal,
+            'mitra_id' => $this->mitra_id,
+            'mulai' => $this->mulai,
+            'selesai' => $this->selesai,
+            'status' => $this->status,
+            'semester' => $this->semester,
+            'mhs_id' => $this->mhs_id,
+            'dosen_id' => $this->dosen_id,
+            'topik_id' => $this->topik_id,
         ]);
-
-        $query->andFilterWhere(['like', 'alamat_pkl', $this->alamat_pkl])
-            ->andFilterWhere(['like', 'tujuan_pengirim', $this->tujuan_pengirim])
-            ->andFilterWhere(['like', 'topik_pkl', $this->topik_pkl])
-            ->andFilterWhere(['like', 'file_krs', $this->file_krs])
-            ->andFilterWhere(['like', 'file_transkip', $this->file_transkip]);
 
         return $dataProvider;
     }

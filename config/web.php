@@ -10,7 +10,7 @@ $config = [
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
         'request' => [
@@ -44,28 +44,34 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules' => [],
         ],
-        */
+
     ],
     'modules' => [
-        'InfoPKL' => [
-            'class' => 'app\modules\InfoPKL\InfoPKL',
+        'mitrapkl' => [
+            'class' => 'app\modules\mitrapkl\Module',
         ],
-        'DaftarMahasiswaPKL' => [
-            'class' => 'app\modules\DaftarMahasiswaPKL\DaftarMahasiswaPKL',
+        'topikpkl' => [
+            'class' => 'app\modules\topikpkl\Module',
         ],
-        'KegiatanPKL' => [
-            'class' => 'app\modules\KegiatanPKL\KegiatanPKL',
+        'kategoripkl' => [
+            'class' => 'app\modules\kategoripkl\Module',
         ],
-        'PengajuanPKL' => [
-            'class' => 'app\modules\PengajuanPKL\PengajuanPKL',
+        'pengajuanpkl' => [
+            'class' => 'app\modules\pengajuanpkl\Module',
         ],
+        'logpkl' => [
+            'class' => 'app\modules\logpkl\Module',
+        ],
+        'detailpkl' => [
+            'class' => 'app\modules\detailpkl\Module',
+        ],
+
     ],
     'params' => $params,
 ];

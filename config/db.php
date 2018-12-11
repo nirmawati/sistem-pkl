@@ -2,9 +2,9 @@
 //ganti sesuai punya nirma
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=dbpklais',
-    'username' => 'root',
-    'password' => '',
+    'dsn' => 'pgsql:host=localhost;port=5432;dbname=db_pkl',
+    'username' => 'postgres',
+    'password' => '1',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)
