@@ -53,6 +53,12 @@ $config = [
 
     ],
     'modules' => [
+
+        'pkl' => [
+            'class' => 'app\modules\pkl\Module',
+        ],
+
+
         'mitrapkl' => [
             'class' => 'app\modules\mitrapkl\Module',
         ],

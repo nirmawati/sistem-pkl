@@ -16,20 +16,16 @@
 
         <?= dmstr\widgets\Menu::widget(
             [
-                'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
+                'options' => ['class' => 'sidebar-menu tree', 'data-widget' => 'tree'],
                 'items' => [
-                    ['label' => 'Home', 'icon' => 'dashboard', 'url' => ['/']],
-                    [
-                        'label' => 'Praktek Kerja Lapangan',
-                        'icon' => 'share',
-                        'url' => ['/PKL'],
-                        'items' => [
-                            ['label' => 'Mitra PKL', 'icon' => 'dashboard', 'url' => ['/mitrapkl']],
-                            ['label' => 'Kategori PKL', 'icon' => 'dashboard', 'url' => ['/kategoripkl']],
-                            ['label' => 'Pengajuan PKL', 'icon' => 'dashboard', 'url' => ['/pengajuanpkl']],
-                            ['label' => 'Kegiatan PKL', 'icon' => 'dashboard', 'url' => ['/logpkl']],
-                        ],
-                    ],
+                    ['label' => 'Home', 'icon' => 'home', 'url' => ['/']],
+
+                    ['label' => 'Mitra PKL', 'icon' => 'road', 'url' => ['/pkl/mitra-pkl']],
+                    ['label' => 'Kategori PKL', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']],
+                    ['label' => 'Mahasiswa PKL', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']],
+                    ['label' => 'Detail PKL', 'icon' => 'book', 'url' => ['/pkl/detail-pkl']],
+                    ['label' => 'Kegiatan PKL', 'icon' => 'tasks', 'url' => ['/pkl/log-pkl']],
+
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
@@ -39,21 +35,21 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'],],
-                            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
+                            ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'], ],
+                            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'], ],
                             [
                                 'label' => 'Level One',
                                 'icon' => 'circle-o',
                                 'url' => '#',
                                 'items' => [
-                                    ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
+                                    ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#', ],
                                     [
                                         'label' => 'Level Two',
                                         'icon' => 'circle-o',
                                         'url' => '#',
                                         'items' => [
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
+                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#', ],
+                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#', ],
                                         ],
                                     ],
                                 ],

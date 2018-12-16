@@ -7,16 +7,16 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\KategoriIndustriSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Kategori Industris';
+$this->title = 'Kategori PKL';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="kategori-industri-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <!-- <h1><?= Html::encode($this->title) ?></h1> -->
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Kategori Industri', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Tambah Kategori', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -24,16 +24,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            [
-                'attribute'=>''
-            ]
+            // 'id',
             'nama',
-            'prodi_id',
+            [
+                'attribute'=>'prodi_id',
+                'value'=>'prodi.nama',
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>
-

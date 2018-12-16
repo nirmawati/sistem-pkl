@@ -4,18 +4,29 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\KategoriIndustri */
+/* @var $model app\models\MitraPkl */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Kategori Industris', 'url' => ['index']];
+$this->title = $model->nama;
+$this->params['breadcrumbs'][] = ['label' => 'Mitra Pkls', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="kategori-industri-view">
+<div class="mitra-pkl-view">
 
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            //'id',
+            'nama',
+            'alamat',
+            'kontak',
+            'telpon',
+            'email:email',
+            'status',
+            'kategori_id',
+        ],
+    ]) ?>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
+        <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -25,14 +36,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'nama',
-            'prodi_id',
-        ],
-    ]) ?>
 
 </div>

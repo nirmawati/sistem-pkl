@@ -4,19 +4,18 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\KategoriIndustriSearch */
+/* @var $searchModel app\models\MitraPklSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Kategori Industris';
+$this->title = 'Mitra Pkl';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="kategori-industri-index">
+<div class="mitra-pkl-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Kategori Industri', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Tambah Mitra Pkl', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,15 +24,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            [
-                'attribute'=>''
-            ]
+            //'id',
             'nama',
-            'prodi_id',
+            'alamat',
+            //'kontak',
+            //'telpon',
+            //'email:email',
+            'status',
+            [
+                'attribute' => 'kategori_id',
+                //'value' => 'kategori_industri.nama'
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>
-

@@ -2,15 +2,15 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
 /* @var $model app\models\KategoriIndustri */
 
-$this->title = 'Tambah Kategori Kategori';
+$this->title = 'Update Kategori Industri: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Kategori Industris', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="kategori-industri-create">
+<div class="kategori-industri-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

@@ -23,7 +23,8 @@
         "kartik-v/yii2-widget-datepicker": "@dev",
         "kartik-v/yii2-widget-timepicker": "dev-master",
         "2amigos/yii2-date-picker-widget": "~1.0",
-        "kartik-v/yii2-dropdown-x": "dev-master"
+        "kartik-v/yii2-dropdown-x": "dev-master",
+        "insolita/yii2-adminlte-widgets": "~3.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
