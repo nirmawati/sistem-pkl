@@ -77,6 +77,9 @@ $config = [
         'detailpkl' => [
             'class' => 'app\modules\detailpkl\Module',
         ],
+        'user' => [
+            'class' => 'dektrium\user\Module',
+        ],
 
     ],
     'params' => $params,

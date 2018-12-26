@@ -24,7 +24,7 @@
                     ['label' => 'Kategori PKL', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']],
                     ['label' => 'Mahasiswa PKL', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']],
                     ['label' => 'Detail PKL', 'icon' => 'book', 'url' => ['/pkl/detail-pkl']],
-                    ['label' => 'Kegiatan PKL', 'icon' => 'tasks', 'url' => ['/pkl/log-pkl']],
+                    ['label' => 'Laporan Harian', 'icon' => 'tasks', 'url' => ['/pkl/log-pkl']],
 
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],

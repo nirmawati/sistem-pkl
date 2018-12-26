@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'Sistem PKL';
+$this->title = 'Sistem Informasi PKL';
 ?>
 <div class="site-index">
 
@@ -11,7 +11,7 @@ $this->title = 'Sistem PKL';
 
   
 
-        <p><a class="btn btn-lg btn-success" href="http://localhost/sistem-pkl/web/index.php?r=InfoPKL#prosedur">Informasi PKL</a></p>
+        <p><a class="btn btn-lg btn-success" href="https://akademik.nurulfikri.ac.id/pkl-3/">Informasi PKL</a></p>
     </div>
 
     </div>

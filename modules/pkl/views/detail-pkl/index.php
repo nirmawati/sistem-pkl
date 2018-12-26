@@ -7,16 +7,16 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\DetailPklSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Detail Pkls';
+$this->title = 'Detail PKL';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="detail-pkl-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <!-- <h1><?= Html::encode($this->title) ?></h1> -->
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Detail Pkl', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Tambah Detail', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,12 +26,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'pkl_id',
-            'deskripsi_tugas:ntext',
             'departemen',
+            [
+                'attribute' => 'text',
+                'value' => 'deskripsi_tugas',
+                'format' => 'html',
+            ],
             'kesesuaian',
-            //'masalah:ntext',
+            // 'masalah:ntext',
             //'laporan:ntext',
             //'masukan_dosen:ntext',
             //'nilai_mentor',

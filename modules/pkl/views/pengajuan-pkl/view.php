@@ -6,13 +6,13 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\PengajuanPkl */
 
-$this->title = $model->id;
+$this->title = $model->mhs_id;
 $this->params['breadcrumbs'][] = ['label' => 'Pengajuan Pkls', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pengajuan-pkl-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <!-- <h1><?= Html::encode($this->title) ?></h1> -->
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -28,16 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'tanggal',
+            //'id',
+            'mhs_id',
+            'semester',
             'mitra_id',
+            'topik_id',
+            'dosen_id',
             'mulai',
             'selesai',
             'status',
-            'semester',
-            'mhs_id',
-            'dosen_id',
-            'topik_id',
+            'tanggal',
         ],
     ]) ?>
 

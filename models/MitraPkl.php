@@ -52,13 +52,13 @@ class MitraPkl extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nama' => 'Nama',
+            'nama' => 'Perusahaan / Instansi',
             'alamat' => 'Alamat',
-            'kontak' => 'Kontak',
-            'telpon' => 'Telpon',
+            'kontak' => 'PIC',
+            'telpon' => 'Telepon',
             'email' => 'Email',
             'status' => 'Status',
-            'kategori_id' => 'Kategori ID',
+            'kategori_id' => 'Kategori ',
         ];
     }
 

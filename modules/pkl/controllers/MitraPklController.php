@@ -37,7 +37,10 @@ class MitraPklController extends Controller
     {
         $searchModel = new MitraPklSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->pagination=[
+            'pageSize'=>10
+        ];
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -70,7 +73,7 @@ class MitraPklController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }

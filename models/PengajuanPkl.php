@@ -34,7 +34,12 @@ class PengajuanPkl extends \yii\db\ActiveRecord
     {
         return 'pengajuan_pkl';
     }
-
+    // public function behaviors() {
+    //     return [
+    //         BlameableBehavior::className(),
+    //         TimestampBehavior::className(),
+    //     ];
+    // }
     /**
      * {@inheritdoc}
      */
@@ -42,6 +47,7 @@ class PengajuanPkl extends \yii\db\ActiveRecord
     {
         return [
             [['tanggal', 'mulai', 'selesai'], 'safe'],
+            [['tanggal', 'mulai', 'selesai'], 'date','format' => 'd-M-yyyy'],
             [['mitra_id', 'status', 'semester', 'mhs_id', 'dosen_id', 'topik_id'], 'default', 'value' => null],
             [['mitra_id', 'status', 'semester', 'mhs_id', 'dosen_id', 'topik_id'], 'integer'],
             [['dosen_id'], 'exist', 'skipOnError' => true, 'targetClass' => Dosen::className(), 'targetAttribute' => ['dosen_id' => 'id']],
@@ -58,15 +64,15 @@ class PengajuanPkl extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'tanggal' => 'Tanggal',
-            'mitra_id' => 'Mitra ID',
-            'mulai' => 'Mulai',
-            'selesai' => 'Selesai',
+            'tanggal' => 'Tanggal Pengajuan',
+            'mitra_id' => 'Perusahaan / Instansi',
+            'mulai' => 'Tanggal Mulai',
+            'selesai' => 'Tanggal Selesai',
             'status' => 'Status',
             'semester' => 'Semester',
-            'mhs_id' => 'Mhs ID',
-            'dosen_id' => 'Dosen ID',
-            'topik_id' => 'Topik ID',
+            'mhs_id' => 'Nama Mahasiswa',
+            'dosen_id' => 'Dosen',
+            'topik_id' => 'Topik / Judul',
         ];
     }
 
@@ -116,5 +122,10 @@ class PengajuanPkl extends \yii\db\ActiveRecord
     public function getTopik()
     {
         return $this->hasOne(TopikPkl::className(), ['id' => 'topik_id']);
+    }
+
+    public function getViewMhsProdi()
+    {
+        return $this->hasOne(VwmahasiswaProdi::className(), ['mhsid' => 'mhs_id']);
     }
 }

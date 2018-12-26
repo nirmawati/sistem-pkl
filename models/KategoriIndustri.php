@@ -44,8 +44,8 @@ class KategoriIndustri extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nama' => 'Nama',
-            'prodi_id' => 'Prodi ID',
+            'nama' => 'Kategori PKL',
+            'prodi_id' => 'Prodi',
         ];
     }
 

@@ -13,8 +13,7 @@ use yii\filters\VerbFilter;
  * LogPklController implements the CRUD actions for LogPkl model.
  */
 class LogPklController extends Controller
-{
-    public $layout = '@app/views/layouts/column1';
+{    public $layout = '@app/views/layouts/column1';
     /**
      * {@inheritdoc}
      */
@@ -38,7 +37,9 @@ class LogPklController extends Controller
     {
         $searchModel = new LogPklSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->pagination=[
+            'pageSize'=>10
+        ];
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -68,10 +69,11 @@ class LogPklController extends Controller
         $model = new LogPkl();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            // return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(Yii::$app->request->referrer);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }

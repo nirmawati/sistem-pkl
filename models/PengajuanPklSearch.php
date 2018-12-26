@@ -12,6 +12,8 @@ use app\models\PengajuanPkl;
  */
 class PengajuanPklSearch extends PengajuanPkl
 {
+    public $nama_mhs;
+
     /**
      * {@inheritdoc}
      */
@@ -19,7 +21,7 @@ class PengajuanPklSearch extends PengajuanPkl
     {
         return [
             [['id', 'mitra_id', 'status', 'semester', 'mhs_id', 'dosen_id', 'topik_id'], 'integer'],
-            [['tanggal', 'mulai', 'selesai'], 'safe'],
+            [['tanggal', 'mulai', 'selesai', 'nama_mhs'], 'safe'],
         ];
     }
 
@@ -42,6 +44,7 @@ class PengajuanPklSearch extends PengajuanPkl
     public function search($params)
     {
         $query = PengajuanPkl::find();
+        $query->join('INNER JOIN','vwmahasiswa_prodi','pengajuan_pkl.mhs_id=vwmahasiswa_prodi.mhsid');
 
         // add conditions that should always apply here
 
@@ -70,6 +73,8 @@ class PengajuanPklSearch extends PengajuanPkl
             'dosen_id' => $this->dosen_id,
             'topik_id' => $this->topik_id,
         ]);
+
+        $query->andFilterWhere(['ilike','vwmahasiswa_prodi.nama', $this->nama_mhs]);
 
         return $dataProvider;
     }

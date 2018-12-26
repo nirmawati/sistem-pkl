@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'jam_masuk',
             'jam_pulang',
             'kegiatan:ntext',
+            'ket',
         ],
     ]) ?>
 

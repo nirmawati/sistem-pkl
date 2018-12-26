@@ -7,12 +7,12 @@ use yii\widgets\DetailView;
 /* @var $model app\models\KategoriIndustri */
 
 $this->title = $model->nama;
-$this->params['breadcrumbs'][] = ['label' => 'Kategori Industris', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Kategori PKL', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="kategori-industri-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <!-- <h1><?= Html::encode($this->title) ?></h1> -->
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             // 'id',
             'nama',
-            'prodi_id',
+            //'prodi_id',
             'value'=>'prodi.nama',
         ],
 

@@ -1,5 +1,5 @@
 <?php
-//ganti sesuai punya nirma
+
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'pgsql:host=localhost;port=5432;dbname=db_pkl',

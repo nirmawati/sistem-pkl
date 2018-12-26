@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\bootstrap4\Modal;
+
 use kartik\date\DatePicker;
 use kartik\time\TimePicker;
 
@@ -17,17 +17,27 @@ use kartik\time\TimePicker;
 
     <!-- <?= $form->field($model, 'pkl_id')->textInput() ?> -->
 
-    <div class="container-fluid">
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+        <?= $form->field($model, 'ket')->dropDownList(
+            ['0' => 'Mangkir', '1' => 'Hadir', '2' => 'Izin'],
+            ['prompt' => '-- Pilih Keterangan --']
+        ); ?>
+		</div>
+	</div>
+
 	<div class="row">
 		<div class="col-md-4">
         <?= $form->field($model, 'tanggal')->widget(DatePicker::classname(), [
-            'options' => ['placeholder' => 'Hari/Tanggal'],
+            'options' => ['placeholder' => 'Pilih Tanggal'],
             'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'DD,dd-M-yyyy'
+                'format' => 'dd-M-yyyy',
+                'autoclose' => true
             ]
         ]); ?>
 		</div>
+
 		<div class="col-md-4">
         <?= $form->field($model, 'jam_masuk')->widget(TimePicker::classname(), [
             'pluginOptions' => [
@@ -38,6 +48,7 @@ use kartik\time\TimePicker;
             ]
         ]); ?>
 		</div>
+
 		<div class="col-md-4">
         <?= $form->field($model, 'jam_pulang')->widget(TimePicker::classname(), [
             'pluginOptions' => [
@@ -49,12 +60,16 @@ use kartik\time\TimePicker;
         ]); ?>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12">
+        <?= $form->field($model, 'kegiatan')->textarea(['rows' => 6]) ?>
+		</div>
+	</div>
+</div>
 
-    <?= $form->field($model, 'kegiatan')->textarea(['rows' => 6]) ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
-</div>
 
     <?php ActiveForm::end(); ?>
 
