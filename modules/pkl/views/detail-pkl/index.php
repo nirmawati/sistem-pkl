@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?= GridView::widget([
-        'tableOptions'=> ['class'=> 'table table-striped table-hover'],
+        'tableOptions' => ['class' => 'table table-striped table-hover'],
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -36,11 +36,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'kesesuaian',
             // 'masalah:ntext',
-            //'laporan:ntext',
+            // 'laporan:ntext',
             //'masukan_dosen:ntext',
             //'nilai_mentor',
             //'nilai_dosen',
             //'nilai_akhir',
+            [
+                'attribute' => 'Laporan',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if ($model->laporan != '')
+                        return Html::a($model->laporan, Yii::$app->homeUrl . 'uploads/file-laporan/' . $model->laporan);
+
+                    else return 'no image';
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

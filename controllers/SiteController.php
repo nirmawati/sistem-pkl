@@ -61,7 +61,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $data = Yii::$app->db->createCommand('select 
+            status,
+            sum(mhs_id) as jumlah
+            from pengajuan_pkl 
+            group by status')->queryAll();
+        return $this->render('index', [
+            'dgrafik' => $data
+        ]);
+        // return $this->render('index');
     }
 
     /**

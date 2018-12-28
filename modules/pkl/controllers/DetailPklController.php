@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use yii\web\UploadedFile;
+
 /**
  * DetailPklController implements the CRUD actions for DetailPkl model.
  */
@@ -66,14 +68,37 @@ class DetailPklController extends Controller
     public function actionCreate()
     {
         $model = new DetailPkl();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $laporan = UploadedFile::getInstance($model, 'laporan');
+            if (!is_null($laporan)) {
+                $model->laporan = $laporan->name;
+                // $ext = end((explode(".", $laporan->name)));
+                // generate a unique file name to prevent duplicate filenames
+                // $model->image_web_filename = Yii::$app->security->generateRandomString() . ".{$ext}";
+                // the path to save file, you can set an uploadPath
+                // in Yii::$app->params (as used in example below)                       
+                Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/web/uploads/file-laporan/';
+                $path = Yii::$app->params['uploadPath'] . $model->laporan;
+                $laporan->saveAs($path);
+            }
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                var_dump($model->getErrors());
+                die();
+            }
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
+
+        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        //     return $this->redirect(['view', 'id' => $model->id]);
+        // }
+
+        // return $this->render('create', [
+        //     'model' => $model,
+        // ]);
     }
 
     /**
