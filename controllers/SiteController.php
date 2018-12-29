@@ -61,15 +61,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $data = Yii::$app->db->createCommand('select 
-            status,
-            sum(mhs_id) as jumlah
-            from pengajuan_pkl 
-            group by status')->queryAll();
-        return $this->render('index', [
-            'dgrafik' => $data
-        ]);
-        // return $this->render('index');
+        // $data = Yii::$app->db->createCommand('select 
+        //     status,
+        //     sum(mhs_id) as jumlah
+        //     from pengajuan_pkl 
+        //     group by status')->queryAll();
+        // return $this->render('index', [
+        //     'dgrafik' => $data
+        // ]);
+        return $this->render('index');
     }
 
     /**
@@ -80,12 +80,14 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            // return $this->goHome();
+            return Yii::$app->user->identity->username;
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return Yii::$app->user->identity->username;
+            // return $this->goBack();
         }
 
         $model->password = '';

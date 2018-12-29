@@ -20,6 +20,7 @@
                 'items' => [
                     ['label' => 'Home', 'icon' => 'home', 'url' => ['/']],
 
+                    ['label' => 'Informasi', 'icon' => 'road', 'url' => ['/pkl/informasi']],
                     ['label' => 'Mitra PKL', 'icon' => 'road', 'url' => ['/pkl/mitra-pkl']],
                     ['label' => 'Kategori PKL', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']],
                     ['label' => 'Mahasiswa PKL', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']],

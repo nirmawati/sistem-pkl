@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="pengajuan-pkl-index">
-<?= $this->render('detailmhs.php') ?>;
+<!-- <?= $this->render('detailmhs.php') ?>; -->
 
     <!-- <h1><?= Html::encode($this->title) ?></h1> -->
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

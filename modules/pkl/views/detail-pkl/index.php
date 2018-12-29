@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     if ($model->laporan != '')
                         return Html::a($model->laporan, Yii::$app->homeUrl . 'uploads/file-laporan/' . $model->laporan);
 
-                    else return 'no image';
+                    else return 'Tidak Ada Laporan';
                 },
             ],
 

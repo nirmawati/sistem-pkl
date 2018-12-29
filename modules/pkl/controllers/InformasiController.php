@@ -7,7 +7,7 @@ use yii\web\Controller;
 /**
  * Default controller for the `informasi` module
  */
-class DefaultController extends Controller
+class InformasiController extends Controller
 {
     /**
      * Renders the index view for the module

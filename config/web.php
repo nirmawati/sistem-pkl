@@ -57,8 +57,6 @@ $config = [
         'pkl' => [
             'class' => 'app\modules\pkl\Module',
         ],
-
-
         'mitrapkl' => [
             'class' => 'app\modules\mitrapkl\Module',
         ],
@@ -79,6 +77,23 @@ $config = [
         ],
         'user' => [
             'class' => 'dektrium\user\Module',
+            'enableUnconfirmedLogin' => true,
+            'confirmWithin' => 21600,
+            'cost' => 12,
+            'admins' => ['admin']
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@app/mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'your-host-domain e.g. smtp.gmail.com',
+                'username' => 'your-email-or-username',
+                'password' => 'your-password',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
         ],
 
     ],

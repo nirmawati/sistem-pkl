@@ -4,12 +4,12 @@
 use dosamigos\highcharts\HighCharts;
 
 $this->title = 'Sistem Informasi PKL';
-foreach ($dgrafik as $values) {
-    $a[0] = ($values['status']);
-    $c[] = ($values['status']);
-    $b[] = array('type' => 'column', 'name' => $values['status'], 'data' => array((int)$values['jumlah']));
-}
-?>
+// foreach ($dgrafik as $values) {
+//     $a[0] = ($values['status']);
+//     $c[] = ($values['status']);
+//     $b[] = array('type' => 'column', 'name' => $values['status'], 'data' => array((int)$values['jumlah']));
+// }
+// ?>
 <div class="site-index">
 
     <div class="jumbotron">
