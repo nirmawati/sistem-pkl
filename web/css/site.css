@@ -113,40 +113,33 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
-
-.tabbable{
-     
-        overflow: hidden;
-        border: 1px solid #ccc;
-        background-color: #f1f1f1;
-      }
-      
-      /* Style the buttons that are used to open the tab content */
-      .tabbable button {
-        background-color: inherit;
-        float: left;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        padding: 14px 16px;
-        transition: 0.3s;
-      }
-      
-      /* Change background color of buttons on hover */
-      .tabbable button:hover {
-        background-color: #ddd;
-      }
-      
-      /* Create an active/current tablink class */
-      .tabbable button.active {
-        background-color: #ccc;
-      }
-      
-      /* Style the tab content */
-      .tab-content {
-        display: none;
-        padding: 6px 12px;
-        border: 1px solid #ccc;
-        border-top: none;
-      }
-
+  
+  /* Style tab links */
+  .tablink {
+    background-color: #555;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 25%;
+  }
+  
+  .tablink:hover {
+    background-color: #777;
+  }
+  
+  /* Style the tab content (and add height:100% for full page content) */
+  .tabcontent {
+    color: white;
+    display: none;
+    padding: 100px 20px;
+    height: 100%;
+  }
+  
+  #Home {background-color: orange;}
+  #News {background-color: orange;}
+  #Contact {background-color: orange;}
+  #About {background-color:orange;}

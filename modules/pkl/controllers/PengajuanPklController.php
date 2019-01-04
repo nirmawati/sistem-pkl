@@ -8,6 +8,7 @@ use app\models\PengajuanPklSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\VwmahasiswaProdi;
 
 /**
  * PengajuanPklController implements the CRUD actions for PengajuanPkl model.
@@ -38,8 +39,8 @@ class PengajuanPklController extends Controller
     {
         $searchModel = new PengajuanPklSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination=[
-            'pageSize'=>10
+        $dataProvider->pagination = [
+            'pageSize' => 10
         ];
 
         return $this->render('index', [
@@ -69,6 +70,8 @@ class PengajuanPklController extends Controller
     public function actionCreate()
     {
         $model = new PengajuanPkl();
+        $userid = Yii::$app->user->identity->id;
+        $mahasiswa = VwmahasiswaProdi::find($userid);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,9 +79,10 @@ class PengajuanPklController extends Controller
 
         return $this->renderAjax('create', [
             'model' => $model,
+            'mahasiswa' => $mahasiswa,
         ]);
     }
-    
+
 
     /**
      * Updates an existing PengajuanPkl model.

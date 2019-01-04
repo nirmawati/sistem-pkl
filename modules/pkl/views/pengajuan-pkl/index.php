@@ -36,7 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
     Modal::begin([
         'header' => '<h4>Registrasi PKL</h4>',
         'id' => 'modal',
-        'size' => 'modal-lg'
+        'size' => 'modal-lg',
+        'options'=>[
+            'tabindex'=> false,
+        ]
     ]);
     echo "<div id='modalContent'></div>";
     Modal::end();

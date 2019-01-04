@@ -3,7 +3,7 @@ use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-$username =Yii::$app->user->identity;
+$username =Yii::$app->user->identity->id;
 ?>
 
 <header class="main-header">

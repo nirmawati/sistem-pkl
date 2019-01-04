@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
  */
 class MitraPklController extends Controller
 {
+    public $layout = '@app/views/layouts/column1';
     /**
      * {@inheritdoc}
      */
