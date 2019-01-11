@@ -25,6 +25,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'selesai') ?>
 
+    <?php // echo $form->field($model, 'status') ?>
+
     <?php // echo $form->field($model, 'semester') ?>
 
     <?php // echo $form->field($model, 'mhs_id') ?>
@@ -32,12 +34,6 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'dosen_id') ?>
 
     <?php // echo $form->field($model, 'topik_id') ?>
-
-    <?php // echo $form->field($model, 'status_pelaksanaan') ?>
-
-    <?php // echo $form->field($model, 'status_kegiatan') ?>
-
-    <?php // echo $form->field($model, 'status_surat') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

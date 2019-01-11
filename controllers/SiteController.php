@@ -18,6 +18,19 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
+            'as beforeRequest' => [
+            'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'roles' => ['@'],
+                        'allow' => true,
+                    ]
+                ]
+            ],
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['logout'],
@@ -70,6 +83,14 @@ class SiteController extends Controller
         //     'dgrafik' => $data
         // ]);
         return $this->render('index');
+        $userid = Yii::$app->user->identity->id;
+        $mahasiswa = VwmahasiswaProdi::find()
+            ->where(['user_id' => $userid])
+            ->one();
+        return $this->render('index', [
+            'mahasiswa' => $mahasiswa,
+            'userid' => $userid,
+        ]);
     }
 
     /**

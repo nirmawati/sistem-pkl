@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\PengajuanPkl;
+use app\models\StatusPkl;
 
 /**
- * PengajuanPklSearch represents the model behind the search form of `app\models\PengajuanPkl`.
+ * StatusPklSearch represents the model behind the search form of `app\models\StatusPkl`.
  */
-class PengajuanPklSearch extends PengajuanPkl
+class StatusPklSearch extends StatusPkl
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class PengajuanPklSearch extends PengajuanPkl
     public function rules()
     {
         return [
-            [['id', 'mitra_id', 'semester', 'mhs_id', 'dosen_id', 'topik_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'integer'],
-            [['tanggal', 'mulai', 'selesai'], 'safe'],
+            [['id'], 'integer'],
+            [['nama'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class PengajuanPklSearch extends PengajuanPkl
      */
     public function search($params)
     {
-        $query = PengajuanPkl::find();
+        $query = StatusPkl::find();
 
         // add conditions that should always apply here
 
@@ -60,18 +60,9 @@ class PengajuanPklSearch extends PengajuanPkl
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'tanggal' => $this->tanggal,
-            'mitra_id' => $this->mitra_id,
-            'mulai' => $this->mulai,
-            'selesai' => $this->selesai,
-            'semester' => $this->semester,
-            'mhs_id' => $this->mhs_id,
-            'dosen_id' => $this->dosen_id,
-            'topik_id' => $this->topik_id,
-            'status_pelaksanaan' => $this->status_pelaksanaan,
-            'status_kegiatan' => $this->status_kegiatan,
-            'status_surat' => $this->status_surat,
         ]);
+
+        $query->andFilterWhere(['ilike', 'nama', $this->nama]);
 
         return $dataProvider;
     }

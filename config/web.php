@@ -104,6 +104,19 @@ $config = [
 
     ],
     'params' => $params,
+    // 'as beforeRequest' => [
+    //     'class' => 'yii\filters\AccessControl',
+    //     'rules' => [
+    //         [
+    //             'actions' => ['login', 'error'],
+    //             'allow' => true,
+    //         ],
+    //         [
+    //             'roles' => ['@'],
+    //             'allow' => true,
+    //         ]
+    //     ]
+    // ],
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [

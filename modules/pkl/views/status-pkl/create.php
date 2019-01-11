@@ -4,19 +4,18 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\PengajuanPkl */
+/* @var $model app\models\StatusPkl */
 
-$this->title = 'Create Pengajuan Pkl';
-$this->params['breadcrumbs'][] = ['label' => 'Pengajuan Pkls', 'url' => ['index']];
+$this->title = 'Create Status Pkl';
+$this->params['breadcrumbs'][] = ['label' => 'Status Pkls', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="pengajuan-pkl-create">
+<div class="status-pkl-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
-        'mahasiswa' => $mahasiswa
     ]) ?>
 
 </div>

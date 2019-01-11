@@ -3,19 +3,17 @@
 namespace app\modules\pkl\controllers;
 
 use Yii;
-use app\models\PengajuanPkl;
-use app\models\PengajuanPklSearch;
+use app\models\StatusPkl;
+use app\models\StatusPklSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\VwmahasiswaProdi;
 
 /**
- * PengajuanPklController implements the CRUD actions for PengajuanPkl model.
+ * StatusPklController implements the CRUD actions for StatusPkl model.
  */
-class PengajuanPklController extends Controller
+class StatusPklController extends Controller
 {
-    public $layout = '@app/views/layouts/column1';
     /**
      * {@inheritdoc}
      */
@@ -32,31 +30,22 @@ class PengajuanPklController extends Controller
     }
 
     /**
-     * Lists all PengajuanPkl models.
+     * Lists all StatusPkl models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PengajuanPklSearch();
+        $searchModel = new StatusPklSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $userid = Yii::$app->user->identity->id;
-        $mahasiswa = VwmahasiswaProdi::find()
-            ->where(['user_id' => $userid])
-            ->one();
-
-        $dataProvider->pagination = [
-            'pageSize' => 10
-        ];
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'mahasiswa' => $mahasiswa,
         ]);
     }
 
     /**
-     * Displays a single PengajuanPkl model.
+     * Displays a single StatusPkl model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -69,34 +58,25 @@ class PengajuanPklController extends Controller
     }
 
     /**
-     * Creates a new PengajuanPkl model.
+     * Creates a new StatusPkl model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new PengajuanPkl();
+        $model = new StatusPkl();
 
-        $userid = Yii::$app->user->identity->id;
-        $mahasiswa = VwmahasiswaProdi::find()
-            ->where(['user_id' => $userid])
-            ->one();
-
-        if ($model->load(Yii::$app->request->post())) {
-            $model->mhs_id = $mahasiswa->mhsid;
-            if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->renderAjax('create', [
+        return $this->render('create', [
             'model' => $model,
-            'mahasiswa' => $mahasiswa
         ]);
     }
 
     /**
-     * Updates an existing PengajuanPkl model.
+     * Updates an existing StatusPkl model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -116,7 +96,7 @@ class PengajuanPklController extends Controller
     }
 
     /**
-     * Deletes an existing PengajuanPkl model.
+     * Deletes an existing StatusPkl model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -130,15 +110,15 @@ class PengajuanPklController extends Controller
     }
 
     /**
-     * Finds the PengajuanPkl model based on its primary key value.
+     * Finds the StatusPkl model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return PengajuanPkl the loaded model
+     * @return StatusPkl the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = PengajuanPkl::findOne($id)) !== null) {
+        if (($model = StatusPkl::findOne($id)) !== null) {
             return $model;
         }
 

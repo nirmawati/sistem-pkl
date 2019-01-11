@@ -16,7 +16,11 @@ use kartik\file\FileInput;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <!-- <?= $form->field($model, 'pkl_id')->textInput() ?> -->
+    <?= $form->field($model, 'pkl_id')->textInput() ?>
+    <?= $form->field($model, 'pkl_id')->textInput([
+        'disabled' => true,
+        'value' => $mahasiswa->nama
+    ]);?>
 
     <?= $form->field($model, 'departemen')->textInput(['maxlength' => true]) ?>
 

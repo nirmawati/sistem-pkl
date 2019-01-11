@@ -8,58 +8,48 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
 
 use dosamigos\datepicker\DatePicker;
-use kartik\date\DatePicker as IsfaGanteng;
+use kartik\date\DatePicker as DatePic;
 use app\models\MitraPkl;
 use kartik\select2\Select2;
-
-
+use fedemotta\datatables\DataTables;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PengajuanPklSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Mahasiswa PKL';
+$this->title = 'Pengajuan PKL';
 $this->params['breadcrumbs'][] = $this->title;
-
 ?>
 <div class="pengajuan-pkl-index">
-<!-- <?= $this->render('detailmhs.php') ?>; -->
 
-    <!-- <h1><?= Html::encode($this->title) ?></h1> -->
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<!-- <h1><?= Html::encode($this->title) ?></h1> -->
+<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::button('Registrasi', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
-    </p>
+<p>
+    <?= Html::button('Daftar PKL', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+</p>
 
-    <?php 
-    Modal::begin([
-        'header' => '<h4>Registrasi PKL</h4>',
-        'id' => 'modal',
-        'size' => 'modal-lg',
-        'options'=>[
-            'tabindex'=> false,
-        ]
-    ]);
-    echo "<div id='modalContent'></div>";
-    Modal::end();
-    ?>
-    <?php Pjax::begin(); ?>
-    <?= GridView::widget([
+<?php 
+Modal::begin([
+    'header' => '<h4>Lembar Pendaftaran</h4>',
+    'id' => 'modal',
+    'size' => 'modal-lg',
+    'options'=>[
+        'tabindex'=> false,
+    ]
+]);
+echo "<div id='modalContent'></div>";
+Modal::end();
+?>
+<?php Pjax::begin(); ?>
+
+    <?= DataTables::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'rowOptions' => function ($model) {
-            if ($model->status == 0) {
-                return ['class' => 'danger'];
-            } elseif ($model->status == 1) {
-                return ['class' => 'success'];
-            } else {
-                return ['class' => 'success'];
-            }
-        },
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            //'id',
+
+            // 'id',
             [
                 'label' => 'Mahasiswa',
                 'attribute' => 'nama_mhs',
@@ -74,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'Date',
                     'dd-MMM-yyyy'
                 ],
-                'filter' => IsfaGanteng::widget([
+                'filter' => DatePic::widget([
                     'model' => $searchModel,
                     'attribute' => 'tanggal',
                     'pluginOptions' => [
@@ -83,7 +73,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]),
             ],
-
             [
                 'attribute' => 'mitra_id',
                 'value' => 'mitra.nama',
@@ -100,31 +89,56 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'topik_id',
             [
-                'attribute' => 'status',
-                'format' => 'text',
-                'filter' => ['0' => 'Cancel', '1' => 'Registered', '2' => 'Done'],
-                'headerOptions' => ['class' => 'text-center'],
-                'contentOptions' => ['class' => 'text-center'],
+                'attribute' => 'status_pelaksanaan',
                 'content' => function ($data) {
-                    if ($data->status == 1) {
-                        $status = 'Registered';
-                    } elseif ($data->status == 2) {
-                        $status = 'Done';
-                    } else {
-                        $status = 'Cancel';
+                    if ($data->statusPelaksanaan->id == 1) { //ditolak
+                        $class = 'label label-danger';
+                    } elseif ($data->statusPelaksanaan->id == 2) { //menunggu
+                        $class = 'label label-warning';
+                    } else { //menunggu
+                        $class = 'label label-success';
                     }
-                    return $status;
+                    return Html::tag('span', $data->statusPelaksanaan->nama, [
+                        'class' => $class
+                    ]);
                 }
-
+            ],
+            [
+                'attribute' => 'status_kegiatan',
+                'content' => function ($data) {
+                    if ($data->statusKegiatan->id == 1) { //ditolak
+                        $class = 'label label-danger';
+                    } elseif ($data->statusKegiatan->id == 2) { //menunggu
+                        $class = 'label label-warning';
+                    } else { //menunggu
+                        $class = 'label label-success';
+                    }
+                    return Html::tag('span', $data->statusKegiatan->nama, [
+                        'class' => $class
+                    ]);
+                }
+            ],
+            [
+                'attribute' => 'status_surat',
+                'content' => function ($data) {
+                    if ($data->statusSurat->id == 1) { //ditolak
+                        $class = 'label label-danger';
+                    } elseif ($data->statusSurat->id == 2) { //menunggu
+                        $class = 'label label-warning';
+                    } else { //menunggu
+                        $class = 'label label-success';
+                    }
+                    return Html::tag('span', $data->statusSurat->nama, [
+                        'class' => $class
+                    ]);
+                }
             ],
             // 'mulai',
             // 'selesai',
-            // 'semester',
+            //'semester',
+            //'mhs_id',
             //'dosen_id',
-
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-    <?php Pjax::end(); ?>
 </div>

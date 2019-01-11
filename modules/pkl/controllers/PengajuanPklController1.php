@@ -95,6 +95,7 @@ class PengajuanPklController extends Controller
         ]);
     }
 
+
     /**
      * Updates an existing PengajuanPkl model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -114,6 +115,22 @@ class PengajuanPklController extends Controller
             'model' => $model,
         ]);
     }
+
+    // public function actionDetailmhs()
+    // {
+    //     $userid = Yii::$app->user->identity->id;
+    //     $mahasiswa = VwmahasiswaProdi::find()
+    //         ->select('nama')
+    //         ->where(['user_id' => $userid])
+    //         ->one();
+
+
+    //     return $this->render('detailmhs', [
+    //         'searchModel' => $searchModel,
+    //         'dataProvider' => $dataProvider,
+    //         'mahasiswa' => $mahasiswa,
+    //     ]);
+    // }
 
     /**
      * Deletes an existing PengajuanPkl model.
@@ -145,3 +162,4 @@ class PengajuanPklController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
+

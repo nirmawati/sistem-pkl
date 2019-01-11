@@ -20,6 +20,7 @@
                 'items' => [
                     ['label' => 'Home', 'icon' => 'home', 'url' => ['/']],
 
+                    ['label' => 'Profil', 'icon' => 'user', 'url' => ['/pkl/profil']],
                     ['label' => 'Informasi', 'icon' => 'flag', 'url' => ['/pkl/informasi']],
                     ['label' => 'Mitra PKL', 'icon' => 'road', 'url' => ['/pkl/mitra-pkl']],
                     ['label' => 'Kategori PKL', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']],

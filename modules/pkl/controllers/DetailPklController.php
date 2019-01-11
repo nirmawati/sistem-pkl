@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use yii\web\UploadedFile;
+use app\models\PengajuanPkl;
+use app\models\VwmahasiswaProdi;
 
 /**
  * DetailPklController implements the CRUD actions for DetailPkl model.
@@ -41,9 +43,11 @@ class DetailPklController extends Controller
         $searchModel = new DetailPklSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'listPKL' => $listPkl,
         ]);
     }
 
@@ -68,6 +72,17 @@ class DetailPklController extends Controller
     public function actionCreate()
     {
         $model = new DetailPkl();
+
+        $userid = Yii::$app->user->identity->id;
+        $mahasiswa = VwmahasiswaProdi::find()
+            ->where(['user_id' => $userid])
+            ->one();
+
+        $listPkl = PengajuanPkl::find()
+            ->where(['mhs_id' => $mahasiswa->mhsid])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+
         if ($model->load(Yii::$app->request->post())) {
             $laporan = UploadedFile::getInstance($model, 'laporan');
             if (!is_null($laporan)) {
@@ -81,6 +96,7 @@ class DetailPklController extends Controller
                 $path = Yii::$app->params['uploadPath'] . $model->laporan;
                 $laporan->saveAs($path);
             }
+            $model->pkl_id = $listPkl->id;
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -90,6 +106,7 @@ class DetailPklController extends Controller
         }
         return $this->render('create', [
             'model' => $model,
+            'mahasiswa' => $mahasiswa
         ]);
 
         // if ($model->load(Yii::$app->request->post()) && $model->save()) {

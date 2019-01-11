@@ -11,16 +11,17 @@ use app\models\VwmahasiswaProdi;
 use app\models\KategoriIndustri;
 use app\models\MitraPkl;
 use app\models\TopikPkl;
-use app\models\StatusPkl;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PengajuanPkl */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
 <div class="pengajuan-pkl-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    
     <div class="container-fluid">
     <!-- <?= $form->field($model, 'mhs_id')->dropDownList(
         ArrayHelper::map(VwmahasiswaProdi::find()->all(), 'mhsid', 'nama'),
@@ -82,38 +83,15 @@ use app\models\StatusPkl;
         ]
     ]); ?>
 </div>
-
-    <?= $form->field($model, 'status_pelaksanaan')->widget(Select2::classname(), [    
-        'data' => ArrayHelper::map(StatusPkl::find()->all(), 'id', 'nama'),
-        'language' => 'en',
-        'options' => ['placeholder' => 'Pilih ...'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
-
-    <?= $form->field($model, 'status_kegiatan')->widget(Select2::classname(), [    
-        'data' => ArrayHelper::map(StatusPkl::find()->all(), 'id', 'nama'),
-        'language' => 'en',
-        'options' => ['placeholder' => 'Pilih ...'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
-
-    <?= $form->field($model, 'status_surat')->widget(Select2::classname(), [    
-        'data' => ArrayHelper::map(StatusPkl::find()->all(), 'id', 'nama'),
-        'language' => 'en',
-        'options' => ['placeholder' => 'Pilih ...'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
+    <!-- <?= $form->field($model, 'status')->dropDownList(
+        ['0' => 'Ditolak', '1' => 'Terdaftar', '2' => 'Selesai'],
+        ['prompt' => 'Pilih Status']
+    ); ?> -->
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Simpan', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
-</div>
+

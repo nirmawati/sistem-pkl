@@ -11,19 +11,13 @@ use kartik\date\DatePicker;
 /* @var $searchModel app\models\LogPklSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Log Pkls';
+$this->title = 'Laporan Harian';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="log-pkl-index">
 
-    
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <!-- <p>
-        <?= Html::a('Create Log Pkl', ['create'], ['class' => 'btn btn-success']) ?>
-    </p> -->
     <p>
-        <?= Html::button('Absensi PKL', ['value' => Url::to('log-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+        <?= Html::button('Tambah Absensi ', ['value' => Url::to('log-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
 
     <?php 
@@ -44,7 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             //'pkl_id',
-            //'ket',
             [
                 'attribute' => 'ket',
                 'format' => 'text',
@@ -83,7 +76,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'jam_pulang',
             'kegiatan:ntext',
             
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
