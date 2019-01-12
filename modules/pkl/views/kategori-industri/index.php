@@ -8,6 +8,7 @@ use yii\helpers\ArrayHelper;
 
 use kartik\select2\Select2;
 use app\models\Prodi;
+use fedemotta\datatables\DataTables;
 
 
 /* @var $this yii\web\View */
@@ -36,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         Modal::end();
     ?>
 
-    <?= GridView::widget([
+    <?= DataTables::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [

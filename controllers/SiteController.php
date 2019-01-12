@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\AuthAssignment;
 
 class SiteController extends Controller
 {
@@ -87,8 +88,10 @@ class SiteController extends Controller
         $mahasiswa = VwmahasiswaProdi::find()
             ->where(['user_id' => $userid])
             ->one();
+
         return $this->render('index', [
             'mahasiswa' => $mahasiswa,
+            'authAssignment' => $authAssignment,
             'userid' => $userid,
         ]);
     }

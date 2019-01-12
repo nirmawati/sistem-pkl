@@ -21,12 +21,23 @@ $this->title = 'Pengajuan PKL';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pengajuan-pkl-index">
-
 <!-- <h1><?= Html::encode($this->title) ?></h1> -->
 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 <p>
-    <?= Html::button('Daftar PKL', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+    <?php
+        //$status_surat = $model->status_surat == NULL || $model->status_surat != 3; //status surat ditolak
+        //$status_kegiatan = $model->status_kegiatan == NULL || $model->status_kegiatan != 3; //status kegiatan ditolak
+
+        if ($model->status_surat == 3 && $model->status_kegiatan == 3) {
+            echo '<div class="alert alert-success alert-dismissible">
+                <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
+                <h4><i class="icon fa fa-check"></i> Selamat!</h4>Anda sedang magang.
+            </div>';
+        } else {
+            echo Html::button('Daftar PKL', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']);
+        }
+    ?>
 </p>
 
 <?php 

@@ -12,10 +12,15 @@ use app\models\KategoriIndustri;
 use app\models\MitraPkl;
 use app\models\TopikPkl;
 use app\models\StatusPkl;
+use app\models\Dosen;
+use app\modules\pkl\utils\Roles;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PengajuanPkl */
 /* @var $form yii\widgets\ActiveForm */
+
+$userId = Yii::$app->user->id;
+
 ?>
 
 <div class="pengajuan-pkl-form">
@@ -37,7 +42,14 @@ use app\models\StatusPkl;
         ['prompt' => 'Pilih Semester']
     ); ?>
 
-    <?= $form->field($model, 'dosen_id')->textInput() ?>
+    <?= $form->field($model, 'dosen_id')->widget(Select2::classname(), [    
+        'data' => ArrayHelper::map(Dosen::find()->all(), 'id', 'nama'),
+        'language' => 'en',
+        'options' => ['placeholder' => 'Pilih ...'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
     
     <?= $form->field($model, 'mitra_id')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(MitraPkl::find()->all(), 'id', 'nama'),
@@ -83,32 +95,41 @@ use app\models\StatusPkl;
     ]); ?>
 </div>
 
-    <?= $form->field($model, 'status_pelaksanaan')->widget(Select2::classname(), [    
-        'data' => ArrayHelper::map(StatusPkl::find()->all(), 'id', 'nama'),
-        'language' => 'en',
-        'options' => ['placeholder' => 'Pilih ...'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
-
-    <?= $form->field($model, 'status_kegiatan')->widget(Select2::classname(), [    
-        'data' => ArrayHelper::map(StatusPkl::find()->all(), 'id', 'nama'),
-        'language' => 'en',
-        'options' => ['placeholder' => 'Pilih ...'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
-
-    <?= $form->field($model, 'status_surat')->widget(Select2::classname(), [    
-        'data' => ArrayHelper::map(StatusPkl::find()->all(), 'id', 'nama'),
-        'language' => 'en',
-        'options' => ['placeholder' => 'Pilih ...'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
+    <?php if(Roles::currentRole($userId) == Roles::BAAK): ?>
+        <!-- BAAK -->
+        <?= $form->field($model, 'status_surat')->widget(Select2::classname(), [    
+            'data' => ArrayHelper::map(StatusPkl::find()->all(), 'id', 'nama'),
+            'language' => 'en',
+            'options' => ['placeholder' => 'Pilih ...'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]); ?>
+    <?php elseif(Roles::currentRole($userId) == Roles::MHS): ?>
+        <!-- MAHASISWA -->
+        <?= $form->field($model, 'status_kegiatan')->widget(Select2::classname(), [    
+            'data' => ArrayHelper::map(StatusPkl::find()->all(), 'id', 'nama'),
+            'language' => 'en',
+            'options' => [
+                'placeholder' => 'Pilih ...',
+                'disabled' => !isset($model->status_surat) || $model->status_surat != 3
+            ],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]); ?>
+    <?php elseif(Roles::currentRole($userId) == Roles::DOSEN): ?>
+        <!-- DOSEN -->
+        <?= $form->field($model, 'status_pelaksanaan')->widget(Select2::classname(), [    
+            'data' => ArrayHelper::map(StatusPkl::find()->all(), 'id', 'nama'),
+            'language' => 'en',
+            'options' => ['placeholder' => 'Pilih ...'],
+            'pluginOptions' => [
+                'allowClear' => true,
+                'disabled' => !isset($model->status_kegiatan) || $model->status_kegiatan != 3 || $model->status_surat != 3
+            ],
+        ]); ?>
+    <?php endif; ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

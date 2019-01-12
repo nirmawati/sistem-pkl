@@ -8,6 +8,7 @@ use yii\helpers\Url;
 
 use kartik\select2\Select2;
 use app\models\KategoriIndustri;
+use fedemotta\datatables\DataTables;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MitraPklSearch */
@@ -35,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
         Modal::end();
     ?>
 
-    <?= GridView::widget([
+    <?= DataTables::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'rowOptions'=> function($model){

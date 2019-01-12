@@ -6,6 +6,7 @@ use yii\bootstrap\Modal;
 use yii\helpers\Url;
 
 use kartik\date\DatePicker;
+use fedemotta\datatables\DataTables;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\LogPklSearch */
@@ -30,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
     Modal::end();
     ?>
 
-    <?= GridView::widget([
+    <?= DataTables::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [

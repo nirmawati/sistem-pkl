@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\VwmahasiswaProdi;
+use app\modules\pkl\utils\Roles;
 
 /**
  * PengajuanPklController implements the CRUD actions for PengajuanPkl model.
@@ -48,10 +49,23 @@ class PengajuanPklController extends Controller
             'pageSize' => 10
         ];
 
+        if (Roles::currentRole($userid) == Roles::DOSEN) {
+            $dataProvider->query->andWhere(['dosen_id' => $userid]);
+            $model = PengajuanPkl::find()
+                ->where(['dosen_id' => $userid])
+                ->one();
+        } elseif (Roles::currentRole($userid) == Roles::MHS) {
+            $dataProvider->query->andWhere(['mhs_id' => $mahasiswa->mhsid]);
+            $model = PengajuanPkl::find()
+                ->where(['mhs_id' => $mahasiswa->mhsid])
+                ->one();
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'mahasiswa' => $mahasiswa,
+            'model' => $model
         ]);
     }
 
@@ -91,7 +105,7 @@ class PengajuanPklController extends Controller
 
         return $this->renderAjax('create', [
             'model' => $model,
-            'mahasiswa' => $mahasiswa
+            'mahasiswa' => $mahasiswa,
         ]);
     }
 
