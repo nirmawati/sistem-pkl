@@ -29,14 +29,19 @@ $this->params['breadcrumbs'][] = $this->title;
         //$status_surat = $model->status_surat == NULL || $model->status_surat != 3; //status surat ditolak
         //$status_kegiatan = $model->status_kegiatan == NULL || $model->status_kegiatan != 3; //status kegiatan ditolak
 
-        if ($model->status_surat == 3 && $model->status_kegiatan == 3) {
-            echo '<div class="alert alert-success alert-dismissible">
+    if ($model->status_surat == 3 || $model->status_kegiatan == 3) {
+        echo '<div class="alert alert-success alert-dismissible">
                 <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
-                <h4><i class="icon fa fa-check"></i> Selamat!</h4>Anda sedang magang.
+                <h4><i class="icon fa fa-check"></i> Surat Pengajuan Selesai!</h4>Silahkan Ambil Surat Pengantar PKL Anda diruang BAAK...
             </div>';
-        } else {
-            echo Html::button('Daftar PKL', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']);
-        }
+    } else if ($model->status_surat == 2 || $model->status_kegiatan == 2) {
+        echo '<div class="alert alert-warning alert-dismissible">
+                <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
+                <h4><i class="icon fa fa-check"></i> Tunggu ya!</h4>Surat Pengantar PKL Anda sedang diproses...
+            </div>';
+    } else {
+        echo Html::button('Daftar PKL', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']);
+    }
     ?>
 </p>
 
@@ -45,8 +50,8 @@ Modal::begin([
     'header' => '<h4>Lembar Pendaftaran</h4>',
     'id' => 'modal',
     'size' => 'modal-lg',
-    'options'=>[
-        'tabindex'=> false,
+    'options' => [
+        'tabindex' => false,
     ]
 ]);
 echo "<div id='modalContent'></div>";
@@ -100,6 +105,21 @@ Modal::end();
             ],
             'topik_id',
             [
+                'attribute' => 'status_surat',
+                'content' => function ($data) {
+                    if ($data->statusSurat->id == 1) { //ditolak
+                        $class = 'label label-danger';
+                    } elseif ($data->statusSurat->id == 2) { //menunggu
+                        $class = 'label label-warning';
+                    } else { //menunggu
+                        $class = 'label label-success';
+                    }
+                    return Html::tag('span', $data->statusSurat->nama, [
+                        'class' => $class
+                    ]);
+                }
+            ],
+            [
                 'attribute' => 'status_pelaksanaan',
                 'content' => function ($data) {
                     if ($data->statusPelaksanaan->id == 1) { //ditolak
@@ -129,21 +149,7 @@ Modal::end();
                     ]);
                 }
             ],
-            [
-                'attribute' => 'status_surat',
-                'content' => function ($data) {
-                    if ($data->statusSurat->id == 1) { //ditolak
-                        $class = 'label label-danger';
-                    } elseif ($data->statusSurat->id == 2) { //menunggu
-                        $class = 'label label-warning';
-                    } else { //menunggu
-                        $class = 'label label-success';
-                    }
-                    return Html::tag('span', $data->statusSurat->nama, [
-                        'class' => $class
-                    ]);
-                }
-            ],
+
             // 'mulai',
             // 'selesai',
             //'semester',

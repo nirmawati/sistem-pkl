@@ -18,9 +18,6 @@ use app\modules\pkl\utils\Roles;
 /* @var $this yii\web\View */
 /* @var $model app\models\PengajuanPkl */
 /* @var $form yii\widgets\ActiveForm */
-
-$userId = Yii::$app->user->id;
-
 ?>
 
 <div class="pengajuan-pkl-form">
@@ -43,7 +40,7 @@ $userId = Yii::$app->user->id;
     ); ?>
 
     <?= $form->field($model, 'dosen_id')->widget(Select2::classname(), [    
-        'data' => ArrayHelper::map(Dosen::find()->all(), 'id', 'nama'),
+        'data' => ArrayHelper::map(Dosen::find()->where(['homebase_id' => $mahasiswaProdi->prodi_id])->all(), 'id', 'nama'),
         'language' => 'en',
         'options' => ['placeholder' => 'Pilih ...'],
         'pluginOptions' => [
@@ -95,44 +92,46 @@ $userId = Yii::$app->user->id;
     ]); ?>
 </div>
 
-    <?php if(Roles::currentRole($userId) == Roles::BAAK): ?>
+    <?php if(Roles::currentRole($userid) == Roles::BAAK): ?>
         <!-- BAAK -->
         <?= $form->field($model, 'status_surat')->widget(Select2::classname(), [    
-            'data' => ArrayHelper::map(StatusPkl::find()->all(), 'id', 'nama'),
+            'data' => ArrayHelper::map(StatusPkl::find()->where(['or',['id'=>1],['id'=>2],['id'=>3]])->all(), 'id', 'nama'),
             'language' => 'en',
             'options' => ['placeholder' => 'Pilih ...'],
             'pluginOptions' => [
                 'allowClear' => true
             ],
         ]); ?>
-    <?php elseif(Roles::currentRole($userId) == Roles::MHS): ?>
-        <!-- MAHASISWA -->
+    <?php elseif(Roles::currentRole($userid) == Roles::DOSEN): ?>
+        <!-- Dosen -->
         <?= $form->field($model, 'status_kegiatan')->widget(Select2::classname(), [    
-            'data' => ArrayHelper::map(StatusPkl::find()->all(), 'id', 'nama'),
+            'data' => ArrayHelper::map(StatusPkl::find()->where(['or',['id'=>1],['id'=>5]])->all(), 'id', 'nama'),
             'language' => 'en',
             'options' => [
                 'placeholder' => 'Pilih ...',
-                'disabled' => !isset($model->status_surat) || $model->status_surat != 3
+                //'disabled' => !isset($model->status_surat) || $model->status_surat != 3
+                'disabled' => !isset($model->status_pelaksanaan) || $model->status_kegiatan != 3 || $model->status_surat != 3
+
             ],
             'pluginOptions' => [
                 'allowClear' => true
             ],
         ]); ?>
-    <?php elseif(Roles::currentRole($userId) == Roles::DOSEN): ?>
-        <!-- DOSEN -->
+    <?php elseif(Roles::currentRole($userid) == Roles::MHS): ?>
+        <!-- MAHASISWA -->
         <?= $form->field($model, 'status_pelaksanaan')->widget(Select2::classname(), [    
-            'data' => ArrayHelper::map(StatusPkl::find()->all(), 'id', 'nama'),
+            'data' => ArrayHelper::map(StatusPkl::find()->where(['or',['id'=>1],['id'=>4]])->all(), 'id', 'nama'),
             'language' => 'en',
             'options' => ['placeholder' => 'Pilih ...'],
             'pluginOptions' => [
                 'allowClear' => true,
-                'disabled' => !isset($model->status_kegiatan) || $model->status_kegiatan != 3 || $model->status_surat != 3
+                'disabled' => !isset($model->status_surat) ||  $model->status_surat != 3
             ],
         ]); ?>
     <?php endif; ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Simpan', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

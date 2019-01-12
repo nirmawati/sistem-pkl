@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\VwmahasiswaProdi;
+use app\models\Dosen;
+use app\models\Mahasiswa;
 use app\modules\pkl\utils\Roles;
 
 /**
@@ -45,12 +47,20 @@ class PengajuanPklController extends Controller
             ->where(['user_id' => $userid])
             ->one();
 
+        $dosen = Dosen::find()
+            ->where(['user_id' => $userid])
+            ->all();
+
+        $dosenProdi = Dosen::find()
+            ->where(['homebase_id' => $mahasiswa1->prodi_id])
+            ->one();
+
         $dataProvider->pagination = [
             'pageSize' => 10
         ];
 
         if (Roles::currentRole($userid) == Roles::DOSEN) {
-            $dataProvider->query->andWhere(['dosen_id' => $userid]);
+            $dataProvider->query->andWhere(['dosen_id' => $dosen->id]);
             $model = PengajuanPkl::find()
                 ->where(['dosen_id' => $userid])
                 ->one();
@@ -64,6 +74,7 @@ class PengajuanPklController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'userid' => $userid,
             'mahasiswa' => $mahasiswa,
             'model' => $model
         ]);
@@ -95,16 +106,22 @@ class PengajuanPklController extends Controller
         $mahasiswa = VwmahasiswaProdi::find()
             ->where(['user_id' => $userid])
             ->one();
+        $mahasiswaProdi = Mahasiswa::find()
+            ->where(['user_id' => $userid])
+            ->one();
 
         if ($model->load(Yii::$app->request->post())) {
             $model->mhs_id = $mahasiswa->mhsid;
-            if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+            $model->status_surat = 2;
+            if ($model->save()) {
+                return $this->redirect(['index']);
             }
         }
 
         return $this->renderAjax('create', [
             'model' => $model,
+            'mahasiswaProdi' => $mahasiswaProdi,
+            'userid' => $userid,
             'mahasiswa' => $mahasiswa,
         ]);
     }
@@ -119,13 +136,31 @@ class PengajuanPklController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $userid = Yii::$app->user->identity->id;
+        $mahasiswa = VwmahasiswaProdi::find()
+            ->where(['user_id' => $userid])
+            ->one();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $mahasiswaProdi = Mahasiswa::find()
+            ->where(['user_id' => $userid])
+            ->one();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->status_surat = 4){
+                $model->status_pelaksanaan = 2;
+            }elseif($model->status_pelaksanaan = 4){
+                $model->status_kegiatan = 5;
+            }
+            if ($model->save()) {
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'mahasiswa' => $mahasiswa,
+            'userid' => $userid,
+            'mahasiswaProdi' => $mahasiswaProdi,
         ]);
     }
 
