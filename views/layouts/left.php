@@ -1,3 +1,4 @@
+
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -21,13 +22,13 @@
                     ['label' => 'Home', 'icon' => 'home', 'url' => ['/']],
 
                     // ['label' => 'Profil', 'icon' => 'user', 'url' => ['/pkl/profil']],
+                    
                     ['label' => 'Informasi', 'icon' => 'flag', 'url' => ['/pkl/informasi']],
                     ['label' => 'Mitra PKL', 'icon' => 'road', 'url' => ['/pkl/mitra-pkl']],
                     ['label' => 'Kategori PKL', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']],
                     ['label' => 'Mahasiswa PKL', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']],
                     ['label' => 'Detail PKL', 'icon' => 'book', 'url' => ['/pkl/detail-pkl']],
                     ['label' => 'Laporan Harian', 'icon' => 'tasks', 'url' => ['/pkl/log-pkl']],
-
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],

@@ -33,7 +33,8 @@
         "2amigos/yii2-highcharts-widget": "~1.0",
         "kartik-v/yii2-tabs-x": "dev-master",
         "kartik-v/yii2-grid": "dev-master",
-        "fedemotta/yii2-widget-datatables": "*"
+        "fedemotta/yii2-widget-datatables": "*",
+        "kartik-v/yii2-editable": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -1,17 +1,20 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
+use app\models\StatusPkl;
+use app\models\MitraPkl;
+use app\modules\pkl\utils\Roles;
 
 use dosamigos\datepicker\DatePicker;
-use kartik\date\DatePicker as DatePic;
-use app\models\MitraPkl;
-use kartik\select2\Select2;
 use fedemotta\datatables\DataTables;
+use kartik\date\DatePicker as DatePic;
+use kartik\select2\Select2;
+use kartik\editable\Editable;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PengajuanPklSearch */
@@ -29,37 +32,61 @@ $this->params['breadcrumbs'][] = $this->title;
         //$status_surat = $model->status_surat == NULL || $model->status_surat != 3; //status surat ditolak
         //$status_kegiatan = $model->status_kegiatan == NULL || $model->status_kegiatan != 3; //status kegiatan ditolak
 
-    if ($model->status_surat == 3 || $model->status_kegiatan == 3) {
+    if ($model->status_surat == 3 && $model->status_pelaksanaan == 2) {
         echo '<div class="alert alert-success alert-dismissible">
                 <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
                 <h4><i class="icon fa fa-check"></i> Surat Pengajuan Selesai!</h4>Silahkan Ambil Surat Pengantar PKL Anda diruang BAAK...
             </div>';
-    } else if ($model->status_surat == 2 || $model->status_kegiatan == 2) {
+    }else if ($model->status_surat == 3 && $model->status_pelaksanaan == 4 && $model->status_kegiatan == 5) {
+        echo '<div class="alert alert-success alert-dismissible">
+                <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
+                <h4><i class="icon fa fa-check"></i> SELAMAT ANDA TELAH DITERIMA !!</h4>Semangat melaksanakan kegiatan PKL, Jangan Lupa lengkapi detail dan absensinya ya...
+            </div>';
+    }else if ($model->status_surat == 3 && $model->status_pelaksanaan == 4 && $model->status_kegiatan == 2 ) {
+        echo '<div class="alert alert-success alert-dismissible">
+                <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
+                <h4><i class="icon fa fa-check"></i> SELAMAT ANDA TELAH SELESAI PKL !!</h4>Semangat melaksanakan kegiatan PKL, Jangan Lupa lengkapi detail dan absensinya ya...
+            </div>';
+    } else if ($model->status_surat == 2 && $model->status_pelaksanaan == 0 & $model->status_kegiatan == 0) {
         echo '<div class="alert alert-warning alert-dismissible">
                 <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
                 <h4><i class="icon fa fa-check"></i> Tunggu ya!</h4>Surat Pengantar PKL Anda sedang diproses...
             </div>';
-    } else {
+    }else {
         echo Html::button('Daftar PKL', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']);
     }
     ?>
 </p>
 
 <?php 
-Modal::begin([
-    'header' => '<h4>Lembar Pendaftaran</h4>',
-    'id' => 'modal',
-    'size' => 'modal-lg',
-    'options' => [
-        'tabindex' => false,
-    ]
-]);
-echo "<div id='modalContent'></div>";
-Modal::end();
+    Modal::begin([
+        'header' => '<h4>Lembar Pendaftaran</h4>',
+        'id' => 'modal',
+        'size' => 'modal-lg',
+        'options' => [
+            'tabindex' => false,
+        ]
+    ]);
+    echo "<div id='modalContent'></div>";
+    Modal::end();
+    ?>
+
+<?php 
+    $isBAAK = true;
+    $isDosen = true;
+    $isMhs = true;
+
+    if (Roles::currentRole($userid) == Roles::BAAK) {
+        $isBAAK = false;
+    } elseif (Roles::currentRole($userid) == Roles::DOSEN) {
+        $isDosen = false;
+    } elseif (Roles::currentRole($userid) == Roles::MHS) {
+        $isMhs = false;
+    }
 ?>
 <?php Pjax::begin(); ?>
 
-    <?= DataTables::widget([
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -105,49 +132,77 @@ Modal::end();
             ],
             'topik_id',
             [
+                'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'status_surat',
+                'readonly' => $isBAAK,
+                'format' => Editable::FORMAT_BUTTON,
+                'editableOptions' => [
+                    'inputType' => Editable::INPUT_DROPDOWN_LIST,
+                    'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 2], ['id' => 3]])->all(), 'id', 'nama'),
+                ],
                 'content' => function ($data) {
                     if ($data->statusSurat->id == 1) { //ditolak
                         $class = 'label label-danger';
                     } elseif ($data->statusSurat->id == 2) { //menunggu
                         $class = 'label label-warning';
-                    } else { //menunggu
+                    }else { //menunggu
                         $class = 'label label-success';
                     }
                     return Html::tag('span', $data->statusSurat->nama, [
                         'class' => $class
                     ]);
-                }
+                },
             ],
             [
+                'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'status_pelaksanaan',
+                'format' => Editable::FORMAT_BUTTON,
+                'readonly' => $isMhs,
+                'editableOptions' => [
+                    'inputType' => Editable::INPUT_DROPDOWN_LIST,
+                    'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 2], ['id' => 4]])->all(), 'id', 'nama'),
+
+                ],
                 'content' => function ($data) {
                     if ($data->statusPelaksanaan->id == 1) { //ditolak
                         $class = 'label label-danger';
                     } elseif ($data->statusPelaksanaan->id == 2) { //menunggu
                         $class = 'label label-warning';
-                    } else { //menunggu
+                    }  elseif ($data->statusPelaksanaan->id == 6) { //menunggu
+                        $class = 'label label-info';
+                    }else { //menunggu
                         $class = 'label label-success';
                     }
                     return Html::tag('span', $data->statusPelaksanaan->nama, [
                         'class' => $class
                     ]);
-                }
+                },
             ],
+
             [
+                'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'status_kegiatan',
+                'format' => Editable::FORMAT_BUTTON,
+                'readonly' => $isDosen,
+                'editableOptions' => [
+                    'inputType' => Editable::INPUT_DROPDOWN_LIST,
+                    'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 2], ['id' => 4]])->all(), 'id', 'nama'),
+
+                ],
                 'content' => function ($data) {
                     if ($data->statusKegiatan->id == 1) { //ditolak
                         $class = 'label label-danger';
-                    } elseif ($data->statusKegiatan->id == 2) { //menunggu
+                    } elseif ($data->statusKegiatan->id == 5) { //menunggu
                         $class = 'label label-warning';
-                    } else { //menunggu
+                    } elseif ($data->statusKegiatan->id == 6) { //menunggu
+                        $class = 'label label-info';
+                    }else { //menunggu
                         $class = 'label label-success';
                     }
                     return Html::tag('span', $data->statusKegiatan->nama, [
                         'class' => $class
                     ]);
-                }
+                },
             ],
 
             // 'mulai',

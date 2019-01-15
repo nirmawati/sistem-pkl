@@ -12,6 +12,7 @@ use app\models\VwmahasiswaProdi;
 use app\models\Dosen;
 use app\models\Mahasiswa;
 use app\modules\pkl\utils\Roles;
+use yii\helpers\Json;
 
 /**
  * PengajuanPklController implements the CRUD actions for PengajuanPkl model.
@@ -68,7 +69,41 @@ class PengajuanPklController extends Controller
             $dataProvider->query->andWhere(['mhs_id' => $mahasiswa->mhsid]);
             $model = PengajuanPkl::find()
                 ->where(['mhs_id' => $mahasiswa->mhsid])
+                ->orderBy(['id' => SORT_DESC])
                 ->one();
+        }
+
+        if (Yii::$app->request->post('hasEditable')) {
+            $id = Yii::$app->request->post('editableKey');
+            $status = PengajuanPkl::findOne($id);
+
+            $out = Json::encode(['output' => '', 'message' => '']);
+            $post = [];
+            $posted = current($_POST['PengajuanPkl']);
+            $post['PengajuanPkl'] = $posted;
+
+            if ($status->load($post)) {
+
+
+                $tempSurat = $status->status_surat;
+                $tempPelaksanaan = $status->status_pelaksanaan;
+                $tempKegiatan = $status->status_kegiatan;
+
+                if ($tempSurat == 3 && $tempPelaksanaan == 6) {
+                    $status->status_pelaksanaan = 2; //menunggu
+                } elseif ($tempPelaksanaan == 4) {
+                    $status->status_pelaksanaan = 4; //diterima
+                    $status->status_kegiatan = 5; //menunggu
+                    $status->status_kegiatan = 5;
+                } elseif ($tempKegiatan == 3) {
+                    $status->status_kegiatan = 3; //selesai
+                }
+                $status->save();
+                $output = 'Refresh untuk update';
+                $out = Json::encode(['output' => $output, 'message' => '']);
+            }
+            echo $out;
+            return;
         }
 
         return $this->render('index', [
@@ -113,6 +148,8 @@ class PengajuanPklController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->mhs_id = $mahasiswa->mhsid;
             $model->status_surat = 2;
+            $model->status_pelaksanaan = 6;
+            $model->status_kegiatan = 6;
             if ($model->save()) {
                 return $this->redirect(['index']);
             }
@@ -146,11 +183,31 @@ class PengajuanPklController extends Controller
             ->one();
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->status_surat = 4){
-                $model->status_pelaksanaan = 2;
-            }elseif($model->status_pelaksanaan = 4){
-                $model->status_kegiatan = 5;
+
+            //status surat pengantar -> status_surat
+            //status pengajuan -> status_pelaksanaan
+            //status kegiatan -> status_kegiatan
+
+            // 1;"Ditolak"
+            // 2;"Menunggu"
+            // 3;"Selesai"
+            // 4;"Diterima"
+            // 5;"Sedang PKL"
+            // 6;"Tidak diproses"
+
+            $tempSurat = $model->status_surat;
+            $tempPelaksanaan = $model->status_pelaksanaan;
+            $tempKegiatan = $model->status_kegiatan;
+
+            if ($tempSurat == 3 && $tempPelaksanaan == 0) {
+                $model->status_pelaksanaan = 2; //menunggu
+            } elseif ($tempPelaksanaan == 4) {
+                $model->status_pelaksanaan = 4; //diterima
+                $model->status_kegiatan = 2; //menunggu
+            } elseif ($tempKegiatan == 3) {
+                $model->status_kegiatan = 3; //selesai
             }
+
             if ($model->save()) {
                 return $this->redirect(['index']);
             }

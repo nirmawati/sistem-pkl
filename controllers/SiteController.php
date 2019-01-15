@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\AuthAssignment;
+use app\models\VwmahasiswaProdi;
 
 class SiteController extends Controller
 {
@@ -83,7 +84,7 @@ class SiteController extends Controller
         // return $this->render('index', [
         //     'dgrafik' => $data
         // ]);
-        return $this->render('index');
+        //return $this->render('index');
         $userid = Yii::$app->user->identity->id;
         $mahasiswa = VwmahasiswaProdi::find()
             ->where(['user_id' => $userid])

@@ -60,10 +60,8 @@ use app\modules\pkl\utils\Roles;
         <?= Html::a('Tambah Mitra', ['/pkl/mitra-pkl'], ['class' => 'btn btn-success']) ?>
     </p>
     
-    <?= $form->field($model, 'topik_id')->dropDownList(
-        ArrayHelper::map(TopikPkl::find()->all(), 'id', 'nama'),
-        ['prompt' => 'Select Topik']
-    ); ?>
+    <?= $form->field($model, 'topik_id')->textInput(['maxlength' => true]) ?>
+
 <div class="col-md-4">
     <?= $form->field($model, 'tanggal')->widget(DatePicker::classname(), [
         'options' => ['placeholder' => 'Tanggal Pengajuan'],
@@ -105,11 +103,10 @@ use app\modules\pkl\utils\Roles;
     <?php elseif(Roles::currentRole($userid) == Roles::DOSEN): ?>
         <!-- Dosen -->
         <?= $form->field($model, 'status_kegiatan')->widget(Select2::classname(), [    
-            'data' => ArrayHelper::map(StatusPkl::find()->where(['or',['id'=>1],['id'=>5]])->all(), 'id', 'nama'),
+            'data' => ArrayHelper::map(StatusPkl::find()->where(['or',['id'=>1],['id'=>5],['id'=>3]])->all(), 'id', 'nama'),
             'language' => 'en',
             'options' => [
                 'placeholder' => 'Pilih ...',
-                //'disabled' => !isset($model->status_surat) || $model->status_surat != 3
                 'disabled' => !isset($model->status_pelaksanaan) || $model->status_kegiatan != 3 || $model->status_surat != 3
 
             ],
@@ -120,7 +117,7 @@ use app\modules\pkl\utils\Roles;
     <?php elseif(Roles::currentRole($userid) == Roles::MHS): ?>
         <!-- MAHASISWA -->
         <?= $form->field($model, 'status_pelaksanaan')->widget(Select2::classname(), [    
-            'data' => ArrayHelper::map(StatusPkl::find()->where(['or',['id'=>1],['id'=>4]])->all(), 'id', 'nama'),
+            'data' => ArrayHelper::map(StatusPkl::find()->where(['or',['id'=>1],['id'=>2],['id'=>4]])->all(), 'id', 'nama'),
             'language' => 'en',
             'options' => ['placeholder' => 'Pilih ...'],
             'pluginOptions' => [
