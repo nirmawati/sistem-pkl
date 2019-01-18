@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use app\models\PengajuanPkl;
 use app\models\VwmahasiswaProdi;
+use app\models\MitraPkl;
 
 /**
  * DetailPklController implements the CRUD actions for DetailPkl model.
@@ -43,11 +44,39 @@ class DetailPklController extends Controller
         $searchModel = new DetailPklSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $userid = Yii::$app->user->identity->id;
+        $mahasiswa = VwmahasiswaProdi::find()
+            ->where(['user_id' => $userid])
+            ->one();
+
+        $listPkl = PengajuanPkl::find()
+            ->where(['mhs_id' => $mahasiswa->mhsid])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+        
+        $tgl_mulai = Yii::$app->formatter->format($listPkl->mulai,'date');
+        $tgl_selesai = Yii::$app->formatter->format($listPkl->selesai,'date');
+
+        $mitra = MitraPkl::find()
+            ->where(['id' => $listPkl->mitra_id])
+            ->one();
+
+        $detailPkl = DetailPkl::find()
+            ->where(['pkl_id' => $listPkl->id])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'listPKL' => $listPkl,
+            'userid' => $userid,
+            'model' => $model,
+            'mahasiswa' => $mahasiswa,
+            'listPkl'=> $listPkl,
+            'mitra'=>$mitra,
+            'tgl_mulai'=>$tgl_mulai,
+            'tgl_selesai'=>$tgl_selesai,
+            'detailPkl'=>$detailPkl
         ]);
     }
 
@@ -83,6 +112,10 @@ class DetailPklController extends Controller
             ->orderBy(['id' => SORT_DESC])
             ->one();
 
+        $mitra = MitraPkl::find()
+            ->where(['id' => $listPkl->mitra_id])
+            ->one();
+
         if ($model->load(Yii::$app->request->post())) {
             $laporan = UploadedFile::getInstance($model, 'laporan');
             if (!is_null($laporan)) {
@@ -106,7 +139,9 @@ class DetailPklController extends Controller
         }
         return $this->render('create', [
             'model' => $model,
-            'mahasiswa' => $mahasiswa
+            'mahasiswa' => $mahasiswa,
+            'listPkl'=> $listPkl,
+            'mitra'=>$mitra,
         ]);
 
         // if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -129,12 +164,45 @@ class DetailPklController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $userid = Yii::$app->user->identity->id;
+        $mahasiswa = VwmahasiswaProdi::find()
+            ->where(['user_id' => $userid])
+            ->one();
+
+        $listPkl = PengajuanPkl::find()
+            ->where(['mhs_id' => $mahasiswa->mhsid])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+
+        $mitra = MitraPkl::find()
+            ->where(['id' => $listPkl->mitra_id])
+            ->one();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $laporan = UploadedFile::getInstance($model, 'laporan');
+            if (!is_null($laporan)) {
+                $model->laporan = $laporan->name;
+                // $ext = end((explode(".", $laporan->name)));
+                // generate a unique file name to prevent duplicate filenames
+                // $model->image_web_filename = Yii::$app->security->generateRandomString() . ".{$ext}";
+                // the path to save file, you can set an uploadPath
+                // in Yii::$app->params (as used in example below)                       
+                Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/web/uploads/file-laporan/';
+                $path = Yii::$app->params['uploadPath'] . $model->laporan;
+                $laporan->saveAs($path);
+            }
+            $model->pkl_id = $listPkl->id;
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                var_dump($model->getErrors());
+                die();
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'mitra' => $mitra
         ]);
     }
 

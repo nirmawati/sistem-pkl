@@ -53,7 +53,7 @@ class DetailPkl extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'pkl_id' => 'Pkl ID',
+            'pkl_id' => 'Perusahaan / Instansi',
             'deskripsi_tugas' => 'Deskripsi Tugas',
             'departemen' => 'Departemen',
             'kesesuaian' => 'Kesesuaian',

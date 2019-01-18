@@ -32,13 +32,18 @@ $userid = Yii::$app->user->identity->id;
                
             ];
 
-            if(Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) == Roles::DOSEN) {
+            if(Roles::currentRole($userid) == Roles::BAAK) {
                 $menus[] = ['label' => 'Kategori PKL', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']];
             } elseif(Roles::currentRole($userid) == Roles::MHS) {
                 $menus[] = ['label' => 'Laporan Harian', 'icon' => 'tasks', 'url' => ['/pkl/log-pkl']];
                 $menus[] = ['label' => 'Detail PKL', 'icon' => 'book', 'url' => ['/pkl/detail-pkl']];
                 $menus[] = ['label' => 'Informasi', 'icon' => 'flag', 'url' => ['/pkl/informasi']];
+            }elseif(Roles::currentRole($userid) == Roles::DOSEN) {
+                $menus[] = ['label' => 'Laporan Harian', 'icon' => 'tasks', 'url' => ['/pkl/log-pkl']];
+                $menus[] = ['label' => 'Detail PKL', 'icon' => 'book', 'url' => ['/pkl/detail-pkl']];
+                $menus[] = ['label' => 'Kategori PKL', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']];
             }
+
         ?>
 
         <?= dmstr\widgets\Menu::widget(
