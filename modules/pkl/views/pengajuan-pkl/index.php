@@ -22,6 +22,7 @@ use kartik\grid\GridView;
 
 $this->title = 'Pengajuan PKL';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="pengajuan-pkl-index">
 <!-- <h1><?= Html::encode($this->title) ?></h1> -->
@@ -43,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
                         <h4><i class="icon fa fa-check"></i> SELAMAT ANDA TELAH DITERIMA !!</h4>Semangat melaksanakan kegiatan PKL, Jangan Lupa lengkapi detail dan absensinya ya...
                     </div>';
-            }else if ($model->status_surat == 3 && $model->status_pelaksanaan == 4 && $model->status_kegiatan == 2 ) {
+            }else if ($model->status_surat == 3 && $model->status_pelaksanaan == 4 && $model->status_kegiatan == 3 ) {
                 echo '<div class="alert alert-success alert-dismissible">
                         <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
                         <h4><i class="icon fa fa-check"></i> SELAMAT ANDA TELAH SELESAI PKL !!</h4>Semangat melaksanakan kegiatan PKL, Jangan Lupa lengkapi detail dan absensinya ya...
@@ -188,7 +189,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'readonly' => $isDosen,
                 'editableOptions' => [
                     'inputType' => Editable::INPUT_DROPDOWN_LIST,
-                    'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 2], ['id' => 3]])->all(), 'id', 'nama'),
+                    'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 5], ['id' => 3]])->all(), 'id', 'nama'),
 
                 ],
                 'content' => function ($data) {

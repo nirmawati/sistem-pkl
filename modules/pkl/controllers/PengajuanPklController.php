@@ -50,8 +50,8 @@ class PengajuanPklController extends Controller
 
         $dosen = Dosen::find()
             ->where(['user_id' => $userid])
-            ->all();
-
+            ->one();
+ 
         $dosenProdi = Dosen::find()
             ->where(['homebase_id' => $mahasiswa1->prodi_id])
             ->one();
@@ -63,7 +63,8 @@ class PengajuanPklController extends Controller
         if (Roles::currentRole($userid) == Roles::DOSEN) {
             $dataProvider->query->andWhere(['dosen_id' => $dosen->id]);
             $model = PengajuanPkl::find()
-                ->where(['dosen_id' => $userid])
+                ->where(['dosen_id' => $dosen->id])
+                ->orderBy(['id' => SORT_DESC])
                 ->one();
         } elseif (Roles::currentRole($userid) == Roles::MHS) {
             $dataProvider->query->andWhere(['mhs_id' => $mahasiswa->mhsid]);
@@ -84,19 +85,33 @@ class PengajuanPklController extends Controller
 
             if ($status->load($post)) {
 
-
                 $tempSurat = $status->status_surat;
                 $tempPelaksanaan = $status->status_pelaksanaan;
                 $tempKegiatan = $status->status_kegiatan;
 
-                if ($tempSurat == 3 && $tempPelaksanaan == 6) {
-                    $status->status_pelaksanaan = 2; //menunggu
-                } elseif ($tempPelaksanaan == 4) {
-                    $status->status_pelaksanaan = 4; //diterima
-                    $status->status_kegiatan = 5; //menunggu
-                    $status->status_kegiatan = 5;
-                } elseif ($tempKegiatan == 3) {
-                    $status->status_kegiatan = 3; //selesai
+                // if ($tempSurat == 3 && $tempPelaksanaan == 6) {
+                //     $status->status_pelaksanaan = 2; //menunggu
+                // } elseif ($tempPelaksanaan == 4) {
+                //     $status->status_pelaksanaan = 4; //diterima
+                //     $status->status_kegiatan = 5; //menunggu
+                //     $status->status_surat = 3;
+                // } elseif ($tempKegiatan == 3) {
+                //     $status->status_kegiatan = 3; //selesai
+                // }elseif ($tempSurat == 3 && $tempPelaksanaan == 1) {
+                //     $status->status_kegiatan = 6; //tidak di proses
+                // }
+                // elseif ($tempSurat == 1||$tempSurat == 2) {
+                //     $status->status_pelaksanaan = 6; //tidak di proses
+                // }
+                if ($tempSurat == 1 || $tempSurat==2){
+                    $status->status_pelaksanaan = 6;
+                    $status->status_kegiatan = 6;
+                }elseif($tempSurat==3 && $tempPelaksanaan==6){
+                    $status->status_pelaksanaan = 2;
+                }elseif($tempPelaksanaan==1||$tempPelaksanaan==2){
+                    $status->status_kegiatan = 6;
+                }elseif($tempPelaksanaan==4 && $tempKegiatan==6){
+                    $status->status_kegiatan = 5;//sedang pkl
                 }
                 $status->save();
                 $output = 'Refresh untuk update';
@@ -111,6 +126,7 @@ class PengajuanPklController extends Controller
             'dataProvider' => $dataProvider,
             'userid' => $userid,
             'mahasiswa' => $mahasiswa,
+            'dosen' => $dosen,
             'model' => $model
         ]);
     }
