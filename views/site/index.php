@@ -5,16 +5,11 @@ use dosamigos\highcharts\HighCharts;
 use app\modules\pkl\utils\Roles;
 use app\models\PengajuanPkl;
 
-$this->title = 'Sistem Informasi PKL';
-// foreach ($dgrafik as $values) {
-//     $a[0] = ($values['status']);
-//     $c[] = ($values['status']);
-//     $b[] = array('type' => 'column', 'name' => $values['status'], 'data' => array((int)$values['jumlah']));
-// }
+$this->title = '';
 
 $pkl = PengajuanPkl::find();
 
-if(Roles::currentRole($userid) == Roles::BAAK) {
+if(Roles::currentRole($userid) == Roles::BAAK||Roles::currentRole($userid) == Roles::DOSEN) {
     //status_pelaksanaan
     $stSuratSelesai = $pkl->where(['status_surat' => 3])->count();
     $stSuratMenunggu = $pkl->where(['status_surat' => 2])->count();
@@ -46,17 +41,17 @@ if(Roles::currentRole($userid) == Roles::BAAK) {
             <div class="col-md-4">
                 <div class="row">
                 <?php if(Roles::currentRole($userid) == Roles::MHS): ?>
-                
-                    <div class="alert alert-success alert-dismissible">
-                        <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> -->
-                        <h4><i class="icon fa fa-check"></i> Diizinkan!</h4>
-                        Saat ini anda sudah praktik kerja di PT. Insan Nurani
-                    </div>
+                        <div class="col-md-12">
+                            <div class="alert alert-warning alert-dismissible">
+                                <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> -->
+                                <h4><i class="icon fa fa-check"></i> ANDA BELUM DAFTAR PKL !!..</h4>
+                                Silahkan mengisi form pendaftaran untuk daftar...
+                            </div>
+                            </div>
 
-                <?php elseif(Roles::currentRole($userid) == Roles::BAAK): ?>
-
+                <?php elseif(Roles::currentRole($userid) == Roles::BAAK||Roles::currentRole($userid) == Roles::DOSEN): ?>
                     <div class="info-box">
-                        <span class="info-box-icon bg-purple"><i class="fa fa-file-o"></i></span>
+                        <span class="info-box-icon bg-aqua"><i class="fa fa-file-o"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Surat Pengantar</span>
                             <span class="info-box-number">
@@ -95,7 +90,7 @@ if(Roles::currentRole($userid) == Roles::BAAK) {
                         </div>
                     </div>
 
-                <?php endif; ?>
+                
                     
                 </div>
             </div>
@@ -121,6 +116,7 @@ if(Roles::currentRole($userid) == Roles::BAAK) {
                 ]);
                 ?>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

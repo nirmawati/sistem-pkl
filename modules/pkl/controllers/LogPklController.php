@@ -127,4 +127,33 @@ class LogPklController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+//     public function actionPdf($id) {
+//         $model = $this->findModel($id);
+//         $absensi = LogP::findOne(['id' => $model->ruangan_id]);
+//         $jamkeAwal = Jamke::findOne(['id' => $model->jamke_awal_id]);
+//         $jamkeAkhir = Jamke::findOne(['id' => $model->jamke_akhir_id]);
+//         $content = $this->renderPartial('_pdf', [
+//             'model' => $model,
+//             'ruangan' => $ruangan,
+//             'jamawal' => $jamkeAwal,
+//             'jamakhir' => $jamkeAkhir,
+//         ]);
+//         $pdf = new Pdf([
+//             'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+//             'content' => $content,
+// //            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+//             'cssInline' => '.kv-heading-1{font-size:18px}',
+//             'options' => [
+//                 'title' => 'Peminjaman Ruangan',
+//                 'subject' => 'Peminjaman Ruangan STT Terpadu Nurul Fikri'
+//             ],
+//             'methods' => [
+//                 'SetHeader' => ['STT Terpadu Nurul Fikri||Dibuat: ' . date("r")],
+//                 'SetFooter' => ['Peminjaman Ruangan STT Terpadu Nurul Fikri'],
+//                 //'SetFooter' => ['|Page {PAGENO}|'],
+//             ]
+//         ]);
+//         return $pdf->render();
+//     }
 }

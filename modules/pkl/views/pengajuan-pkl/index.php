@@ -32,29 +32,31 @@ $this->params['breadcrumbs'][] = $this->title;
         //$status_surat = $model->status_surat == NULL || $model->status_surat != 3; //status surat ditolak
         //$status_kegiatan = $model->status_kegiatan == NULL || $model->status_kegiatan != 3; //status kegiatan ditolak
 
-    if ($model->status_surat == 3 && $model->status_pelaksanaan == 2) {
-        echo '<div class="alert alert-success alert-dismissible">
-                <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
-                <h4><i class="icon fa fa-check"></i> Surat Pengajuan Selesai!</h4>Silahkan Ambil Surat Pengantar PKL Anda diruang BAAK...
-            </div>';
-    }else if ($model->status_surat == 3 && $model->status_pelaksanaan == 4 && $model->status_kegiatan == 5) {
-        echo '<div class="alert alert-success alert-dismissible">
-                <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
-                <h4><i class="icon fa fa-check"></i> SELAMAT ANDA TELAH DITERIMA !!</h4>Semangat melaksanakan kegiatan PKL, Jangan Lupa lengkapi detail dan absensinya ya...
-            </div>';
-    }else if ($model->status_surat == 3 && $model->status_pelaksanaan == 4 && $model->status_kegiatan == 2 ) {
-        echo '<div class="alert alert-success alert-dismissible">
-                <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
-                <h4><i class="icon fa fa-check"></i> SELAMAT ANDA TELAH SELESAI PKL !!</h4>Semangat melaksanakan kegiatan PKL, Jangan Lupa lengkapi detail dan absensinya ya...
-            </div>';
-    } else if ($model->status_surat == 2 && $model->status_pelaksanaan == 0 & $model->status_kegiatan == 0) {
-        echo '<div class="alert alert-warning alert-dismissible">
-                <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
-                <h4><i class="icon fa fa-check"></i> Tunggu ya!</h4>Surat Pengantar PKL Anda sedang diproses...
-            </div>';
-    }else {
-        echo Html::button('Daftar PKL', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']);
-    }
+        if (Roles::currentRole($userid) == Roles::MHS) {
+            if ($model->status_surat == 3 && $model->status_pelaksanaan == 2) {
+                echo '<div class="alert alert-success alert-dismissible">
+                        <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
+                        <h4><i class="icon fa fa-check"></i> Surat Pengajuan Selesai!</h4>Silahkan Ambil Surat Pengantar PKL Anda diruang BAAK...
+                    </div>';
+            }else if ($model->status_surat == 3 && $model->status_pelaksanaan == 4 && $model->status_kegiatan == 5) {
+                echo '<div class="alert alert-success alert-dismissible">
+                        <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
+                        <h4><i class="icon fa fa-check"></i> SELAMAT ANDA TELAH DITERIMA !!</h4>Semangat melaksanakan kegiatan PKL, Jangan Lupa lengkapi detail dan absensinya ya...
+                    </div>';
+            }else if ($model->status_surat == 3 && $model->status_pelaksanaan == 4 && $model->status_kegiatan == 2 ) {
+                echo '<div class="alert alert-success alert-dismissible">
+                        <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
+                        <h4><i class="icon fa fa-check"></i> SELAMAT ANDA TELAH SELESAI PKL !!</h4>Semangat melaksanakan kegiatan PKL, Jangan Lupa lengkapi detail dan absensinya ya...
+                    </div>';
+            } else if ($model->status_surat == 2 && $model->status_pelaksanaan == 0 & $model->status_kegiatan == 0) {
+                echo '<div class="alert alert-warning alert-dismissible">
+                        <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
+                        <h4><i class="icon fa fa-check"></i> Tunggu ya!</h4>Surat Pengantar PKL Anda sedang diproses...
+                    </div>';
+            }else {
+                echo Html::button('Daftar PKL', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']);
+            }
+        }
     ?>
 </p>
 
@@ -186,7 +188,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'readonly' => $isDosen,
                 'editableOptions' => [
                     'inputType' => Editable::INPUT_DROPDOWN_LIST,
-                    'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 2], ['id' => 4]])->all(), 'id', 'nama'),
+                    'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 2], ['id' => 3]])->all(), 'id', 'nama'),
 
                 ],
                 'content' => function ($data) {
@@ -194,7 +196,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $class = 'label label-danger';
                     } elseif ($data->statusKegiatan->id == 5) { //menunggu
                         $class = 'label label-warning';
-                    } elseif ($data->statusKegiatan->id == 6) { //menunggu
+                    } elseif ($data->statusKegiatan->id == 6) { //tidak diproses
                         $class = 'label label-info';
                     }else { //menunggu
                         $class = 'label label-success';
@@ -210,7 +212,27 @@ $this->params['breadcrumbs'][] = $this->title;
             //'semester',
             //'mhs_id',
             //'dosen_id',
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete}',
+                'visibleButtons' => [
+                    'delete' => function($data) {
+                        if (Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    },
+                    'update' => function($data) {
+                        if (Roles::currentRole(Yii::$app->user->identity->id) == Roles::MHS) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                ]
+                
+            ],
         ],
     ]); ?>
 </div>

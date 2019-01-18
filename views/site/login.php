@@ -8,6 +8,8 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = 'Sign In';
 
+
+
 $fieldOptions1 = [
     'options' => ['class' => 'form-group has-feedback'],
     'inputTemplate' => "{input}<span class='glyphicon glyphicon-envelope form-control-feedback'></span>"
