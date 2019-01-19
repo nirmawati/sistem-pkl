@@ -18,8 +18,8 @@ class PengajuanPklSearch extends PengajuanPkl
     public function rules()
     {
         return [
-            [['id', 'mitra_id', 'semester', 'mhs_id', 'dosen_id', 'topik_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'integer'],
-            [['tanggal', 'mulai', 'selesai'], 'safe'],
+            [['id', 'mitra_id', 'semester', 'mhs_id', 'dosen_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'integer'],
+            [['tanggal', 'mulai', 'selesai', 'topik'], 'safe'],
         ];
     }
 
@@ -67,7 +67,7 @@ class PengajuanPklSearch extends PengajuanPkl
             'semester' => $this->semester,
             'mhs_id' => $this->mhs_id,
             'dosen_id' => $this->dosen_id,
-            'topik_id' => $this->topik_id,
+            'topik' => $this->topik,
             'status_pelaksanaan' => $this->status_pelaksanaan,
             'status_kegiatan' => $this->status_kegiatan,
             'status_surat' => $this->status_surat,

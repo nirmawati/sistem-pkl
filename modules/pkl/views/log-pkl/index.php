@@ -1,12 +1,13 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use app\modules\pkl\utils\Roles;
 
 use kartik\date\DatePicker;
 use fedemotta\datatables\DataTables;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\LogPklSearch */
@@ -16,9 +17,25 @@ $this->title = 'Laporan Harian';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="log-pkl-index">
-
+    <?php
+        // echo Select2::widget([
+        //     'model' => $model,
+        //     'attribute' => 'state_2',
+        //     'data' => $data,
+        //     'options' => ['placeholder' => 'Select a state ...'],
+        //     'pluginOptions' => [
+        //         'allowClear' => true
+        //     ],
+        // ]);
+    ?>
     <p>
-        <?= Html::button('Tambah Absensi ', ['value' => Url::to('log-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+        <?php
+            if (Roles::currentRole($userid) == Roles::MHS) {
+                echo Html::button('Tambah Absensi ', ['value' => Url::to('log-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']);
+            }elseif(Roles::currentRole($userid) == Roles::MHS){
+                //tampilkan dropdown
+            }
+        ?>
     </p>
 
     <?php 
@@ -38,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            //'pkl_id',
+            'pkl_id',
             [
                 'attribute' => 'ket',
                 'format' => 'text',

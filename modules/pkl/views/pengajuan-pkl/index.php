@@ -9,9 +9,7 @@ use app\models\StatusPkl;
 use app\models\MitraPkl;
 use app\modules\pkl\utils\Roles;
 
-use dosamigos\datepicker\DatePicker;
-use fedemotta\datatables\DataTables;
-use kartik\date\DatePicker as DatePic;
+use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use kartik\editable\Editable;
 use kartik\grid\GridView;
@@ -49,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
                         <h4><i class="icon fa fa-check"></i> SELAMAT ANDA TELAH SELESAI PKL !!</h4>Semangat melaksanakan kegiatan PKL, Jangan Lupa lengkapi detail dan absensinya ya...
                     </div>';
-            } else if ($model->status_surat == 2 && $model->status_pelaksanaan == 0 & $model->status_kegiatan == 0) {
+            } else if ($model->status_surat == 2 && $model->status_pelaksanaan == 6 & $model->status_kegiatan == 6) {
                 echo '<div class="alert alert-warning alert-dismissible">
                         <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
                         <h4><i class="icon fa fa-check"></i> Tunggu ya!</h4>Surat Pengantar PKL Anda sedang diproses...
@@ -110,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'Date',
                     'dd-MMM-yyyy'
                 ],
-                'filter' => DatePic::widget([
+                'filter' => DatePicker::widget([
                     'model' => $searchModel,
                     'attribute' => 'tanggal',
                     'pluginOptions' => [
@@ -133,7 +131,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 ]),
             ],
-            'topik_id',
+            'topik',
             [
                 'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'status_surat',

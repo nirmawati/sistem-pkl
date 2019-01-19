@@ -1,5 +1,6 @@
 <?php
     use yii\helpers\Html;
+    use kartik\widgets\FileInput;
 ?>
 
 <div class="col-md-12">
@@ -18,13 +19,25 @@
                             <tr><th width="30%">Alamat</th><td><?= $mitra->alamat ?></td></tr>
                             <tr><th width="30%">Departemen</th><td><?= $mahasiswa->prodi ?></td></tr>
                             <tr><th width="30%">Deskripsi Tugas</th><td><?= $detailPkl->deskripsi_tugas ?></td></tr>
-                            <tr><th width="30%">Laporan PKL</th><td><?=$detailPkl->laporan?></td></tr>
+                            <tr><th width="30%">Laporan PKL</th>
+                                <td>
+                                    <?php if($detailPkl->laporan == null){echo 'Belum Ada File Laporan';}else{echo $detailPkl->laporan;} ?>
+                                    <!-- <?php
+                                    //     echo '<label class="control-label">Add Attachments</label>';
+                                    //     echo FileInput::widget([
+                                    //     'model' => $detailPkl->Laporan,
+                                    //     'attribute' => 'attachment_1[]',
+                                    //     'options' => ['multiple' => true]
+                                    // ]);
+                                    ?> -->
+                                </td>
+                            </tr>
                         </tbody> 
                     </table> 
                 </div>			
             </div>
         </div>
-        <button class="accordion">Lihat Detail</button>
+        <button class="accordion">Selanjutnya</button>
         <div class="panel">
             <div class="box box-primary">
                 <div class="box-header with-border">
@@ -35,8 +48,11 @@
                         <div class="col-md-12">
                             <table id="w0" class="table table-bordered detail-view">
                                 <tbody>
-                                    <tr><th width="30%">Kesesuaian </th><td><?php if($detailPkl->kesesuaian == 0){echo 'Sesuai';}else{echo 'Tidak Sesuai';} ?></td></tr>
-                                    <tr><th width="30%">Deskripsi Masalah</th><td><?= $detailPkl->masalah ?></td></tr>  
+                                    <tr><th width="30%">Kesesuaian </th><td><?php if($detailPkl->kesesuaian == null){echo 'Belum terdefinisi';}else if($detailPkl->kesesuaian == 0){echo 'Sesuai';}else if($detailPkl->kesesuaian == 1){echo 'Tidak Sesuai';} ?></td></tr>
+                                    <tr><th width="30%">Deskripsi Masalah</th><td><?php if($detailPkl->masalah == null){echo 'Belum terdefinisi';}else{echo $detailPkl->masalah;}?></td></tr>  
+                                    <tr><th width="30%">Tanggapan Dosen</th><td><?php if($detailPkl->masukan_dosen == null){echo 'Belum terdefinisi';}else{echo $detailPkl->masukan_dosen;}?></td></tr>  
+                                    <tr><th width="30%">Nilai Akhir</th><td><?php if($detailPkl->nilai_akhir == null){echo 'Belum terdefinisi';}else{echo $detailPkl->nilai_akhir;}?></td></tr>  
+                                    
                                 </tbody>
                             </table>  
                         </div>

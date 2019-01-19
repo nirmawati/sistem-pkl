@@ -14,6 +14,7 @@ use Yii;
  * @property string $jam_pulang
  * @property string $kegiatan
  * @property int $ket
+ * @property int $dosen_id
  *
  * @property PengajuanPkl $pkl
  */
@@ -33,8 +34,8 @@ class LogPkl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pkl_id', 'ket'], 'default', 'value' => null],
-            [['pkl_id', 'ket'], 'integer'],
+            [['pkl_id', 'ket', 'dosen_id'], 'default', 'value' => null],
+            [['pkl_id', 'ket', 'dosen_id'], 'integer'],
             [['tanggal', 'jam_masuk', 'jam_pulang'], 'safe'],
             [['kegiatan'], 'string'],
             [['pkl_id'], 'exist', 'skipOnError' => true, 'targetClass' => PengajuanPkl::className(), 'targetAttribute' => ['pkl_id' => 'id']],
@@ -48,12 +49,13 @@ class LogPkl extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'pkl_id' => 'Pkl ID',
+            'pkl_id' => 'Mahasiswa',
             'tanggal' => 'Tanggal',
             'jam_masuk' => 'Jam Masuk',
             'jam_pulang' => 'Jam Pulang',
             'kegiatan' => 'Kegiatan',
-            'ket' => 'Keterangan',
+            'ket' => 'Ket',
+            'dosen_id' => 'Dosen ID',
         ];
     }
 

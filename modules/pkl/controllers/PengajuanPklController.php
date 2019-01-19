@@ -59,13 +59,15 @@ class PengajuanPklController extends Controller
         $dataProvider->pagination = [
             'pageSize' => 10
         ];
-
+        
+        //nampilin data sesuai user login
         if (Roles::currentRole($userid) == Roles::DOSEN) {
             $dataProvider->query->andWhere(['dosen_id' => $dosen->id]);
             $model = PengajuanPkl::find()
                 ->where(['dosen_id' => $dosen->id])
                 ->orderBy(['id' => SORT_DESC])
                 ->one();
+                
         } elseif (Roles::currentRole($userid) == Roles::MHS) {
             $dataProvider->query->andWhere(['mhs_id' => $mahasiswa->mhsid]);
             $model = PengajuanPkl::find()

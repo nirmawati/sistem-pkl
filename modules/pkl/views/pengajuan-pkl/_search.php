@@ -25,13 +25,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'selesai') ?>
 
+    <?= $form->field($model, 'topik') ?>
+
     <?php // echo $form->field($model, 'semester') ?>
 
     <?php // echo $form->field($model, 'mhs_id') ?>
 
     <?php // echo $form->field($model, 'dosen_id') ?>
-
-    <?php // echo $form->field($model, 'topik_id') ?>
 
     <?php // echo $form->field($model, 'status_pelaksanaan') ?>
 

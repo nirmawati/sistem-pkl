@@ -60,7 +60,7 @@ use app\modules\pkl\utils\Roles;
         <?= Html::a('Tambah Mitra', ['/pkl/mitra-pkl'], ['class' => 'btn btn-success']) ?>
     </p>
     
-    <?= $form->field($model, 'topik_id')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'topik')->textInput(['maxlength' => true]) ?>
 
 <div class="col-md-4">
     <?= $form->field($model, 'tanggal')->widget(DatePicker::classname(), [

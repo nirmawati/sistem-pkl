@@ -18,7 +18,9 @@ use Yii;
  * @property double $nilai_mentor
  * @property double $nilai_dosen
  * @property double $nilai_akhir
+ * @property int $dosen_id
  *
+ * @property Dosen $dosen
  * @property PengajuanPkl $pkl
  */
 class DetailPkl extends \yii\db\ActiveRecord
@@ -37,11 +39,12 @@ class DetailPkl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pkl_id', 'kesesuaian'], 'default', 'value' => null],
-            [['pkl_id', 'kesesuaian'], 'integer'],
+            [['pkl_id', 'kesesuaian', 'dosen_id'], 'default', 'value' => null],
+            [['pkl_id', 'kesesuaian', 'dosen_id'], 'integer'],
             [['deskripsi_tugas', 'masalah', 'laporan', 'masukan_dosen'], 'string'],
             [['nilai_mentor', 'nilai_dosen', 'nilai_akhir'], 'number'],
             [['departemen'], 'string', 'max' => 40],
+            [['dosen_id'], 'exist', 'skipOnError' => true, 'targetClass' => Dosen::className(), 'targetAttribute' => ['dosen_id' => 'id']],
             [['pkl_id'], 'exist', 'skipOnError' => true, 'targetClass' => PengajuanPkl::className(), 'targetAttribute' => ['pkl_id' => 'id']],
         ];
     }
@@ -53,17 +56,26 @@ class DetailPkl extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'pkl_id' => 'Perusahaan / Instansi',
+            'pkl_id' => 'Perusahhan/Instansi',
             'deskripsi_tugas' => 'Deskripsi Tugas',
             'departemen' => 'Departemen',
             'kesesuaian' => 'Kesesuaian',
             'masalah' => 'Masalah',
             'laporan' => 'Laporan',
-            'masukan_dosen' => 'Masukan Dosen',
+            'masukan_dosen' => 'Saran Dosen',
             'nilai_mentor' => 'Nilai Mentor',
             'nilai_dosen' => 'Nilai Dosen',
             'nilai_akhir' => 'Nilai Akhir',
+            'dosen_id' => 'Dosen',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDosen()
+    {
+        return $this->hasOne(Dosen::className(), ['id' => 'dosen_id']);
     }
 
     /**

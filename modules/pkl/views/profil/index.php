@@ -32,7 +32,7 @@
                             <tr><th width="30%">Perusahaan / Instansi</th><td><?= $mitra->nama?></td></tr>
                             <tr><th width="30%">Alamat</th><td><?= $mitra->alamat ?></td></tr>
                             <tr><th width="30%">Kategori</th><td><?= $kategori->nama ?></td></tr>
-                            <tr><th width="30%">Topik PKL</th><td><?= $pengajuan->topik_id ?></td></tr>
+                            <tr><th width="30%">Topik PKL</th><td><?= $pengajuan->topik ?></td></tr>
                             <tr><th width="30%">Tanggal Mulai</th><td><?= $tgl_mulai ?></td></tr>
                             <tr><th width="30%">Tanggal Selesai</th><td><?= $tgl_selesai ?></td></tr>
                             <tr><th width="30%">Status PKL</th><td></td></tr></table>    

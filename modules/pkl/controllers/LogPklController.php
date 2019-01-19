@@ -8,12 +8,17 @@ use app\models\LogPklSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\VwmahasiswaProdi;
+use app\models\PengajuanPkl;
+use app\models\Dosen;
+use app\modules\pkl\utils\Roles;
 
 /**
  * LogPklController implements the CRUD actions for LogPkl model.
  */
 class LogPklController extends Controller
-{    public $layout = '@app/views/layouts/column1';
+{
+    public $layout = '@app/views/layouts/column1';
     /**
      * {@inheritdoc}
      */
@@ -37,12 +42,45 @@ class LogPklController extends Controller
     {
         $searchModel = new LogPklSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination=[
-            'pageSize'=>10
+        $userid = Yii::$app->user->identity->id;
+
+        $mahasiswa = VwmahasiswaProdi::find()
+            ->where(['user_id' => $userid])
+            ->one();
+        
+        $dosen = Dosen::find()
+            ->where(['user_id' => $userid])
+            ->one();
+
+        $pengajuanPkl = PengajuanPkl::find()
+            ->where(['mhs_id' => $mahasiswa->mhsid])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+
+        $dataProvider->pagination = [
+            'pageSize' => 10
         ];
+
+        //nampilin data sesuai user login
+        if (Roles::currentRole($userid) == Roles::DOSEN) {
+            $dataProvider->query->andWhere(['dosen_id' => $dosen->id]);
+            $model = LogPkl::find()
+                ->where(['dosen_id' => $dosen->id])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
+
+        } elseif (Roles::currentRole($userid) == Roles::MHS) {
+            $dataProvider->query->andWhere(['pkl_id' => $pengajuanPkl->id]);
+            $model = LogPkl::find()
+                ->where(['pkl_id' => $pengajuanPkl->id])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'userid' => $userid,
         ]);
     }
 
@@ -68,9 +106,23 @@ class LogPklController extends Controller
     {
         $model = new LogPkl();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $userid = Yii::$app->user->identity->id;
+
+        $mahasiswa = VwmahasiswaProdi::find()
+            ->where(['user_id' => $userid])
+            ->one();
+
+        $pengajuanPkl = PengajuanPkl::find()
+            ->where(['mhs_id' => $mahasiswa->mhsid])
+            ->one();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->pkl_id = $pengajuanPkl->id;
+            $model->dosen_id = $pengajuanPkl->dosen_id;
             // return $this->redirect(['view', 'id' => $model->id]);
-            return $this->redirect(Yii::$app->request->referrer);
+            if ($model->save()) {
+                return $this->redirect(Yii::$app->request->referrer);
+            }
         }
 
         return $this->renderAjax('create', [

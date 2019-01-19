@@ -13,6 +13,10 @@ use yii\web\UploadedFile;
 use app\models\PengajuanPkl;
 use app\models\VwmahasiswaProdi;
 use app\models\MitraPkl;
+use app\modules\pkl\utils\Roles;
+use app\models\Dosen;
+use app\models\Mahasiswa;
+
 
 /**
  * DetailPklController implements the CRUD actions for DetailPkl model.
@@ -49,13 +53,26 @@ class DetailPklController extends Controller
             ->where(['user_id' => $userid])
             ->one();
 
+        $dosen = Dosen::find()
+            ->where(['user_id' => $userid])
+            ->one();
+
         $listPkl = PengajuanPkl::find()
             ->where(['mhs_id' => $mahasiswa->mhsid])
             ->orderBy(['id' => SORT_DESC])
             ->one();
-        
-        $tgl_mulai = Yii::$app->formatter->format($listPkl->mulai,'date');
-        $tgl_selesai = Yii::$app->formatter->format($listPkl->selesai,'date');
+
+        // nampilin data sesuai user login
+        if (Roles::currentRole($userid) == Roles::DOSEN) {
+            $dataProvider->query->andWhere(['dosen_id' => $dosen->id]);
+            $model = DetailPkl::find()
+                ->where(['dosen_id' => $dosen->id])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
+        }
+
+        $tgl_mulai = Yii::$app->formatter->format($listPkl->mulai, 'date');
+        $tgl_selesai = Yii::$app->formatter->format($listPkl->selesai, 'date');
 
         $mitra = MitraPkl::find()
             ->where(['id' => $listPkl->mitra_id])
@@ -72,11 +89,12 @@ class DetailPklController extends Controller
             'userid' => $userid,
             'model' => $model,
             'mahasiswa' => $mahasiswa,
-            'listPkl'=> $listPkl,
-            'mitra'=>$mitra,
-            'tgl_mulai'=>$tgl_mulai,
-            'tgl_selesai'=>$tgl_selesai,
-            'detailPkl'=>$detailPkl
+            'listPkl' => $listPkl,
+            'dosen' => $dosen,
+            'mitra' => $mitra,
+            'tgl_mulai' => $tgl_mulai,
+            'tgl_selesai' => $tgl_selesai,
+            'detailPkl' => $detailPkl
         ]);
     }
 
@@ -88,8 +106,47 @@ class DetailPklController extends Controller
      */
     public function actionView($id)
     {
+        $userid = Yii::$app->user->identity->id;
+
+        $mahasiswa1 = Mahasiswa::find()
+            ->where(['mhsid' => $this->findModel($id)->pkl->viewMhsProdi->mhsid])
+            ->one();
+
+        $mahasiswa = VwmahasiswaProdi::find()
+            ->where(['mhsid' => $mahasiswa1->mhsid])
+            ->one();
+
+        $dosen = Dosen::find()
+            ->where(['user_id' => $userid])
+            ->one();
+
+        $listPkl = PengajuanPkl::find()
+            ->where(['mhs_id' => $mahasiswa->mhsid])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+
+        $tgl_mulai = Yii::$app->formatter->format($listPkl->mulai, 'date');
+        $tgl_selesai = Yii::$app->formatter->format($listPkl->selesai, 'date');
+
+        $mitra = MitraPkl::find()
+            ->where(['id' => $listPkl->mitra_id])
+            ->one();
+
+        $detailPkl = DetailPkl::find()
+            ->where(['pkl_id' => $listPkl->id])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'userid' => $userid,
+            'mahasiswa' => $mahasiswa,
+            'listPkl' => $listPkl,
+            'dosen' => $dosen,
+            'mitra' => $mitra,
+            'tgl_mulai' => $tgl_mulai,
+            'tgl_selesai' => $tgl_selesai,
+            'detailPkl' => $detailPkl
         ]);
     }
 
@@ -130,8 +187,9 @@ class DetailPklController extends Controller
                 $laporan->saveAs($path);
             }
             $model->pkl_id = $listPkl->id;
+            $model->dosen_id = $listPkl->dosen_id;
             if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             } else {
                 var_dump($model->getErrors());
                 die();
@@ -139,9 +197,10 @@ class DetailPklController extends Controller
         }
         return $this->render('create', [
             'model' => $model,
+            'userid' => $userid,
             'mahasiswa' => $mahasiswa,
-            'listPkl'=> $listPkl,
-            'mitra'=>$mitra,
+            'listPkl' => $listPkl,
+            'mitra' => $mitra,
         ]);
 
         // if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -191,9 +250,9 @@ class DetailPklController extends Controller
                 $path = Yii::$app->params['uploadPath'] . $model->laporan;
                 $laporan->saveAs($path);
             }
-            $model->pkl_id = $listPkl->id;
+            $model->nilai_akhir = ($model->nilai_dosen + $model->nilai_mentor) / 2;
             if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             } else {
                 var_dump($model->getErrors());
                 die();
@@ -202,6 +261,7 @@ class DetailPklController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'userid' => $userid,
             'mitra' => $mitra
         ]);
     }

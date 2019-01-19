@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'semester',
             'mhs_id',
             'dosen_id',
-            'topik_id',
+            'topik',
             'status_pelaksanaan',
             'status_kegiatan',
             'status_surat',

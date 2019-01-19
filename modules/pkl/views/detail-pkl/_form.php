@@ -6,20 +6,20 @@ use yii\widgets\ActiveForm;
 use dosamigos\ckeditor\CKEditor;
 use dosamigos\fileupload\FileUploadUI;
 use kartik\file\FileInput;
+use app\modules\pkl\utils\Roles;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\DetailPkl */
 /* @var $form yii\widgets\ActiveForm */
-
 ?>
 
 <div class="detail-pkl-form">
-
     <?php $form = ActiveForm::begin(); ?>
     <div class="container-fluid">
+    <?php if(Roles::currentRole($userid) == Roles::MHS): ?>
         <div class="row">
             <div class="col-md-8">
-                <?= $form->field($model, 'pkl_id')->textInput([
+            <?= $form->field($model, 'pkl_id')->textInput([
                 'disabled' => true,
                 'value' => $mitra->nama
                 ]);?>
@@ -30,7 +30,7 @@ use kartik\file\FileInput;
         </div>
         <div class="row">
             <div class="col-md-12">
-                <?= $form->field($model, 'deskripsi_tugas')->widget(CKEditor::className(), [
+            <?= $form->field($model, 'deskripsi_tugas')->widget(CKEditor::className(), [
                 'options' => ['rows' => 6],
                 'preset' => 'basic'
                 ]) ?>
@@ -38,7 +38,7 @@ use kartik\file\FileInput;
         </div>
         <div class="row">
             <div class="col-md-4">
-                <?= $form->field($model, 'kesesuaian')->dropDownList(
+            <?= $form->field($model, 'kesesuaian')->dropDownList(
                 [0 => 'Sesuai', 1 => 'Tidak Sesuai']
                 ); ?>
             </div>
@@ -48,16 +48,13 @@ use kartik\file\FileInput;
         </div>
         <div class="row">
             <div class="col-md-12">
-                <?= $form->field($model, 'laporan')->widget(FileInput::classname(), [
+            <?= $form->field($model, 'laporan')->widget(FileInput::classname(), [
                 'pluginOptions' => ['allowedFileExtensions' => ['pdf'], 'showUpload' => true, ],
                 ]); ?>
             </div>
         </div>
-    </div>
-
-
-                <!-- penilaian untuk dosen -->
-    <div class="container-fluid">
+    <!-- penilaian untuk dosen -->
+    <?php elseif(Roles::currentRole($userid) == Roles::DOSEN): ?>
         <div class="row">
             <div class="col-md-12">
                 <?= $form->field($model, 'masukan_dosen')->textarea(['rows' => 6]) ?>
@@ -74,8 +71,8 @@ use kartik\file\FileInput;
                 <?= $form->field($model, 'nilai_akhir')->textInput() ?>
             </div>
         </div>
+    <?php endif; ?>
     </div>
-
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

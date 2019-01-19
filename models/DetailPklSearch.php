@@ -18,7 +18,7 @@ class DetailPklSearch extends DetailPkl
     public function rules()
     {
         return [
-            [['id', 'pkl_id', 'kesesuaian'], 'integer'],
+            [['id', 'pkl_id', 'kesesuaian','dosen_id'], 'integer'],
             [['deskripsi_tugas', 'departemen', 'masalah', 'laporan', 'masukan_dosen'], 'safe'],
             [['nilai_mentor', 'nilai_dosen', 'nilai_akhir'], 'number'],
         ];
@@ -62,6 +62,7 @@ class DetailPklSearch extends DetailPkl
         $query->andFilterWhere([
             'id' => $this->id,
             'pkl_id' => $this->pkl_id,
+            'dosen_id' => $this->dosen_id,
             'kesesuaian' => $this->kesesuaian,
             'nilai_mentor' => $this->nilai_mentor,
             'nilai_dosen' => $this->nilai_dosen,
