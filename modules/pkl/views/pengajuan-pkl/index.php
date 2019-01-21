@@ -97,6 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Mahasiswa',
                 'attribute' => 'nama_mhs',
+                'contentOptions' => ['style' => 'width:1000px; white-space: normal;'],
                 'content' => function ($data) {
                     return $data->viewMhsProdi->nama;
                 }
@@ -104,6 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'tanggal',
                 'value' => 'tanggal',
+                'contentOptions' => ['style' => 'width:10px; white-space: normal;'],
                 'format' => [
                     'Date',
                     'dd-MMM-yyyy'
@@ -213,7 +215,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'dosen_id',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete}',
+                'template' => '{view} {update} {delete} {download}',
                 'visibleButtons' => [
                     'delete' => function($data) {
                         if (Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK) {
@@ -228,9 +230,20 @@ $this->params['breadcrumbs'][] = $this->title;
                         } else {
                             return false;
                         }
+                    },
+                    'download' => function($data) {
+                        if (Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                ],
+                'buttons' => [
+                    'download' => function ($url) {
+                        return Html::a( '<span class="glyphicon glyphicon-file"> </span>', $url, [ 'title' => 'Add Client', 'data-pjax' => '0', ] );
                     }
                 ]
-                
             ],
         ],
     ]); ?>

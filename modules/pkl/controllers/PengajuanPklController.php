@@ -13,6 +13,7 @@ use app\models\Dosen;
 use app\models\Mahasiswa;
 use app\modules\pkl\utils\Roles;
 use yii\helpers\Json;
+use kartik\mpdf\Pdf;
 
 /**
  * PengajuanPklController implements the CRUD actions for PengajuanPkl model.
@@ -251,6 +252,35 @@ class PengajuanPklController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Download PengajualPkl() by mahasiswa
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDownload($id) {
+        $pengajuanPkl = PengajuanPkl::find()->where(['id' => $id])->one();
+
+        $content = $this->renderPartial('download', [
+            'model' => $pengajuanPkl
+        ]);
+
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+            'content' => $content,
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => [
+                'title' => 'FERGUSO',
+                'subject' => 'MAGANG GITO LHO'
+            ],
+            'methods' => [
+                'SetHeader' => ['STT Terpadu Nurul Fikri||Dibuat: ' . date("r")],
+                'SetFooter' => ['PKL - STT Terpadu Nurul Fikri'],
+            ]
+        ]);
+        
+        return $pdf->render();
     }
 
     /**

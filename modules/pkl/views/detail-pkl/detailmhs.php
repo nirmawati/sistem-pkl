@@ -21,15 +21,11 @@
                             <tr><th width="30%">Deskripsi Tugas</th><td><?= $detailPkl->deskripsi_tugas ?></td></tr>
                             <tr><th width="30%">Laporan PKL</th>
                                 <td>
-                                    <?php if($detailPkl->laporan == null){echo 'Belum Ada File Laporan';}else{echo $detailPkl->laporan;} ?>
-                                    <!-- <?php
-                                    //     echo '<label class="control-label">Add Attachments</label>';
-                                    //     echo FileInput::widget([
-                                    //     'model' => $detailPkl->Laporan,
-                                    //     'attribute' => 'attachment_1[]',
-                                    //     'options' => ['multiple' => true]
-                                    // ]);
-                                    ?> -->
+                                    <?php if($detailPkl->laporan == null){
+                                            echo 'Belum Ada File Laporan';
+                                        } else {
+                                            echo Html::a($detailPkl->laporan, Yii::$app->homeUrl . 'uploads/file-laporan/' . $detailPkl->laporan);
+                                    } ?>
                                 </td>
                             </tr>
                         </tbody> 

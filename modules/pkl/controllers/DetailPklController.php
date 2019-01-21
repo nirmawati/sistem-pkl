@@ -202,14 +202,6 @@ class DetailPklController extends Controller
             'listPkl' => $listPkl,
             'mitra' => $mitra,
         ]);
-
-        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
-        //     return $this->redirect(['view', 'id' => $model->id]);
-        // }
-
-        // return $this->render('create', [
-        //     'model' => $model,
-        // ]);
     }
 
     /**
@@ -250,7 +242,13 @@ class DetailPklController extends Controller
                 $path = Yii::$app->params['uploadPath'] . $model->laporan;
                 $laporan->saveAs($path);
             }
-            $model->nilai_akhir = ($model->nilai_dosen + $model->nilai_mentor) / 2;
+            if ($model->nilai_dosen != "" || $model->nilai_dosen != "") {
+                $model->nilai_akhir = ($model->nilai_dosen + $model->nilai_mentor) / 2;
+            }else{
+                $model->nilai_akhir = null;
+                $model->nilai_dosen = null;
+                $model->nilai_mentor = null;
+            }
             if ($model->save()) {
                 return $this->redirect(['index']);
             } else {

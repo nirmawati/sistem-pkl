@@ -65,16 +65,16 @@ class PengajuanPkl extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'tanggal' => 'Tanggal',
-            'mitra_id' => 'Mitra ID',
-            'mulai' => 'Mulai',
-            'selesai' => 'Selesai',
+            'tanggal' => 'Tanggal Pengajuan',
+            'mitra_id' => 'Perusahaan / Instansi',
+            'mulai' => 'Tanggal Mulai',
+            'selesai' => 'Tanggal Selesai',
             'semester' => 'Semester',
-            'mhs_id' => 'Mhs ID',
-            'dosen_id' => 'Dosen ID',
-            'status_pelaksanaan' => 'Status Pelaksanaan',
+            'mhs_id' => 'Nama Mahasiswa',
+            'dosen_id' => 'Dosen Pembimbing',
+            'status_pelaksanaan' => 'Status Pengajuan',
             'status_kegiatan' => 'Status Kegiatan',
-            'status_surat' => 'Status Surat',
+            'status_surat' => 'Status Surat Pengantar',
             'topik' => 'Topik',
         ];
     }

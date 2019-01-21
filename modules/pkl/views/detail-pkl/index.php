@@ -102,7 +102,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     //'masukan_dosen:ntext',
                     // 'nilai_mentor',
                     // 'nilai_dosen',
-                    'nilai_akhir',
+                    [
+                        'attribute' => 'nilai_akhir',
+                        'content' => function ($data) {
+                            if($data->nilai_akhir != ""){
+                                return $data->nilai_akhir;
+                            }else{
+                                return 'belum di input';
+                            }
+                        }
+                    ],
                     // 'dosen_id',
 
                     ['class' => 'yii\grid\ActionColumn'],

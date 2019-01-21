@@ -25,21 +25,21 @@ use app\modules\pkl\utils\Roles;
     <?php $form = ActiveForm::begin(); ?>
     <div class="container-fluid">
     <!-- <?= $form->field($model, 'mhs_id')->dropDownList(
-        ArrayHelper::map(VwmahasiswaProdi::find()->all(), 'mhsid', 'nama'),
-        ['prompt' => 'Select Mahasiswa']
-    ); ?> -->
+            ArrayHelper::map(VwmahasiswaProdi::find()->all(), 'mhsid', 'nama'),
+            ['prompt' => 'Select Mahasiswa']
+        ); ?> -->
 
     <?= $form->field($model, 'mhs_id')->textInput([
         'disabled' => true,
         'value' => $mahasiswa->nama
-    ]);?>    
+    ]); ?>    
 
     <?= $form->field($model, 'semester')->dropDownList(
         ['0' => 'Semester 5', '1' => 'Semester 6', '2' => 'Semester 7'],
         ['prompt' => 'Pilih Semester']
     ); ?>
 
-    <?= $form->field($model, 'dosen_id')->widget(Select2::classname(), [    
+    <?= $form->field($model, 'dosen_id')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Dosen::find()->where(['homebase_id' => $mahasiswaProdi->prodi_id])->all(), 'id', 'nama'),
         'language' => 'en',
         'options' => ['placeholder' => 'Pilih ...'],
@@ -90,20 +90,20 @@ use app\modules\pkl\utils\Roles;
     ]); ?>
 </div>
 
-    <?php if(Roles::currentRole($userid) == Roles::BAAK): ?>
+    <?php if (Roles::currentRole($userid) == Roles::BAAK) : ?>
         <!-- BAAK -->
-        <?= $form->field($model, 'status_surat')->widget(Select2::classname(), [    
-            'data' => ArrayHelper::map(StatusPkl::find()->where(['or',['id'=>1],['id'=>2],['id'=>3]])->all(), 'id', 'nama'),
+        <?= $form->field($model, 'status_surat')->widget(Select2::classname(), [
+            'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 2], ['id' => 3]])->all(), 'id', 'nama'),
             'language' => 'en',
             'options' => ['placeholder' => 'Pilih ...'],
             'pluginOptions' => [
                 'allowClear' => true
             ],
         ]); ?>
-    <?php elseif(Roles::currentRole($userid) == Roles::DOSEN): ?>
+    <?php elseif (Roles::currentRole($userid) == Roles::DOSEN) : ?>
         <!-- Dosen -->
-        <?= $form->field($model, 'status_kegiatan')->widget(Select2::classname(), [    
-            'data' => ArrayHelper::map(StatusPkl::find()->where(['or',['id'=>1],['id'=>5],['id'=>3]])->all(), 'id', 'nama'),
+        <?= $form->field($model, 'status_kegiatan')->widget(Select2::classname(), [
+            'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 5], ['id' => 3]])->all(), 'id', 'nama'),
             'language' => 'en',
             'options' => [
                 'placeholder' => 'Pilih ...',
@@ -114,15 +114,15 @@ use app\modules\pkl\utils\Roles;
                 'allowClear' => true
             ],
         ]); ?>
-    <?php elseif(Roles::currentRole($userid) == Roles::MHS): ?>
+    <?php elseif (Roles::currentRole($userid) == Roles::MHS) : ?>
         <!-- MAHASISWA -->
-        <?= $form->field($model, 'status_pelaksanaan')->widget(Select2::classname(), [    
-            'data' => ArrayHelper::map(StatusPkl::find()->where(['or',['id'=>1],['id'=>2],['id'=>4]])->all(), 'id', 'nama'),
+        <?= $form->field($model, 'status_pelaksanaan')->widget(Select2::classname(), [
+            'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 2], ['id' => 4]])->all(), 'id', 'nama'),
             'language' => 'en',
             'options' => ['placeholder' => 'Pilih ...'],
             'pluginOptions' => [
                 'allowClear' => true,
-                'disabled' => !isset($model->status_surat) ||  $model->status_surat != 3
+                'disabled' => !isset($model->status_surat) || $model->status_surat != 3
             ],
         ]); ?>
     <?php endif; ?>

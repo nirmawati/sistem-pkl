@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\DetailPkl */
 
 $this->title = $model->pkl->viewMhsProdi->nama;
-$this->params['breadcrumbs'][] = ['label' => 'Detail Pkls', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Detail Pkl', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="detail-pkl-view">

@@ -12,6 +12,10 @@ use app\models\VwmahasiswaProdi;
 use app\models\PengajuanPkl;
 use app\models\Dosen;
 use app\modules\pkl\utils\Roles;
+use kartik\mpdf\Pdf;
+use app\models\MitraPkl;
+use app\models\PengajuanPklSearch;
+
 
 /**
  * LogPklController implements the CRUD actions for LogPkl model.
@@ -40,21 +44,17 @@ class LogPklController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new LogPklSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $userid = Yii::$app->user->identity->id;
+        if (Roles::currentRole($userid) == Roles::DOSEN) {
+            $searchModel = new PengajuanPklSearch();
+
+        } elseif (Roles::currentRole($userid) == Roles::MHS) {
+            $searchModel = new LogPklSearch();
+        }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $mahasiswa = VwmahasiswaProdi::find()
             ->where(['user_id' => $userid])
-            ->one();
-        
-        $dosen = Dosen::find()
-            ->where(['user_id' => $userid])
-            ->one();
-
-        $pengajuanPkl = PengajuanPkl::find()
-            ->where(['mhs_id' => $mahasiswa->mhsid])
-            ->orderBy(['id' => SORT_DESC])
             ->one();
 
         $dataProvider->pagination = [
@@ -63,13 +63,31 @@ class LogPklController extends Controller
 
         //nampilin data sesuai user login
         if (Roles::currentRole($userid) == Roles::DOSEN) {
-            $dataProvider->query->andWhere(['dosen_id' => $dosen->id]);
+            $dosen = Dosen::find()
+                ->where(['user_id' => $userid])
+                ->one();
+
+            $dataProvider->query->andWhere(['dosen_id' => $dosen->id, 'status_kegiatan' => 5]);
+
+            $pengajuanPkl = PengajuanPkl::find()
+                ->where([
+                    'dosen_id' => $dosen->id,
+                    'status_kegiatan' => 5
+                ])
+                ->orderBy(['id' => SORT_DESC])
+                ->all();
+
             $model = LogPkl::find()
                 ->where(['dosen_id' => $dosen->id])
                 ->orderBy(['id' => SORT_DESC])
                 ->one();
 
         } elseif (Roles::currentRole($userid) == Roles::MHS) {
+            $pengajuanPkl = PengajuanPkl::find()
+                ->where(['mhs_id' => $mahasiswa->mhsid])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
+
             $dataProvider->query->andWhere(['pkl_id' => $pengajuanPkl->id]);
             $model = LogPkl::find()
                 ->where(['pkl_id' => $pengajuanPkl->id])
@@ -80,6 +98,7 @@ class LogPklController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'pengajuanPkl' => $pengajuanPkl,
             'userid' => $userid,
         ]);
     }
@@ -94,6 +113,40 @@ class LogPklController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+        ]);
+    }
+
+    public function actionDetail($id)
+    {
+        $searchModel = new LogPklSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $dataProvider->query->andWhere(['pkl_id' => $id]);
+
+        $pengajuanPkl = PengajuanPkl::find()
+            ->where(['id' => $id])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+
+        $mahasiswa = VwmahasiswaProdi::find()
+            ->where(['mhsid' => $pengajuanPkl->mhs_id])
+            ->one();
+
+        $dataProvider->pagination = [
+            'pageSize' => 10
+        ];
+
+        $model = LogPkl::find()
+            ->where(['dosen_id' => $dosen->id])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+
+        return $this->render('detail', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'mahasiswa' => $mahasiswa,
+            'id' => $id,
+            'userid' => $userid,
         ]);
     }
 
@@ -140,6 +193,9 @@ class LogPklController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $mahasiswa = VwmahasiswaProdi::find()
+            ->where(['user_id' => $userid])
+            ->one();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -147,6 +203,7 @@ class LogPklController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'mhs'=>$mahasiswa,
         ]);
     }
 
@@ -180,32 +237,51 @@ class LogPklController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-//     public function actionPdf($id) {
-//         $model = $this->findModel($id);
-//         $absensi = LogP::findOne(['id' => $model->ruangan_id]);
-//         $jamkeAwal = Jamke::findOne(['id' => $model->jamke_awal_id]);
-//         $jamkeAkhir = Jamke::findOne(['id' => $model->jamke_akhir_id]);
-//         $content = $this->renderPartial('_pdf', [
-//             'model' => $model,
-//             'ruangan' => $ruangan,
-//             'jamawal' => $jamkeAwal,
-//             'jamakhir' => $jamkeAkhir,
-//         ]);
-//         $pdf = new Pdf([
-//             'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
-//             'content' => $content,
-// //            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-//             'cssInline' => '.kv-heading-1{font-size:18px}',
-//             'options' => [
-//                 'title' => 'Peminjaman Ruangan',
-//                 'subject' => 'Peminjaman Ruangan STT Terpadu Nurul Fikri'
-//             ],
-//             'methods' => [
-//                 'SetHeader' => ['STT Terpadu Nurul Fikri||Dibuat: ' . date("r")],
-//                 'SetFooter' => ['Peminjaman Ruangan STT Terpadu Nurul Fikri'],
-//                 //'SetFooter' => ['|Page {PAGENO}|'],
-//             ]
-//         ]);
-//         return $pdf->render();
-//     }
+
+    /**
+     * Save view to PDF
+     * @param $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function actionPdf()
+    {
+        $userid = Yii::$app->user->identity->id;
+
+        $mahasiswa = VwmahasiswaProdi::find()
+            ->where(['user_id' => $userid])
+            ->one();
+
+        $pengajuanPkl = PengajuanPkl::find()
+            ->where(['mhs_id' => $mahasiswa->mhsid])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+
+        $mitraPkl = MitraPkl::find()
+            ->where(['id' => $pengajuanPkl->mitra_id])
+            ->one();
+
+        $content = $this->renderPartial('_pdf', [
+            'mahasiswa' => $mahasiswa,
+            'mitraPkl' => $mitraPkl,
+            'model' => LogPkl::find()->where(['pkl_id' => $pengajuanPkl->id])->all(),
+        ]);
+
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+            'content' => $content,
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => [
+                'title' => 'FERGUSO',
+                'subject' => 'MAGANG GITO LHO'
+            ],
+            'methods' => [
+                'SetHeader' => ['STT Terpadu Nurul Fikri||Dibuat: ' . date("r")],
+                'SetFooter' => ['PKL - STT Terpadu Nurul Fikri'],
+            ]
+        ]);
+        return $pdf->render();
+    }
+
 }

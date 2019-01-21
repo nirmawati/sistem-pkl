@@ -62,13 +62,13 @@ use app\modules\pkl\utils\Roles;
         </div>
         <div class="row">
             <div class="col-md-4">
-                <?= $form->field($model, 'nilai_mentor')->textInput() ?>
+                <?= $form->field($model, 'nilai_mentor')->textInput(['type' => 'number']) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($model, 'nilai_dosen')->textInput() ?>
+                <?= $form->field($model, 'nilai_dosen')->textInput(['type' => 'number']) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($model, 'nilai_akhir')->textInput() ?>
+                <?= $form->field($model, 'nilai_akhir')->textInput(['type' => 'number','disabled' => true]) ?>
             </div>
         </div>
     <?php endif; ?>

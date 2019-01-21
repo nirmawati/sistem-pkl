@@ -1,18 +1,17 @@
 <?php
 
 use yii\helpers\Html;
+use app\modules\pkl\utils\Roles;
 
 
 /* @var $this yii\web\View */
 /* @var $model app\models\DetailPkl */
 
 $this->title = 'Tambah Detail';
-$this->params['breadcrumbs'][] = ['label' => 'Detail Pkls', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Detail Pkl', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="detail-pkl-create">
-
-    <!-- <h1><?= Html::encode($this->title) ?></h1> -->
 
     <?= $this->render('_form', [
         'model' => $model,
