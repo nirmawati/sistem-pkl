@@ -38,10 +38,10 @@ class MitraPklController extends Controller
     {
         $searchModel = new MitraPklSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination=[
-            'pageSize'=>10
+        $dataProvider->pagination = [
+            'pageSize' => 10
         ];
-        
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -71,12 +71,17 @@ class MitraPklController extends Controller
         $model = new MitraPkl();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
+        } else if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('create', [
+                'model' => $model
+            ]);
         }
 
-        return $this->renderAjax('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -91,7 +96,7 @@ class MitraPklController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [

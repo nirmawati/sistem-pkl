@@ -59,7 +59,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]),
             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete}',
+                'buttons' => [
+                    'delete' => function ($url) {
+                        return Html::a( '<span class="glyphicon glyphicon-trash"> </span>', $url, [ 'title' => 'Hapus', 'data-pjax' => '0', ] );
+                    },
+                    'view' => function ($url) {
+                        return Html::a( '<span class="glyphicon glyphicon-eye-open"> </span>', $url, [ 'title' => 'Lihat', 'data-pjax' => '0', ] );
+                    },
+                    'update' => function ($url) {
+                        return Html::a( '<span class="glyphicon glyphicon-pencil"> </span>', $url, [ 'title' => 'Ubah', 'data-pjax' => '0', ] );
+                    },
+                ]
+            ],
         ],
     ]); ?>
 </div>

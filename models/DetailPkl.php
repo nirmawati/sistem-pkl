@@ -19,6 +19,8 @@ use Yii;
  * @property double $nilai_dosen
  * @property double $nilai_akhir
  * @property int $dosen_id
+ * @property string $created_at
+ * @property string $updated_at
  *
  * @property Dosen $dosen
  * @property PengajuanPkl $pkl
@@ -39,6 +41,7 @@ class DetailPkl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['created_at', 'updated_at'], 'safe'],
             [['pkl_id', 'kesesuaian', 'dosen_id'], 'default', 'value' => null],
             [['pkl_id', 'kesesuaian', 'dosen_id'], 'integer'],
             [['deskripsi_tugas', 'masalah', 'laporan', 'masukan_dosen'], 'string'],

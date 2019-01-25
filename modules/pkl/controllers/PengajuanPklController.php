@@ -121,7 +121,7 @@ class PengajuanPklController extends Controller
                 $out = Json::encode(['output' => $output, 'message' => '']);
             }
             echo $out;
-            return;
+            $this->refresh();
         }
 
         return $this->render('index', [

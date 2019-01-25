@@ -16,8 +16,10 @@ use app\models\MitraPkl;
 /* @var $searchModel app\models\LogPklSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Laporan Harian '.$mahasiswa->nama;
 
+$this->title = 'Laporan Harian :'.$mahasiswa->nama;
+$this->params['breadcrumbs'][] = ['label' => 'Daftar Absensi Mahasiswa', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $mahasiswa->nama;
 ?>
 <div class="log-pkl-index">
     <?= DataTables::widget([

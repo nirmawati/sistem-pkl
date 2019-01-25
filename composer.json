@@ -35,7 +35,8 @@
         "kartik-v/yii2-grid": "dev-master",
         "fedemotta/yii2-widget-datatables": "*",
         "kartik-v/yii2-editable": "@dev",
-        "kartik-v/yii2-mpdf": "dev-master"
+        "kartik-v/yii2-mpdf": "dev-master",
+        "microinginer/yii2-dropdown-action-column": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -19,7 +19,7 @@ class StatusPklSearch extends StatusPkl
     {
         return [
             [['id'], 'integer'],
-            [['nama'], 'safe'],
+            [['nama','created_at', 'updated_at',], 'safe'],
         ];
     }
 
@@ -60,6 +60,8 @@ class StatusPklSearch extends StatusPkl
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['ilike', 'nama', $this->nama]);

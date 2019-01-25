@@ -19,7 +19,7 @@ class LogPklSearch extends LogPkl
     {
         return [
             [['id', 'pkl_id', 'ket'], 'integer'],
-            [['tanggal', 'jam_masuk', 'jam_pulang', 'kegiatan'], 'safe'],
+            [['tanggal', 'jam_masuk', 'jam_pulang', 'kegiatan','created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -65,6 +65,8 @@ class LogPklSearch extends LogPkl
             'jam_masuk' => $this->jam_masuk,
             'jam_pulang' => $this->jam_pulang,
             'ket' => $this->ket,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['ilike', 'kegiatan', $this->kegiatan]);

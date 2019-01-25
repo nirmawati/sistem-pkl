@@ -10,6 +10,8 @@ use Yii;
  * @property int $id
  * @property string $nama
  * @property int $prodi_id
+ * @property string $created_at
+ * @property string $updated_at
  *
  * @property Prodi $prodi
  * @property MitraPkl[] $mitraPkls
@@ -31,6 +33,7 @@ class KategoriIndustri extends \yii\db\ActiveRecord
     {
         return [
             [['prodi_id'], 'default', 'value' => null],
+            [['created_at', 'updated_at'],'safe'],
             [['prodi_id'], 'integer'],
             [['nama'], 'string', 'max' => 60],
             [['prodi_id'], 'exist', 'skipOnError' => true, 'targetClass' => Prodi::className(), 'targetAttribute' => ['prodi_id' => 'id']],
@@ -46,6 +49,8 @@ class KategoriIndustri extends \yii\db\ActiveRecord
             'id' => 'ID',
             'nama' => 'Kategori PKL',
             'prodi_id' => 'Prodi',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 

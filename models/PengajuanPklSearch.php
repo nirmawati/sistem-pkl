@@ -19,7 +19,7 @@ class PengajuanPklSearch extends PengajuanPkl
     {
         return [
             [['id', 'mitra_id', 'semester', 'mhs_id', 'dosen_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'integer'],
-            [['tanggal', 'mulai', 'selesai', 'topik'], 'safe'],
+            [['tanggal', 'mulai','created_at', 'updated_at', 'selesai', 'topik'], 'safe'],
         ];
     }
 
@@ -61,6 +61,8 @@ class PengajuanPklSearch extends PengajuanPkl
         $query->andFilterWhere([
             'id' => $this->id,
             'tanggal' => $this->tanggal,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'mitra_id' => $this->mitra_id,
             'mulai' => $this->mulai,
             'selesai' => $this->selesai,

@@ -19,7 +19,7 @@ class KategoriIndustriSearch extends KategoriIndustri
     {
         return [
             [['id', 'prodi_id'], 'integer'],
-            [['nama'], 'safe'],
+            [['nama','created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -61,6 +61,8 @@ class KategoriIndustriSearch extends KategoriIndustri
         $query->andFilterWhere([
             'id' => $this->id,
             'prodi_id' => $this->prodi_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['ilike', 'nama', $this->nama]);

@@ -9,6 +9,8 @@ use yii\helpers\Url;
 use kartik\select2\Select2;
 use app\models\KategoriIndustri;
 use fedemotta\datatables\DataTables;
+use app\modules\pkl\utils\Roles;
+use microinginer\dropDownActionColumn\DropDownActionColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MitraPklSearch */
@@ -20,8 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="mitra-pkl-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-
     <p>
         <?= Html::button('Tambah Mitra Pkl', ['value' => Url::to('mitra-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
@@ -85,9 +85,41 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $status;
                 }
             ],
+            [
+                'class' => DropDownActionColumn::className(),
+                'items' => [
+                    [
+                        'label' => 'Lihat',
+                        'url'   => ['view'],
+                    ],
+                    [
+                        'label' => 'Hapus',
+                        'url'   => ['delete'],
+                        'visible' => Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK,
+                        'linkOptions' => [
+                            'data-method' => 'post'
+                        ],
+                    ],
+                    [
+                        'label' => 'Ubah',
+                        'url'   => ['update'],
+                    ],
+                ]
+            ],
 
-
-            ['class' => 'yii\grid\ActionColumn'],
+            // [
+            //     'class' => 'yii\grid\ActionColumn',
+            //     'template' => '{view} {update} {delete}',
+            //     'visibleButtons' => [
+            //         'delete' => function($data) {
+            //             if (Roles::currentRole(Yii::$app->user->identity->id) != Roles::MHS) {
+            //                 return true;
+            //             } else {
+            //                 return false;
+            //             }
+            //         },
+            //     ],
+            // ],
         ],
     ]); ?>
 </div>

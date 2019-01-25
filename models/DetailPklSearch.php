@@ -19,7 +19,7 @@ class DetailPklSearch extends DetailPkl
     {
         return [
             [['id', 'pkl_id', 'kesesuaian','dosen_id'], 'integer'],
-            [['deskripsi_tugas', 'departemen', 'masalah', 'laporan', 'masukan_dosen'], 'safe'],
+            [['deskripsi_tugas', 'departemen', 'masalah', 'laporan', 'masukan_dosen','created_at', 'updated_at'], 'safe'],
             [['nilai_mentor', 'nilai_dosen', 'nilai_akhir'], 'number'],
         ];
     }
@@ -62,6 +62,8 @@ class DetailPklSearch extends DetailPkl
         $query->andFilterWhere([
             'id' => $this->id,
             'pkl_id' => $this->pkl_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'dosen_id' => $this->dosen_id,
             'kesesuaian' => $this->kesesuaian,
             'nilai_mentor' => $this->nilai_mentor,

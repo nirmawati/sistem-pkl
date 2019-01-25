@@ -5,6 +5,8 @@ use yii\bootstrap\Modal;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
+use yii\bootstrap\ButtonDropdown;
+
 use app\models\StatusPkl;
 use app\models\MitraPkl;
 use app\modules\pkl\utils\Roles;
@@ -14,11 +16,13 @@ use kartik\select2\Select2;
 use kartik\editable\Editable;
 use kartik\grid\GridView;
 
+use microinginer\dropDownActionColumn\DropDownActionColumn;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PengajuanPklSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Pengajuan PKL';
+$this->title = 'Mahasiswa PKL';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -30,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
         //$status_surat = $model->status_surat == NULL || $model->status_surat != 3; //status surat ditolak
         //$status_kegiatan = $model->status_kegiatan == NULL || $model->status_kegiatan != 3; //status kegiatan ditolak
-
+        
         if (Roles::currentRole($userid) == Roles::MHS) {
             if ($model->status_surat == 3 && $model->status_pelaksanaan == 2) {
                 echo '<div class="alert alert-success alert-dismissible">
@@ -140,6 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'readonly' => $isBAAK,
                 'format' => Editable::FORMAT_BUTTON,
                 'editableOptions' => [
+                    'disabled' => $model->status_surat == 3,
                     'inputType' => Editable::INPUT_DROPDOWN_LIST,
                     'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 2], ['id' => 3]])->all(), 'id', 'nama'),
                 ],
@@ -181,7 +186,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]);
                 },
             ],
-
             [
                 'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'status_kegiatan',
@@ -189,8 +193,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'readonly' => $isDosen,
                 'editableOptions' => [
                     'inputType' => Editable::INPUT_DROPDOWN_LIST,
-                    'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 5], ['id' => 3]])->all(), 'id', 'nama'),
-
+                    'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 3],['id' => 5]])->all(), 'id', 'nama'),
                 ],
                 'content' => function ($data) {
                     if ($data->statusKegiatan->id == 1) { //ditolak
@@ -213,6 +216,33 @@ $this->params['breadcrumbs'][] = $this->title;
             //'semester',
             //'mhs_id',
             //'dosen_id',
+            // [
+            //     'class' => DropDownActionColumn::className(),
+            //     'items' => [
+            //         [
+            //             'label' => 'Lihat',
+            //             'url'   => ['view'],
+            //         ],
+            //         [
+            //             'label' => 'Hapus',
+            //             'url'   => ['delete'],
+            //             'visible' => Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK,
+            //             'linkOptions' => [
+            //                 'data-method' => 'post'
+            //             ],
+            //         ],
+            //         [
+            //             'label' => 'Perbaharui',
+            //             'url'   => ['update'],
+            //             'visible' => Roles::currentRole(Yii::$app->user->identity->id) == Roles::MHS,
+            //         ],
+            //         [
+            //             'label'   => 'Cetak Surat',
+            //             'url'     => ['download'],
+            //             'visible' => Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK,
+            //         ],
+            //     ]
+            // ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete} {download}',
@@ -241,8 +271,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'buttons' => [
                     'download' => function ($url) {
-                        return Html::a( '<span class="glyphicon glyphicon-file"> </span>', $url, [ 'title' => 'Add Client', 'data-pjax' => '0', ] );
-                    }
+                        return Html::a( '<span class="glyphicon glyphicon-print"> </span>', $url, [ 'title' => 'Cetak surat pengantar', 'data-pjax' => '0', ] );
+                    },
                 ]
             ],
         ],

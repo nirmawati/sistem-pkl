@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\bootstrap4\Modal;
+use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
@@ -57,38 +57,48 @@ use app\modules\pkl\utils\Roles;
         ],
     ]); ?>
     <p>
-        <?= Html::a('Tambah Mitra', ['/pkl/mitra-pkl'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Tambah Mitra', ['/pkl/mitra-pkl/create'], ['class' => 'btn btn-success']) ?>
     </p>
+
+    <?php 
+        Modal::begin([
+            'header' => '<h4>Tambah Mitra PKL</h4>',
+            'id' => 'modal',
+            'size' => 'modal-lg'
+        ]);
+        echo "<div id='modalContent'></div>";
+        Modal::end();
+    ?>
     
     <?= $form->field($model, 'topik')->textInput(['maxlength' => true]) ?>
 
-<div class="col-md-4">
-    <?= $form->field($model, 'tanggal')->widget(DatePicker::classname(), [
-        'options' => ['placeholder' => 'Tanggal Pengajuan'],
-        'pluginOptions' => [
-            'format' => 'dd-M-yyyy',
-            'autoclose' => true
-        ]
-    ]); ?>
-</div>
-<div class="col-md-4">
-    <?= $form->field($model, 'mulai')->widget(DatePicker::classname(), [
-        'options' => ['placeholder' => 'Tanggal Mulai'],
-        'pluginOptions' => [
-            'format' => 'dd-M-yyyy',
-            'autoclose' => true
-        ]
-    ]); ?>
-</div>
-<div class="col-md-4">
-    <?= $form->field($model, 'selesai')->widget(DatePicker::classname(), [
-        'options' => ['placeholder' => 'Tanggal Selesai'],
-        'pluginOptions' => [
-            'format' => 'dd-M-yyyy',
-            'autoclose' => true
-        ]
-    ]); ?>
-</div>
+    <div class="col-md-4">
+        <?= $form->field($model, 'tanggal')->widget(DatePicker::classname(), [
+            'options' => ['placeholder' => 'Tanggal Pengajuan'],
+            'pluginOptions' => [
+                'format' => 'dd-M-yyyy',
+                'autoclose' => true
+            ]
+        ]); ?>
+    </div>
+    <div class="col-md-4">
+        <?= $form->field($model, 'mulai')->widget(DatePicker::classname(), [
+            'options' => ['placeholder' => 'Tanggal Mulai'],
+            'pluginOptions' => [
+                'format' => 'dd-M-yyyy',
+                'autoclose' => true
+            ]
+        ]); ?>
+    </div>
+    <div class="col-md-4">
+        <?= $form->field($model, 'selesai')->widget(DatePicker::classname(), [
+            'options' => ['placeholder' => 'Tanggal Selesai'],
+            'pluginOptions' => [
+                'format' => 'dd-M-yyyy',
+                'autoclose' => true
+            ]
+        ]); ?>
+    </div>
 
     <?php if (Roles::currentRole($userid) == Roles::BAAK) : ?>
         <!-- BAAK -->
@@ -103,7 +113,7 @@ use app\modules\pkl\utils\Roles;
     <?php elseif (Roles::currentRole($userid) == Roles::DOSEN) : ?>
         <!-- Dosen -->
         <?= $form->field($model, 'status_kegiatan')->widget(Select2::classname(), [
-            'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 5], ['id' => 3]])->all(), 'id', 'nama'),
+            'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 5], ['id' => 3]])->all(), 'id', 'nama'),
             'language' => 'en',
             'options' => [
                 'placeholder' => 'Pilih ...',

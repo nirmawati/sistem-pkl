@@ -86,6 +86,9 @@ $config = [
         'detailpkl' => [
             'class' => 'app\modules\detailpkl\Module',
         ],
+        'riwayatpkl' => [
+            'class' => 'app\modules\riwayatpkl\Module',
+        ],
         'user' => [
             'class' => 'dektrium\user\Module',
             'enableUnconfirmedLogin' => true,

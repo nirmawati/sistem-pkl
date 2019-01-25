@@ -9,6 +9,8 @@ use Yii;
  *
  * @property int $id
  * @property string $nama
+ * @property string $created_at
+ * @property string $updated_at
  */
 class StatusPkl extends \yii\db\ActiveRecord
 {
@@ -26,7 +28,8 @@ class StatusPkl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nama'], 'string', 'max' => 30],
+            [['created_at', 'updated_at'], 'safe'],
+            [['nama'], 'string', 'max' => 30]
         ];
     }
 
@@ -38,6 +41,8 @@ class StatusPkl extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nama' => 'Nama',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 }

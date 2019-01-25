@@ -16,27 +16,33 @@ use app\models\MitraPkl;
 /* @var $searchModel app\models\LogPklSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Laporan Harian';
-$this->params['breadcrumbs'][] = $this->title;
+if (Roles::currentRole($userid) == Roles::MHS) {
+    $this->title = 'Laporan Harian';
+    $this->params['breadcrumbs'][] = $this->title;
+} else {
+    $this->title = 'Daftar Absensi Mahasiswa';
+    $this->params['breadcrumbs'][] = $this->title;
+}
 ?>
 <div class="log-pkl-index">
     <p>
         <?php
         if (Roles::currentRole($userid) == Roles::MHS) {
             echo Html::button('Tambah Absensi ', ['value' => Url::to('log-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']);
-            echo Html::a('Download PDF', ['log-pkl/pdf'], ['class' => 'btn btn-primary']);
+            ?>&emsp;<?php
+            echo Html::a('Cetak Laporan Harian', ['log-pkl/pdf'], ['class' => 'btn btn-primary']);
         }
         ?>
     </p>
 
     <?php 
-        Modal::begin([
-            'header' => '<h4>Tambah Absensi</h4>',
-            'id' => 'modal',
-            'size' => 'modal-lg'
-        ]);
-        echo "<div id='modalContent'></div>";
-        Modal::end();
+    Modal::begin([
+        'header' => '<h4>Tambah Absensi</h4>',
+        'id' => 'modal',
+        'size' => 'modal-lg'
+    ]);
+    echo "<div id='modalContent'></div>";
+    Modal::end();
     ?>
 
     <?php if (Roles::currentRole($userid) == Roles::MHS) : ?>
@@ -107,7 +113,21 @@ $this->params['breadcrumbs'][] = $this->title;
                             return false;
                         }
                     }
-                ]
+                ],
+                'buttons' => [
+                    'detail' => function ($url) {
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"> </span>', $url, ['title' => 'Lihat Absensi', 'data-pjax' => '0', ]);
+                    },
+                    'delete' => function ($url) {
+                        return Html::a( '<span class="glyphicon glyphicon-trash"> </span>', $url, [ 'title' => 'Hapus', 'data-pjax' => '0', ] );
+                    },
+                    'view' => function ($url) {
+                        return Html::a( '<span class="glyphicon glyphicon-eye-open"> </span>', $url, [ 'title' => 'Lihat', 'data-pjax' => '0', ] );
+                    },
+                    'update' => function ($url) {
+                        return Html::a( '<span class="glyphicon glyphicon-pencil"> </span>', $url, [ 'title' => 'Ubah', 'data-pjax' => '0', ] );
+                    },
+                ],
             ],
         ],
     ]); ?>
@@ -142,7 +162,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'topik',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{detail}',
+                'template' => '{detail} {update} {delete}',
                 'visibleButtons' => [
                     'detail' => function ($data) {
                         if (Roles::currentRole(Yii::$app->user->identity->id) == Roles::DOSEN) {
@@ -154,9 +174,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'buttons' => [
                     'detail' => function ($url) {
-                        return Html::a( '<span class="glyphicon glyphicon-eye-open"> </span>', $url, [ 'title' => 'Add Client', 'data-pjax' => '0', ] );
-                    }
-                ]
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"> </span>', $url, ['title' => 'Lihat Absensi', 'data-pjax' => '0', ]);
+                    },
+                    'delete' => function ($url) {
+                        return Html::a( '<span class="glyphicon glyphicon-trash"> </span>', $url, [ 'title' => 'Hapus', 'data-pjax' => '0', ] );
+                    },
+                    'view' => function ($url) {
+                        return Html::a( '<span class="glyphicon glyphicon-eye-open"> </span>', $url, [ 'title' => 'Lihat', 'data-pjax' => '0', ] );
+                    },
+                    'update' => function ($url) {
+                        return Html::a( '<span class="glyphicon glyphicon-pencil"> </span>', $url, [ 'title' => 'Ubah', 'data-pjax' => '0', ] );
+                    },
+                ],
             ],
         ],
     ]); ?>

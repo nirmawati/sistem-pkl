@@ -12,13 +12,15 @@ use Yii;
  * @property int $mitra_id
  * @property string $mulai
  * @property string $selesai
- * @property int $semester
+ * @property string $semester
+ * @property string $topik
  * @property int $mhs_id
  * @property int $dosen_id
  * @property int $status_pelaksanaan
  * @property int $status_kegiatan
  * @property int $status_surat
- * @property string $topik
+ * @property string $created_at
+ * @property string $updated_at
  *
  * @property DetailPkl[] $detailPkls
  * @property LogPkl[] $logPkls
@@ -45,10 +47,10 @@ class PengajuanPkl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tanggal', 'mulai', 'selesai'], 'safe'],
-            [['mitra_id', 'semester', 'mhs_id', 'dosen_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'default', 'value' => null],
-            [['mitra_id', 'semester', 'mhs_id', 'dosen_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'integer'],
-            [['topik'], 'string', 'max' => 100],
+            [['tanggal', 'mulai', 'selesai', 'created_at', 'updated_at'], 'safe'],
+            [['mitra_id', 'mhs_id', 'dosen_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'default', 'value' => null],
+            [['mitra_id', 'mhs_id', 'dosen_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'integer'],
+            [['semester', 'topik'], 'string', 'max' => 255],
             [['dosen_id'], 'exist', 'skipOnError' => true, 'targetClass' => Dosen::className(), 'targetAttribute' => ['dosen_id' => 'id']],
             [['mhs_id'], 'exist', 'skipOnError' => true, 'targetClass' => Mahasiswa::className(), 'targetAttribute' => ['mhs_id' => 'mhsid']],
             [['mitra_id'], 'exist', 'skipOnError' => true, 'targetClass' => MitraPkl::className(), 'targetAttribute' => ['mitra_id' => 'id']],
@@ -70,12 +72,14 @@ class PengajuanPkl extends \yii\db\ActiveRecord
             'mulai' => 'Tanggal Mulai',
             'selesai' => 'Tanggal Selesai',
             'semester' => 'Semester',
+            'topik' => 'Topik',
             'mhs_id' => 'Nama Mahasiswa',
             'dosen_id' => 'Dosen Pembimbing',
             'status_pelaksanaan' => 'Status Pengajuan',
             'status_kegiatan' => 'Status Kegiatan',
-            'status_surat' => 'Status Surat Pengantar',
-            'topik' => 'Topik',
+            'status_surat' => 'Status Pengantar',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 
@@ -142,7 +146,7 @@ class PengajuanPkl extends \yii\db\ActiveRecord
     {
         return $this->hasOne(StatusPkl::className(), ['id' => 'status_surat']);
     }
-
+    
     public function getViewMhsProdi()
     {
         return $this->hasOne(VwmahasiswaProdi::className(), ['mhsid' => 'mhs_id']);

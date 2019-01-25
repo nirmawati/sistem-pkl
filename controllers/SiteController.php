@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\AuthAssignment;
 use app\models\VwmahasiswaProdi;
+use app\models\PengajuanPkl;
 
 class SiteController extends Controller
 {
@@ -89,11 +90,16 @@ class SiteController extends Controller
         $mahasiswa = VwmahasiswaProdi::find()
             ->where(['user_id' => $userid])
             ->one();
+        $model = PengajuanPkl::find()
+            ->where(['mhs_id' => $mahasiswa->mhsid])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
 
         return $this->render('index', [
             'mahasiswa' => $mahasiswa,
             'authAssignment' => $authAssignment,
             'userid' => $userid,
+            'model' => $model,
         ]);
     }
 

@@ -26,21 +26,27 @@ $userid = Yii::$app->user->identity->id;
 
             if(Roles::currentRole($userid) == Roles::BAAK) {
                 $menus [] =['label' => 'Home', 'icon' => 'home', 'url' => ['/']];                
-                $menus [] = ['label' => 'List Mahasiswa PKL', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']];
-                $menus[] = ['label' => 'Kategori PKL', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']];
-                $menus[] = ['label' => 'Mitra PKL', 'icon' => 'road', 'url' => ['/pkl/mitra-pkl']];
+                $menus [] = ['label' => 'Daftar Mahasiswa ', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']];
+                $menus[] = ['label' => 'Kategori ', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']];
+                $menus[] = ['label' => 'Mitra', 'icon' => 'road', 'url' => ['/pkl/mitra-pkl']];
+                $menus[] = ['label' => 'Riwayat', 'icon' => 'road', 'url' => ['/pkl/riwayat-pkl']];
+
 
             } elseif(Roles::currentRole($userid) == Roles::MHS) {
+                $menus [] =['label' => 'Home', 'icon' => 'home', 'url' => ['/']];                
                 $menus[] = ['label' => 'Informasi', 'icon' => 'flag', 'url' => ['/pkl/informasi']];
-                $menus[] = ['label' => 'Mahasiswa PKL', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']];
-                $menus[] = ['label' => 'Detail PKL', 'icon' => 'book', 'url' => ['/pkl/detail-pkl']];
+                $menus[] = ['label' => 'Mahasiswa', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']];
                 $menus[] = ['label' => 'Laporan Harian', 'icon' => 'tasks', 'url' => ['/pkl/log-pkl']];
+                $menus[] = ['label' => 'Laporan Akhir', 'icon' => 'book', 'url' => ['/pkl/detail-pkl']];
+                
+
             }elseif(Roles::currentRole($userid) == Roles::DOSEN) {
                 $menus [] =['label' => 'Home', 'icon' => 'home', 'url' => ['/']];                
-                $menus[] = ['label' => 'List Mahasiswa PKL', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']];                
-                $menus[] = ['label' => 'Monitoring Mahasiswa', 'icon' => 'book', 'url' => ['/pkl/detail-pkl']];                
+                $menus[] = ['label' => 'Daftar Mahasiswa', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']];                
+                $menus[] = ['label' => 'Penilaian', 'icon' => 'book', 'url' => ['/pkl/detail-pkl']];                
                 $menus[] = ['label' => 'Absensi Mahasiswa', 'icon' => 'tasks', 'url' => ['/pkl/log-pkl']];
-                $menus[] = ['label' => 'Kelolah Kategori PKL', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']];
+                $menus[] = ['label' => 'Kategori', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']];
+                $menus[] = ['label' => 'Riwayat', 'icon' => 'road', 'url' => ['/pkl/riwayat-pkl']];                
             }
 
         ?>
