@@ -66,8 +66,12 @@ class StatusPklController extends Controller
     {
         $model = new StatusPkl();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->created_at = date('d-M-Y');
+            $model->updated_at = date('d-M-Y');
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
@@ -86,8 +90,11 @@ class StatusPklController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->updated_at = date('d-M-Y');
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);                
+            }
         }
 
         return $this->render('update', [

@@ -19,7 +19,7 @@ class PengajuanPklSearch extends PengajuanPkl
     {
         return [
             [['id', 'mitra_id', 'semester', 'mhs_id', 'dosen_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'integer'],
-            [['tanggal', 'mulai','created_at', 'updated_at', 'selesai', 'topik'], 'safe'],
+            [['tanggal', 'mulai','created_at', 'updated_at', 'selesai', 'topik','bukti'], 'safe'],
         ];
     }
 
@@ -74,6 +74,8 @@ class PengajuanPklSearch extends PengajuanPkl
             'status_kegiatan' => $this->status_kegiatan,
             'status_surat' => $this->status_surat,
         ]);
+
+        $query->andFilterWhere(['ilike', 'bukti', $this->bukti]);
 
         return $dataProvider;
     }

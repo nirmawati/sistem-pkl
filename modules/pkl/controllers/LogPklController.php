@@ -172,6 +172,9 @@ class LogPklController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->pkl_id = $pengajuanPkl->id;
             $model->dosen_id = $pengajuanPkl->dosen_id;
+            $model->tanggal = date('d-M-Y');
+            $model->created_at = date('d-M-Y');
+            $model->updated_at = date('d-M-Y');
             // return $this->redirect(['view', 'id' => $model->id]);
             if ($model->save()) {
                 return $this->redirect(Yii::$app->request->referrer);
@@ -197,8 +200,11 @@ class LogPklController extends Controller
             ->where(['user_id' => $userid])
             ->one();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->updated_at = date('d-M-Y');
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [

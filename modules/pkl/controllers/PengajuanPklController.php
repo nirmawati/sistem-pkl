@@ -166,6 +166,9 @@ class PengajuanPklController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->mhs_id = $mahasiswa->mhsid;
+            $model->tanggal = date('d-M-Y');
+            $model->created_at = date('d-M-Y');
+            $model->updated_at = date('d-M-Y');
             $model->status_surat = 2;
             $model->status_pelaksanaan = 6;
             $model->status_kegiatan = 6;
@@ -226,6 +229,7 @@ class PengajuanPklController extends Controller
             } elseif ($tempKegiatan == 3) {
                 $model->status_kegiatan = 3; //selesai
             }
+            $model->updated_at = date('d-M-Y');
 
             if ($model->save()) {
                 return $this->redirect(['index']);

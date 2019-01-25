@@ -53,7 +53,7 @@ use app\modules\pkl\utils\Roles;
         'language' => 'en',
         'options' => ['placeholder' => 'Pilih ...'],
         'pluginOptions' => [
-            'allowClear' => true
+            'allowClear' => true,
         ],
     ]); ?>
     <p>
@@ -72,7 +72,7 @@ use app\modules\pkl\utils\Roles;
     
     <?= $form->field($model, 'topik')->textInput(['maxlength' => true]) ?>
 
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
         <?= $form->field($model, 'tanggal')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Tanggal Pengajuan'],
             'pluginOptions' => [
@@ -80,8 +80,8 @@ use app\modules\pkl\utils\Roles;
                 'autoclose' => true
             ]
         ]); ?>
-    </div>
-    <div class="col-md-4">
+    </div> -->
+    <div class="col-md-6">
         <?= $form->field($model, 'mulai')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Tanggal Mulai'],
             'pluginOptions' => [
@@ -90,7 +90,7 @@ use app\modules\pkl\utils\Roles;
             ]
         ]); ?>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <?= $form->field($model, 'selesai')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Tanggal Selesai'],
             'pluginOptions' => [

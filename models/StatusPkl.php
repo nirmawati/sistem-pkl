@@ -14,6 +14,7 @@ use Yii;
  */
 class StatusPkl extends \yii\db\ActiveRecord
 {
+    
     /**
      * {@inheritdoc}
      */

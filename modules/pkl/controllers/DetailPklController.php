@@ -188,6 +188,8 @@ class DetailPklController extends Controller
             }
             $model->pkl_id = $listPkl->id;
             $model->dosen_id = $listPkl->dosen_id;
+            $model->created_at = date('d-M-Y');
+            $model->updated_at = date('d-M-Y');
             if ($model->save()) {
                 return $this->redirect(['index']);
             } else {
@@ -249,6 +251,7 @@ class DetailPklController extends Controller
                 $model->nilai_dosen = null;
                 $model->nilai_mentor = null;
             }
+            $model->updated_at = date('d-M-Y');
             if ($model->save()) {
                 return $this->redirect(['index']);
             } else {

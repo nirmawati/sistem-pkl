@@ -21,6 +21,7 @@ use Yii;
  * @property int $status_surat
  * @property string $created_at
  * @property string $updated_at
+ * @property string $bukti
  *
  * @property DetailPkl[] $detailPkls
  * @property LogPkl[] $logPkls
@@ -51,6 +52,7 @@ class PengajuanPkl extends \yii\db\ActiveRecord
             [['mitra_id', 'mhs_id', 'dosen_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'default', 'value' => null],
             [['mitra_id', 'mhs_id', 'dosen_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'integer'],
             [['semester', 'topik'], 'string', 'max' => 255],
+            [['bukti'], 'string'],
             [['dosen_id'], 'exist', 'skipOnError' => true, 'targetClass' => Dosen::className(), 'targetAttribute' => ['dosen_id' => 'id']],
             [['mhs_id'], 'exist', 'skipOnError' => true, 'targetClass' => Mahasiswa::className(), 'targetAttribute' => ['mhs_id' => 'mhsid']],
             [['mitra_id'], 'exist', 'skipOnError' => true, 'targetClass' => MitraPkl::className(), 'targetAttribute' => ['mitra_id' => 'id']],
@@ -78,6 +80,7 @@ class PengajuanPkl extends \yii\db\ActiveRecord
             'status_pelaksanaan' => 'Status Pengajuan',
             'status_kegiatan' => 'Status Kegiatan',
             'status_surat' => 'Status Pengantar',
+            'bukti' => 'Bukti PKL',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -146,7 +149,7 @@ class PengajuanPkl extends \yii\db\ActiveRecord
     {
         return $this->hasOne(StatusPkl::className(), ['id' => 'status_surat']);
     }
-    
+
     public function getViewMhsProdi()
     {
         return $this->hasOne(VwmahasiswaProdi::className(), ['mhsid' => 'mhs_id']);

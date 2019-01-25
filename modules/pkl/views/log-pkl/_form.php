@@ -28,36 +28,36 @@ use kartik\time\TimePicker;
 	</div>
 
 	<div class="row">
-		<div class="col-md-4">
-        <?= $form->field($model, 'tanggal')->widget(DatePicker::classname(), [
-            'options' => ['placeholder' => 'Pilih Tanggal'],
-            'pluginOptions' => [
-                'format' => 'dd-M-yyyy',
-                'autoclose' => true
-            ]
-        ]); ?>
+		<!-- <div class="col-md-4">
+            <?= $form->field($model, 'tanggal')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Pilih Tanggal'],
+                'pluginOptions' => [
+                    'format' => 'dd-M-yyyy',
+                    'autoclose' => true
+                ]
+            ]); ?>
+		</div> -->
+
+		<div class="col-md-6">
+            <?= $form->field($model, 'jam_masuk')->widget(TimePicker::classname(), [
+                'pluginOptions' => [
+                    'showSeconds' => false,
+                    'showMeridian' => false,
+                    'minuteStep' => 1,
+                    'secondStep' => 5,
+                ]
+            ]); ?>
 		</div>
 
-		<div class="col-md-4">
-        <?= $form->field($model, 'jam_masuk')->widget(TimePicker::classname(), [
-            'pluginOptions' => [
-                'showSeconds' => false,
-                'showMeridian' => false,
-                'minuteStep' => 1,
-                'secondStep' => 5,
-            ]
-        ]); ?>
-		</div>
-
-		<div class="col-md-4">
-        <?= $form->field($model, 'jam_pulang')->widget(TimePicker::classname(), [
-            'pluginOptions' => [
-                'showSeconds' => false,
-                'showMeridian' => false,
-                'minuteStep' => 1,
-                'secondStep' => 5,
-            ]
-        ]); ?>
+		<div class="col-md-6">
+            <?= $form->field($model, 'jam_pulang')->widget(TimePicker::classname(), [
+                'pluginOptions' => [
+                    'showSeconds' => false,
+                    'showMeridian' => false,
+                    'minuteStep' => 1,
+                    'secondStep' => 5,
+                ]
+            ]); ?>
 		</div>
 	</div>
 	<div class="row">

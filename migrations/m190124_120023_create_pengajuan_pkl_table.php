@@ -34,6 +34,7 @@ class m190124_120023_create_pengajuan_pkl_table extends Migration
             'topik'=>$this->string(),
             'mhs_id'=>$this->integer(),
             'dosen_id'=>$this->integer(),
+            'bukti'=>$this->string(),
             'status_pelaksanaan'=>$this->integer(),
             'status_kegiatan'=>$this->integer(),
             'status_surat'=>$this->integer(),   
