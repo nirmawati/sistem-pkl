@@ -57,6 +57,11 @@ class LogPklController extends Controller
             ->where(['user_id' => $userid])
             ->one();
 
+        $listPkl = PengajuanPkl::find()
+            ->where(['mhs_id' => $mahasiswa->mhsid])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+
         $dataProvider->pagination = [
             'pageSize' => 10
         ];
@@ -100,6 +105,7 @@ class LogPklController extends Controller
             'dataProvider' => $dataProvider,
             'pengajuanPkl' => $pengajuanPkl,
             'userid' => $userid,
+            'listPkl' => $listPkl,
         ]);
     }
 

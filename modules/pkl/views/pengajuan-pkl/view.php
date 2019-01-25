@@ -63,6 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status_kegiatan',
                 'value' => $model->statusKegiatan->nama,
             ],
+            'bukti'
         ],
     ]) ?>
 

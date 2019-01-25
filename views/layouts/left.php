@@ -34,17 +34,18 @@ $userid = Yii::$app->user->identity->id;
 
             } elseif(Roles::currentRole($userid) == Roles::MHS) {
                 $menus [] =['label' => 'Home', 'icon' => 'home', 'url' => ['/']];                
-                $menus[] = ['label' => 'Informasi', 'icon' => 'flag', 'url' => ['/pkl/informasi']];
                 $menus[] = ['label' => 'Mahasiswa', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']];
+                $menus[] = ['label' => 'Mitra', 'icon' => 'road', 'url' => ['/pkl/mitra-pkl']];
                 $menus[] = ['label' => 'Laporan Harian', 'icon' => 'tasks', 'url' => ['/pkl/log-pkl']];
                 $menus[] = ['label' => 'Laporan Akhir', 'icon' => 'book', 'url' => ['/pkl/detail-pkl']];
                 
 
             }elseif(Roles::currentRole($userid) == Roles::DOSEN) {
                 $menus [] =['label' => 'Home', 'icon' => 'home', 'url' => ['/']];                
-                $menus[] = ['label' => 'Daftar Mahasiswa', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']];                
-                $menus[] = ['label' => 'Penilaian', 'icon' => 'book', 'url' => ['/pkl/detail-pkl']];                
+                $menus[] = ['label' => 'Daftar Mahasiswa', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']];    
                 $menus[] = ['label' => 'Absensi Mahasiswa', 'icon' => 'tasks', 'url' => ['/pkl/log-pkl']];
+                $menus[] = ['label' => 'Penilaian', 'icon' => 'book', 'url' => ['/pkl/detail-pkl']];                
+                $menus[] = ['label' => 'Mitra', 'icon' => 'road', 'url' => ['/pkl/mitra-pkl']];
                 $menus[] = ['label' => 'Kategori', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']];
                 $menus[] = ['label' => 'Riwayat', 'icon' => 'road', 'url' => ['/pkl/riwayat-pkl']];                
             }

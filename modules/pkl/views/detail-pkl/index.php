@@ -5,6 +5,8 @@ use yii\grid\GridView;
 use fedemotta\datatables\DataTables;
 use app\modules\pkl\utils\Roles;
 use app\models\PengajuanPkl;
+use microinginer\dropDownActionColumn\DropDownActionColumn;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DetailPklSearch */
@@ -15,32 +17,33 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="detail-pkl-index">
-    <?php if($listPkl->status_kegiatan == 6 ||$listPkl->status_kegiatan == NULL): ?>
-        <div class="alert alert-danger alert-dismissible">
-            <h4><i class="icon fa fa-check"></i> Maaf Anda Belum Diterima di Perusahaan Manapun !</h4>Anda tidak dapat menambah detail PKL...
-        </div>
-    <?php else: ?>
-        <?php if(Roles::currentRole($userid) == Roles::MHS): ?>
-            <p> 
-                <?php if($detailPkl == null): ?>
-                    <div class="alert alert-warning alert-dismissible">
-                        <h4><i class="icon fa fa-check"></i> Selamat Anda Telah Diterima di <?= $mitra->nama ?>!</h4>Silahkan Melengkapi Detail PKL Anda...
+        <?php if (Roles::currentRole($userid) == Roles::MHS) : ?>
+            <p>
+                <?php if ($listPkl->status_kegiatan == 6 ||$listPkl->status_kegiatan == NULL) : ?>
+                    <div class="alert alert-danger alert-dismissible">
+                        <h4><i class="icon fa fa-check"></i> Maaf Anda Belum Diterima di Perusahaan Manapun !</h4>Anda tidak dapat menambah detail PKL...
                     </div>
-                    <?= Html::a('Tambah Detail', ['create'], ['class' => 'btn btn-success']) ?>
-                <?php else: ?>
-                    <?= Html::a('Update Detail', ['update?id='.$detailPkl->id], ['class' => 'btn btn-success']) ?>
-                    <?= $this->render('detailmhs', [
-                        'model' => $model,
-                        'mahasiswa' => $mahasiswa,
-                        'listPkl'=> $listPkl,
-                        'mitra'=>$mitra,
-                        'tgl_mulai'=>$tgl_mulai,
-                        'tgl_selesai'=>$tgl_selesai,
-                        'detailPkl'=>$detailPkl
-                    ]) ?>
+                <?php else :?> 
+                    <?php if ($detailPkl == null) : ?>
+                        <div class="alert alert-warning alert-dismissible">
+                            <h4><i class="icon fa fa-check"></i> Selamat Anda Telah Diterima di <?= $mitra->nama ?>!</h4>Silahkan Melengkapi Detail PKL Anda...
+                        </div>
+                        <?= Html::a('Tambah Detail', ['create'], ['class' => 'btn btn-success']) ?>
+                    <?php else : ?>
+                        <?= Html::a('Update Detail', ['update?id=' . $detailPkl->id], ['class' => 'btn btn-success']) ?>
+                        <?= $this->render('detailmhs', [
+                            'model' => $model,
+                            'mahasiswa' => $mahasiswa,
+                            'listPkl' => $listPkl,
+                            'mitra' => $mitra,
+                            'tgl_mulai' => $tgl_mulai,
+                            'tgl_selesai' => $tgl_selesai,
+                            'detailPkl' => $detailPkl
+                        ]) ?>
+                    <?php endif; ?>
                 <?php endif; ?>
             </p>
-        <?php elseif(Roles::currentRole($userid) == Roles::DOSEN): ?>
+        <?php elseif (Roles::currentRole($userid) == Roles::DOSEN) : ?>
             <?= DataTables::widget([
                 'tableOptions' => ['class' => 'table table-striped table-hover'],
                 'dataProvider' => $dataProvider,
@@ -105,18 +108,31 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'nilai_akhir',
                         'content' => function ($data) {
-                            if($data->nilai_akhir != ""){
+                            if ($data->nilai_akhir != "") {
                                 return $data->nilai_akhir;
-                            }else{
+                            } else {
                                 return 'belum di input';
                             }
                         }
                     ],
                     // 'dosen_id',
 
-                    ['class' => 'yii\grid\ActionColumn'],
+                    [
+                        'class' => DropDownActionColumn::className(),
+                        'items' => [
+        
+                            [
+                                'label' => 'Lihat',
+                                'url'   => ['view'],
+                            ],
+                            [
+                                'label' => 'Masukkan Nilai',
+                                'url'   => ['update'],
+                            ],
+
+                        ]
+                    ],
                 ],
             ]); ?>
-        <?php endif; ?>
     <?php endif; ?>
 </div>

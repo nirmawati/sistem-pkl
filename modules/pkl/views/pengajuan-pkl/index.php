@@ -21,8 +21,11 @@ use microinginer\dropDownActionColumn\DropDownActionColumn;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PengajuanPklSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Mahasiswa PKL';
+if (Roles::currentRole($userid) == Roles::MHS) {
+    $this->title = 'Mahasiswa PKL';
+}else{
+    $this->title = 'Daftar Mahasiswa PKL';
+}
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -210,72 +213,74 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]);
                 },
             ],
-            'bukti',
+            
+            // 'bukti',
 
             // 'mulai',
             // 'selesai',
             //'semester',
             //'mhs_id',
             //'dosen_id',
-            // [
-            //     'class' => DropDownActionColumn::className(),
-            //     'items' => [
-            //         [
-            //             'label' => 'Lihat',
-            //             'url'   => ['view'],
-            //         ],
-            //         [
-            //             'label' => 'Hapus',
-            //             'url'   => ['delete'],
-            //             'visible' => Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK,
-            //             'linkOptions' => [
-            //                 'data-method' => 'post'
-            //             ],
-            //         ],
-            //         [
-            //             'label' => 'Perbaharui',
-            //             'url'   => ['update'],
-            //             'visible' => Roles::currentRole(Yii::$app->user->identity->id) == Roles::MHS,
-            //         ],
-            //         [
-            //             'label'   => 'Cetak Surat',
-            //             'url'     => ['download'],
-            //             'visible' => Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK,
-            //         ],
-            //     ]
-            // ],
             [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete} {download}',
-                'visibleButtons' => [
-                    'delete' => function($data) {
-                        if (Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    },
-                    'update' => function($data) {
-                        if (Roles::currentRole(Yii::$app->user->identity->id) == Roles::MHS) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    },
-                    'download' => function($data) {
-                        if (Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                ],
-                'buttons' => [
-                    'download' => function ($url) {
-                        return Html::a( '<span class="glyphicon glyphicon-print"> </span>', $url, [ 'title' => 'Cetak surat pengantar', 'data-pjax' => '0', ] );
-                    },
+                'class' => DropDownActionColumn::className(),
+                'items' => [
+
+                    [
+                        'label' => 'Lihat',
+                        'url'   => ['view'],
+                    ],
+                    [
+                        'label' => 'Hapus',
+                        'url'   => ['delete'],
+                        'visible' => Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK,
+                        'linkOptions' => [
+                            'data-method' => 'post'
+                        ],
+                    ],
+                    [
+                        'label' => 'Ubah',
+                        'url'   => ['update'],
+                        'visible' => Roles::currentRole(Yii::$app->user->identity->id) == Roles::MHS,
+                    ],
+                    [
+                        'label'   => 'Cetak Surat',
+                        'url'     => ['download'],
+                        'visible' => Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK,
+                    ],
                 ]
             ],
+            // [
+            //     'class' => 'yii\grid\ActionColumn',
+            //     'template' => '{view} {update} {delete} {download}',
+            //     'visibleButtons' => [
+            //         'delete' => function($data) {
+            //             if (Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK) {
+            //                 return true;
+            //             } else {
+            //                 return false;
+            //             }
+            //         },
+            //         'update' => function($data) {
+            //             if (Roles::currentRole(Yii::$app->user->identity->id) == Roles::MHS) {
+            //                 return true;
+            //             } else {
+            //                 return false;
+            //             }
+            //         },
+            //         'download' => function($data) {
+            //             if (Roles::currentRole(Yii::$app->user->identity->id) == Roles::BAAK) {
+            //                 return true;
+            //             } else {
+            //                 return false;
+            //             }
+            //         }
+            //     ],
+            //     'buttons' => [
+            //         'download' => function ($url) {
+            //             return Html::a( '<span class="glyphicon glyphicon-print"> </span>', $url, [ 'title' => 'Cetak surat pengantar', 'data-pjax' => '0', ] );
+            //         },
+            //     ]
+            // ],
         ],
     ]); ?>
 </div>

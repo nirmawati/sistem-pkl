@@ -9,6 +9,8 @@ use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use app\models\Prodi;
 use fedemotta\datatables\DataTables;
+use microinginer\dropDownActionColumn\DropDownActionColumn;
+
 
 
 /* @var $this yii\web\View */
@@ -60,18 +62,24 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete}',
-                'buttons' => [
-                    'delete' => function ($url) {
-                        return Html::a( '<span class="glyphicon glyphicon-trash"> </span>', $url, [ 'title' => 'Hapus', 'data-pjax' => '0', ] );
-                    },
-                    'view' => function ($url) {
-                        return Html::a( '<span class="glyphicon glyphicon-eye-open"> </span>', $url, [ 'title' => 'Lihat', 'data-pjax' => '0', ] );
-                    },
-                    'update' => function ($url) {
-                        return Html::a( '<span class="glyphicon glyphicon-pencil"> </span>', $url, [ 'title' => 'Ubah', 'data-pjax' => '0', ] );
-                    },
+                'class' => DropDownActionColumn::className(),
+                'items' => [
+
+                    [
+                        'label' => 'Lihat',
+                        'url'   => ['view'],
+                    ],
+                    [
+                        'label' => 'Hapus',
+                        'url'   => ['delete'],
+                        'linkOptions' => [
+                            'data-method' => 'post'
+                        ],
+                    ],
+                    [
+                        'label' => 'Ubah',
+                        'url'   => ['update'],
+                    ],
                 ]
             ],
         ],
