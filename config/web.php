@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
-    'name' => 'Sistem PKL',
+    'name' => 'SIMPEL - PKL',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [

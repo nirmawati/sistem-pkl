@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <p>
-        <?= Html::button('Tambah Mitra Pkl', ['value' => Url::to('mitra-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+        <?= Html::button('Tambah Mitra', ['value' => Url::to('mitra-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
 
     <?php 

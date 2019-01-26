@@ -60,7 +60,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h4><i class="icon fa fa-check"></i> Tunggu ya!</h4>Surat Pengantar PKL Anda sedang diproses...
                     </div>';
             }else {
-                echo Html::button('Daftar PKL', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']);
+                echo '<div class="alert alert-danger alert-dismissible">
+                    <h4><i class="icon fa fa-check"></i> BELUM DAFTAR !</h4> Anda belum terdaftar sebagai Mahasiswa PKL, silahkan daftar terlebih dahulu untuk memulai kegiatan PKL..
+                </div>';
+                echo Html::button('Daftar Sekarang', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']);
             }
         }
     ?>

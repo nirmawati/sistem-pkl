@@ -54,7 +54,7 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                 } else if ($model->status_surat == 3 && $model->status_pelaksanaan == 4 && $model->status_kegiatan == 3) {
                     echo '<div class="alert alert-success alert-dismissible">
                             <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
-                            <h4><i class="icon fa fa-check"></i> SELAMAT ANDA TELAH SELESAI PKL !!</h4>Semangat melaksanakan kegiatan PKL, Jangan Lupa lengkapi detail dan absensinya ya...
+                            <h4><i class="icon fa fa-check"></i> SELAMAT ANDA TELAH SELESAI PKL !!</h4>
                         </div>';
                 } else if ($model->status_surat == 2 && $model->status_pelaksanaan == 6 & $model->status_kegiatan == 6) {
                     echo '<div class="alert alert-warning alert-dismissible">
@@ -62,7 +62,9 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                             <h4><i class="icon fa fa-check"></i> Tunggu ya!</h4>Surat Pengantar PKL Anda sedang diproses...
                         </div>';
                 } else {
-                    echo Html::button('Daftar PKL', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']);
+                    echo '<div class="alert alert-danger alert-dismissible">
+                    <h4><i class="icon fa fa-check"></i> BELUM DAFTAR !</h4> Anda belum terdaftar sebagai Mahasiswa PKL, silahkan daftar terlebih dahulu untuk memulai kegiatan PKL..
+                </div>';
                 }
             } ?>
             <div class="col-md-12">
@@ -71,7 +73,7 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                     <button class="tablinks col-md-3" onclick="openCity(event, 'Prosedur')">Panduan Pengajuan</button>
                     <button class="tablinks col-md-3" onclick="openCity(event, 'Pedoman')">Panduan Pelaksanaan</button>
                     <button class="tablinks col-md-3" onclick="openCity(event, 'Tatib')">Tata Tertib</button>
-                    <button class="tablinks col-md-3" onclick="openCity(event, 'Doc')">Dokumen PKL</button>
+                    <button class="tablinks col-md-3" onclick="openCity(event, 'Doc')">Dokumen</button>
                 </div>
 
                 <!-- Tab content -->
