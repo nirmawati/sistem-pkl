@@ -106,7 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'id',
             [
                 'label' => 'Mahasiswa',
-                'attribute' => 'nama_mhs',
+                'attribute' => 'mhs_id',
                 'contentOptions' => ['style' => 'width:1000px; white-space: normal;'],
                 'content' => function ($data) {
                     return $data->viewMhsProdi->nama;
@@ -174,7 +174,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'readonly' => $isMhs,
                 'editableOptions' => [
                     'inputType' => Editable::INPUT_DROPDOWN_LIST,
-                    'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 2], ['id' => 4]])->all(), 'id', 'nama'),
+                    'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 2]])->all(), 'id', 'nama'),
 
                 ],
                 'content' => function ($data) {
@@ -224,6 +224,16 @@ $this->params['breadcrumbs'][] = $this->title;
             //'semester',
             //'mhs_id',
             //'dosen_id',
+            [
+                'attribute' => 'bukti',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if ($model->bukti != '')
+                        return Html::a($model->bukti, Yii::$app->homeUrl . 'uploads/file-bukti/' . $model->bukti);
+
+                    else return 'Tidak Ada Bukti';
+                },
+            ],
             [
                 'class' => DropDownActionColumn::className(),
                 'items' => [

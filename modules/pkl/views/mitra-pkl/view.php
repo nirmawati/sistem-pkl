@@ -21,20 +21,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'kontak',
             'telpon',
             'email:email',
-            'status',
-            'kategori_id',
+            [
+                'attribute' => 'status',
+                'value' => function ($data) {
+                    if ($data->status == 0) {
+                        return "Tersedia";
+                    }else if ($data->status == 1) { 
+                        return "Tidak Tersedia";
+                    }
+                },
+            ],
+            [
+                'attribute' => 'kategori_id',
+                'value' => $model->kategori->nama,
+            ],
+
         ],
     ]) ?>
 
-        <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
 
 </div>

@@ -34,7 +34,7 @@ use yii\helpers\ArrayHelper;
 	<div class="row">
 		<div class="col-md-6">
         <?= $form->field($model, 'status')->dropDownList(
-            [0 => 'available', 1 => 'not available']
+            [0 => 'Tersedia', 1 => 'Tidak Tersedia']
         ); ?>
 		</div>
 		<div class="col-md-6">

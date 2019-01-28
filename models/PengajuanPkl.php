@@ -79,7 +79,7 @@ class PengajuanPkl extends \yii\db\ActiveRecord
             'dosen_id' => 'Dosen Pembimbing',
             'status_pelaksanaan' => 'Status Pengajuan',
             'status_kegiatan' => 'Status Kegiatan',
-            'status_surat' => 'Status Pengantar',
+            'status_surat' => 'Status Surat',
             'bukti' => 'Bukti PKL',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

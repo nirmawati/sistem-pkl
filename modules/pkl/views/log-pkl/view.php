@@ -6,35 +6,38 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\LogPkl */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Log Pkls', 'url' => ['index']];
+$this->title = $model->pkl->viewMhsProdi->nama;
+$this->params['breadcrumbs'][] = ['label' => 'Daftar Hadir', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="log-pkl-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'pkl_id',
-            'tanggal',
+            // 'id',
+            // 'pkl_id',
+            [
+                'attribute'=>'tanggal',
+                'format'=>['Date','php:d-M-Y']
+            ],
             'jam_masuk',
             'jam_pulang',
             'kegiatan:ntext',
-            'ket',
+            [
+                'attribute' => 'ket',
+                'value' => function ($data) {
+                    if ($data->ket == 0) {
+                        return "Mangkir";
+                    }else if ($data->ket == 1) {
+                        return "Hadir";
+                    }else if ($data->ket == 2) { 
+                        return "Sakit";
+                    }
+                },
+            ],
+            
         ],
     ]) ?>
 

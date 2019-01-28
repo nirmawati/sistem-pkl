@@ -19,11 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="detail-pkl-index">
         <?php if (Roles::currentRole($userid) == Roles::MHS) : ?>
             <p>
-                <?php if ($listPkl->status_kegiatan == 6 ||$listPkl->status_kegiatan == NULL) : ?>
+                <?php if ($listPkl->status_kegiatan == 6 || $listPkl->status_kegiatan == null) : ?>
                     <div class="alert alert-danger alert-dismissible">
                         <h4><i class="icon fa fa-check"></i> Maaf Anda Belum Diterima di Perusahaan Manapun !</h4>Anda tidak dapat menambah detail PKL...
                     </div>
-                <?php else :?> 
+                <?php else : ?> 
                     <?php if ($detailPkl == null) : ?>
                         <div class="alert alert-warning alert-dismissible">
                             <h4><i class="icon fa fa-check"></i> Selamat Anda Telah Diterima di <?= $mitra->nama ?>!</h4>Silahkan Melengkapi Detail PKL Anda...
@@ -115,19 +115,39 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         }
                     ],
+                    [
+                        'attribute' => 'nilai_akhir',
+                        'content' => function ($data) {
+                            if ($data->nilai_akhir != "") {
+                                if ($data->nilai_akhir >=86 || $data->nilai_akhir <=100) {
+                                    echo 'A';
+                                } else if ($data->nilai_akhir >=70 || $data->nilai_akhir <=85) {
+                                    echo 'B';
+                                }else if ($data->nilai_akhir >=69 || $data->nilai_akhir <=56) {
+                                    echo 'C';
+                                }else if ($data->nilai_akhir >=40 || $data->nilai_akhir <=55) {
+                                    echo 'D';
+                                }else if ($data->nilai_akhir >=0|| $data->nilai_akhir <=39) {
+                                    echo 'E';
+                                } 
+                            } else {
+                                return 'belum di input';
+                            }
+                        }
+                    ],
                     // 'dosen_id',
 
                     [
                         'class' => DropDownActionColumn::className(),
                         'items' => [
-        
+
                             [
                                 'label' => 'Lihat',
-                                'url'   => ['view'],
+                                'url' => ['view'],
                             ],
                             [
                                 'label' => 'Masukkan Nilai',
-                                'url'   => ['update'],
+                                'url' => ['update'],
                             ],
 
                         ]

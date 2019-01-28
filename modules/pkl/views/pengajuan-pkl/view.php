@@ -34,13 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'semester',
                 'value' => function ($data) {
-                    if ($data->semester == 1) { //ditolak
+                    if ($data->semester == 0) {
                         return "Semester 5";
-                    }else if ($data->semester == 2) { //menunggu
+                    }else if ($data->semester == 1) {
                         return "Semester 6";
-                    }else if ($data->semester == 3) { //menunggu
+                    }else if ($data->semester == 2) { 
                         return "Semester 7";
-                    }else if ($data->semester == 4) { //menunggu
+                    }else if ($data->semester == 3) { 
                         return "Semester 8";
                     }
                 },

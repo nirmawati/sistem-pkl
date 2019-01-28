@@ -70,7 +70,7 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
             <div class="col-md-12">
                 <!-- Tab links -->
                 <div class="tab">
-                    <button class="tablinks col-md-3" onclick="openCity(event, 'Prosedur')">Panduan Pengajuan</button>
+                    <button class="tablinks col-md-3" onclick="openCity(event, 'Prosedur')" id="defaultOpen">Panduan Pengajuan</button>
                     <button class="tablinks col-md-3" onclick="openCity(event, 'Pedoman')">Panduan Pelaksanaan</button>
                     <button class="tablinks col-md-3" onclick="openCity(event, 'Tatib')">Tata Tertib</button>
                     <button class="tablinks col-md-3" onclick="openCity(event, 'Doc')">Dokumen</button>
@@ -78,12 +78,10 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
 
                 <!-- Tab content -->
                 <div id="Prosedur" class="tabcontent">
-                    <h3>Prosedur</h3>
-                    <p>London is the capital city of England.</p>
+                    <img style="display: block;margin-left: auto;margin-right: auto;width: 50%;" src="<?= Yii::$app->homeUrl . 'img/panduan1.jpg' ?>" class=" img-responsive" > 
                 </div>
                 <div id="Pedoman" class="tabcontent">
-                    <h3>Panduan</h3>
-                    <p>Paris is the capital of France.</p> 
+                    <img style="display: block;margin-left: auto;margin-right: auto;width: 50%;" src="<?= Yii::$app->homeUrl . 'img/panduan2.jpg' ?>" class=" img-responsive" > 
                 </div>
                 <div id="Tatib" class="tabcontent">
                     <div class="col-md-6">
@@ -139,6 +137,8 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                     // Declare all variables
                     var i, tabcontent, tablinks;
 
+                    document.getElementById("defaultOpen").click();
+
                     // Get all elements with class="tabcontent" and hide them
                     tabcontent = document.getElementsByClassName("tabcontent");
                     for (i = 0; i < tabcontent.length; i++) {
@@ -163,7 +163,7 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                 <div class="row">
                 <?php if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) == Roles::DOSEN) : ?>
                     <div class="info-box">
-                        <span class="info-box-icon bg-aqua"><i class="fa fa-file-o"></i></span>
+                        <span class="info-box-icon bg-blue"><i class="fa fa-file-o"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Surat Pengantar</span>
                             <span class="info-box-number">
@@ -175,9 +175,9 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                     </div>
 
                     <div class="info-box">
-                        <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+                        <span class="info-box-icon bg-black"><i class="glyphicon glyphicon-paste"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Pengajuan</span>
+                            <span class="info-box-text">Proses Pengajuan</span>
                             <span class="info-box-number">
                             
                                 <small class="label bg-green"><?= $stPengajuanDiterima ?></small>
@@ -189,9 +189,9 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                     </div>
 
                      <div class="info-box">
-                        <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+                        <span class="info-box-icon bg-green"><i class=" fa fa-circle-o-notch"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Kegiatan</span>
+                            <span class="info-box-text">Sedang PKL</span>
                             <span class="info-box-number">
                             
                                 <small class="label bg-green"><?= $stKegiatanselesai ?></small>
@@ -203,6 +203,13 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                     </div>               
                     
                 </div>
+                <div>
+                    <!-- keterangan -->
+                    <h4>Keterangan</h4>
+                    <small class="label bg-green"> </small>&nbsp : Status Selesai<br>
+                    <small class="label bg-yellow">  </small>&nbsp : Status Menunggu<br>
+                    <small class="label bg-red">  </small>&nbsp : Status Ditolak<br>
+                </div>
             </div>
             <div class="col-md-8">
                 <?= HighCharts::widget([
@@ -211,14 +218,14 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                             'type' => 'pie'
                         ],
                         'title' => [
-                            'text' => 'model PKL'
+                            'text' => 'Diagram Mahasiswa PKL'
                         ],
                         'series' => [
                             [
                                 'data' => [
-                                    ['Surat', $suratCount],
-                                    ['Pengajuan', $pengajuanCount],
-                                    ['Magang', $kegiatanCount]
+                                    ['Surat Pengantar', $suratCount],
+                                    ['Proses Pengajuan', $pengajuanCount],
+                                    ['Sedang PKL', $kegiatanCount]
                                 ],
                             ]
                         ],

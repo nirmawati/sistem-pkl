@@ -209,7 +209,7 @@ class LogPklController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->updated_at = date('d-M-Y');
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['/pkl/log-pkl']);
             }
         }
 

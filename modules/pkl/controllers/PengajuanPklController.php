@@ -12,6 +12,7 @@ use app\models\VwmahasiswaProdi;
 use app\models\Dosen;
 use app\models\Mahasiswa;
 use app\modules\pkl\utils\Roles;
+use yii\web\UploadedFile;
 use yii\helpers\Json;
 use kartik\mpdf\Pdf;
 
@@ -217,6 +218,20 @@ class PengajuanPklController extends Controller
             // 5;"Sedang PKL"
             // 6;"Tidak diproses"
 
+            $bukti = UploadedFile::getInstance($model, 'bukti');
+            if (!is_null($bukti)) {
+                $model->bukti = $bukti->name;
+                // $ext = end((explode(".", $laporan->name)));
+                // generate a unique file name to prevent duplicate filenames
+                // $model->image_web_filename = Yii::$app->security->generateRandomString() . ".{$ext}";
+                // the path to save file, you can set an uploadPath
+                // in Yii::$app->params (as used in example below)                       
+                Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/web/uploads/file-bukti/';
+                $path = Yii::$app->params['uploadPath'] . $model->bukti;
+                $model->status_pelaksanaan = 4; //diterima
+                $bukti->saveAs($path);
+            }
+
             $tempSurat = $model->status_surat;
             $tempPelaksanaan = $model->status_pelaksanaan;
             $tempKegiatan = $model->status_kegiatan;
@@ -225,7 +240,7 @@ class PengajuanPklController extends Controller
                 $model->status_pelaksanaan = 2; //menunggu
             } elseif ($tempPelaksanaan == 4) {
                 $model->status_pelaksanaan = 4; //diterima
-                $model->status_kegiatan = 2; //menunggu
+                $model->status_kegiatan = 5; //menunggu
             } elseif ($tempKegiatan == 3) {
                 $model->status_kegiatan = 3; //selesai
             }

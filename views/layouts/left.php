@@ -34,7 +34,7 @@ $userid = Yii::$app->user->identity->id;
 
             } elseif(Roles::currentRole($userid) == Roles::MHS) {
                 $menus [] =['label' => 'Home', 'icon' => 'home', 'url' => ['/']];                
-                $menus[] = ['label' => 'Mahasiswa', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']];
+                $menus[] = ['label' => 'Pengajuan', 'icon' => 'edit', 'url' => ['/pkl/pengajuan-pkl']];
                 $menus[] = ['label' => 'Mitra', 'icon' => 'road', 'url' => ['/pkl/mitra-pkl']];
                 $menus[] = ['label' => 'Laporan Harian', 'icon' => 'tasks', 'url' => ['/pkl/log-pkl']];
                 $menus[] = ['label' => 'Laporan Akhir', 'icon' => 'book', 'url' => ['/pkl/detail-pkl']];
