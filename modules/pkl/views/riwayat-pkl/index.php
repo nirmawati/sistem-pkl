@@ -16,6 +16,7 @@ use kartik\select2\Select2;
 use kartik\editable\Editable;
 use kartik\grid\GridView;
 
+use fedemotta\datatables\DataTables;
 use microinginer\dropDownActionColumn\DropDownActionColumn;
 
 /* @var $this yii\web\View */
@@ -45,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
     <?php Pjax::begin(); ?>
 
-    <?= GridView::widget([
+    <?= DataTables::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -53,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'id',
             [
                 'label' => 'Mahasiswa',
-                'attribute' => 'nama_mhs',
+                'attribute' => 'mhs_id',
                 'content' => function ($data) {
                     return $data->viewMhsProdi->nama;
                 }
@@ -140,8 +141,13 @@ $this->params['breadcrumbs'][] = $this->title;
             //     ]
             // ],
             [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{view}',
+                'class' => DropDownActionColumn::className(),
+                'items' => [
+                    [
+                        'label' => 'Lihat',
+                        'url'   => ['view'],
+                    ],
+                ]
             ],
         ],
     ]); ?>

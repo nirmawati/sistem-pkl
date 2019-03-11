@@ -71,7 +71,7 @@ class MitraPklController extends Controller
         $model = new MitraPkl();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['/pkl/mitra-pkl']);
         } else if (Yii::$app->request->isAjax) {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -96,7 +96,7 @@ class MitraPklController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['/pkl/mitra-pkl']);
         }
 
         return $this->render('update', [
@@ -115,7 +115,7 @@ class MitraPklController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/pkl/mitra-pkl']);
     }
 
     /**

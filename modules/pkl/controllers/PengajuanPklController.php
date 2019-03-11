@@ -57,26 +57,33 @@ class PengajuanPklController extends Controller
         $dosenProdi = Dosen::find()
             ->where(['homebase_id' => $mahasiswa1->prodi_id])
             ->one();
-
-        $dataProvider->pagination = [
-            'pageSize' => 10
-        ];
         
         //nampilin data sesuai user login
         if (Roles::currentRole($userid) == Roles::DOSEN) {
-            $dataProvider->query->andWhere(['dosen_id' => $dosen->id]);
+            $dataProvider->query->andWhere(['dosen_id' => $dosen->id])->orderBy(['updated_at'=>SORT_DESC]);
+ 
             $model = PengajuanPkl::find()
                 ->where(['dosen_id' => $dosen->id])
-                ->orderBy(['id' => SORT_DESC])
+                ->orderBy(['updated_at' => SORT_DSC])
                 ->one();
                 
         } elseif (Roles::currentRole($userid) == Roles::MHS) {
-            $dataProvider->query->andWhere(['mhs_id' => $mahasiswa->mhsid]);
+            $dataProvider->query->andWhere(['mhs_id' => $mahasiswa->mhsid])->orderBy(['updated_at'=>SORT_DESC]);
+            $model = PengajuanPkl::find()
+                ->where(['mhs_id' => $mahasiswa->mhsid])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
+        }elseif (Roles::currentRole($userid) == Roles::BAAK) {
+            $dataProvider->query->orderBy(['updated_at'=>SORT_DESC]);
             $model = PengajuanPkl::find()
                 ->where(['mhs_id' => $mahasiswa->mhsid])
                 ->orderBy(['id' => SORT_DESC])
                 ->one();
         }
+        
+        $dataProvider->pagination = [
+            'pageSize' => 5
+        ];
 
         if (Yii::$app->request->post('hasEditable')) {
             $id = Yii::$app->request->post('editableKey');
@@ -93,20 +100,6 @@ class PengajuanPklController extends Controller
                 $tempPelaksanaan = $status->status_pelaksanaan;
                 $tempKegiatan = $status->status_kegiatan;
 
-                // if ($tempSurat == 3 && $tempPelaksanaan == 6) {
-                //     $status->status_pelaksanaan = 2; //menunggu
-                // } elseif ($tempPelaksanaan == 4) {
-                //     $status->status_pelaksanaan = 4; //diterima
-                //     $status->status_kegiatan = 5; //menunggu
-                //     $status->status_surat = 3;
-                // } elseif ($tempKegiatan == 3) {
-                //     $status->status_kegiatan = 3; //selesai
-                // }elseif ($tempSurat == 3 && $tempPelaksanaan == 1) {
-                //     $status->status_kegiatan = 6; //tidak di proses
-                // }
-                // elseif ($tempSurat == 1||$tempSurat == 2) {
-                //     $status->status_pelaksanaan = 6; //tidak di proses
-                // }
                 if ($tempSurat == 1 || $tempSurat==2){
                     $status->status_pelaksanaan = 6;
                     $status->status_kegiatan = 6;
@@ -174,7 +167,7 @@ class PengajuanPklController extends Controller
             $model->status_pelaksanaan = 6;
             $model->status_kegiatan = 6;
             if ($model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['/pkl/pengajuan-pkl']);
             }
         }
 
@@ -247,7 +240,7 @@ class PengajuanPklController extends Controller
             $model->updated_at = date('d-M-Y');
 
             if ($model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['/pkl/pengajuan-pkl']);
             }
         }
 
@@ -270,7 +263,7 @@ class PengajuanPklController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/pkl/pengajuan-pkl']);
     }
 
     /**

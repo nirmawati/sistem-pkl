@@ -89,9 +89,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     if (Roles::currentRole($userid) == Roles::BAAK) {
         $isBAAK = false;
-    } elseif (Roles::currentRole($userid) == Roles::DOSEN) {
+    } elseif (Roles::currentRole($userid) == Roles::DOSEN && $model->status_kegiatan!=6) {
         $isDosen = false;
-    } elseif (Roles::currentRole($userid) == Roles::MHS) {
+    } elseif (Roles::currentRole($userid) == Roles::MHS && $model->status_pelaksanaan!=6) {
         $isMhs = false;
     }
 ?>
@@ -216,12 +216,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]);
                 },
             ],
-            
-            // 'bukti',
-
-            // 'mulai',
-            // 'selesai',
-            //'semester',
             //'mhs_id',
             //'dosen_id',
             [

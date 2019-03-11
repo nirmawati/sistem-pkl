@@ -44,6 +44,7 @@ class LogPklController extends Controller
      */
     public function actionIndex()
     {
+        $pengajuanPkl;
         $userid = Yii::$app->user->identity->id;
         if (Roles::currentRole($userid) == Roles::DOSEN) {
             $searchModel = new PengajuanPklSearch();
@@ -72,8 +73,6 @@ class LogPklController extends Controller
                 ->where(['user_id' => $userid])
                 ->one();
 
-            $dataProvider->query->andWhere(['dosen_id' => $dosen->id, 'status_kegiatan' => 5]);
-
             $pengajuanPkl = PengajuanPkl::find()
                 ->where([
                     'dosen_id' => $dosen->id,
@@ -81,6 +80,9 @@ class LogPklController extends Controller
                 ])
                 ->orderBy(['id' => SORT_DESC])
                 ->all();
+
+            $dataProvider->query->andWhere(['dosen_id' => $dosen->id, 'status_kegiatan' => 5]);
+
 
             $model = LogPkl::find()
                 ->where(['dosen_id' => $dosen->id])
@@ -92,6 +94,9 @@ class LogPklController extends Controller
                 ->where(['mhs_id' => $mahasiswa->mhsid])
                 ->orderBy(['id' => SORT_DESC])
                 ->one();
+
+            var_dump($pengajuanPkl);
+            echo $pengajuanPkl->id;
 
             $dataProvider->query->andWhere(['pkl_id' => $pengajuanPkl->id]);
             $model = LogPkl::find()
@@ -172,7 +177,7 @@ class LogPklController extends Controller
             ->one();
 
         $pengajuanPkl = PengajuanPkl::find()
-            ->where(['mhs_id' => $mahasiswa->mhsid])
+            ->where(['mhs_id' => $mahasiswa->mhsid, 'status_kegiatan' => 5])
             ->one();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -183,7 +188,7 @@ class LogPklController extends Controller
             $model->updated_at = date('d-M-Y');
             // return $this->redirect(['view', 'id' => $model->id]);
             if ($model->save()) {
-                return $this->redirect(Yii::$app->request->referrer);
+                return $this->redirect(['/pkl/log-pkl']);
             }
         }
 
@@ -208,14 +213,14 @@ class LogPklController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->updated_at = date('d-M-Y');
-            if($model->save()){
+            if ($model->save()) {
                 return $this->redirect(['/pkl/log-pkl']);
             }
         }
 
         return $this->render('update', [
             'model' => $model,
-            'mhs'=>$mahasiswa,
+            'mhs' => $mahasiswa,
         ]);
     }
 
@@ -230,7 +235,7 @@ class LogPklController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/pkl/log-pkl']);
     }
 
     /**

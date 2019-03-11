@@ -71,7 +71,7 @@ class KategoriIndustriController extends Controller
             $model->created_at = date('d-M-Y');
             $model->updated_at = date('d-M-Y');
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['/pkl/kategori-industri']);
             }
         }
 
@@ -94,7 +94,7 @@ class KategoriIndustriController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->updated_at = date('d-M-Y');
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['/pkl/kategori-industri']);
             }
         }
 
@@ -114,7 +114,7 @@ class KategoriIndustriController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/pkl/kategori-industri']);
     }
 
     /**

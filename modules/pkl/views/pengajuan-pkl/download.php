@@ -35,7 +35,7 @@
 			<table>
 				<tbody>
 					<tr>
-						<td>Nomor</td><td>:</td><td><?= sprintf("%03d", $model->id); ?>/S.Peng/BAAK/<?=$prodi?>/I/<?= date('Y'); ?></td>
+						<td>Nomor</td><td>:</td><td><?= sprintf("%03d", $model->id); ?>/S.Peng/BAAK/<?=$prodi?>/II/<?= date('Y'); ?></td>
 					</tr>
                     <tr>
 						<td>Lamp</td><td>:</td><td>-</td>
@@ -96,8 +96,8 @@
 			        </table>
 
                 <br>
-                Mengenai jadwal dan pelaksanaan Kerja Praktek dilaksanakan dengan pada tanggal <?php echo tgl_indo($model->mulai) ?> s/d <?php echo tgl_indo($model->selesai) ?>
-                <br>
+                Mengenai jadwal dan pelaksanaan Kerja Praktek dilaksanakan dengan pada tanggal <?php echo tgl_indo($model->mulai) ?> s/d <?php echo tgl_indo($model->selesai) ?>.
+                <br><br>
                 Demikian permohonan kami. Atas perhatian dan kerja sama yang baik kami ucapkan terima kasih.
 			</p><br><br>
 			<div clas="row">

@@ -48,7 +48,9 @@ class PengajuanPkl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['tanggal', 'mitra_id', 'mulai', 'selesai','semester','topik','mhs_id','dosen_id'], 'required'],
             [['tanggal', 'mulai', 'selesai', 'created_at', 'updated_at'], 'safe'],
+            ['mulai', 'compare', 'compareAttribute' => 'selesai', 'operator' => '<', 'enableClientValidation' => false],
             [['mitra_id', 'mhs_id', 'dosen_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'default', 'value' => null],
             [['mitra_id', 'mhs_id', 'dosen_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'integer'],
             [['semester', 'topik'], 'string', 'max' => 255],

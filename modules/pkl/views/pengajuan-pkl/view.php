@@ -63,7 +63,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status_kegiatan',
                 'value' => $model->statusKegiatan->nama,
             ],
-            'bukti'
+            [
+                'attribute' => 'bukti',
+                'value' => function ($data) {
+                    if ($data->bukti == "") {
+                        return "Bukti belum dimasukkan";
+                    }else { 
+                        return $data->bukti;
+                    }
+                },
+            ],
         ],
     ]) ?>
 

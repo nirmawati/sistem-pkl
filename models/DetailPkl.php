@@ -41,6 +41,7 @@ class DetailPkl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['deskripsi_tugas', 'departemen', 'kesesuaian'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['pkl_id', 'kesesuaian', 'dosen_id'], 'default', 'value' => null],
             [['pkl_id', 'kesesuaian', 'dosen_id'], 'integer'],

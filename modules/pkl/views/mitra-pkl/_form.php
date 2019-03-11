@@ -16,19 +16,18 @@ use yii\helpers\ArrayHelper;
     <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-6">
-        <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 		</div>
 		<div class="col-md-6">
-        <?= $form->field($model, 'alamat')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'alamat')->textInput(['maxlength' => true]) ?>
 		</div>
 	</div>
-
         <?= $form->field($model, 'kontak')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'telpon')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'telpon')->textInput(['maxlength' => true,'type' => 'number']) ?>
 	
         <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-</div>
+    </div>
 
 <div class="container-fluid">
 	<div class="row">

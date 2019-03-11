@@ -35,11 +35,13 @@ class MitraPkl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['nama', 'alamat', 'kontak', 'telpon','email','status','kategori_id'], 'required'],
             [['status', 'kategori_id'], 'default', 'value' => null],
             [['status', 'kategori_id'], 'integer'],
             [['nama'], 'string', 'max' => 60],
             [['alamat'], 'string', 'max' => 100],
             [['kontak', 'email'], 'string', 'max' => 30],
+            ['email', 'email'],
             [['telpon'], 'string', 'max' => 20],
             [['kategori_id'], 'exist', 'skipOnError' => true, 'targetClass' => KategoriIndustri::className(), 'targetAttribute' => ['kategori_id' => 'id']],
         ];

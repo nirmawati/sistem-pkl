@@ -72,16 +72,7 @@ use app\modules\pkl\utils\Roles;
     ?>
     
     <?= $form->field($model, 'topik')->textInput(['maxlength' => true]) ?>
-
-    <!-- <div class="col-md-4">
-        <?= $form->field($model, 'tanggal')->widget(DatePicker::classname(), [
-            'options' => ['placeholder' => 'Tanggal Pengajuan'],
-            'pluginOptions' => [
-                'format' => 'dd-M-yyyy',
-                'autoclose' => true
-            ]
-        ]); ?>
-    </div> -->
+    
     <div class="col-md-6">
         <?= $form->field($model, 'mulai')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Tanggal Mulai'],

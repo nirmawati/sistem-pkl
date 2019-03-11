@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <?= Html::a('Tambah Detail', ['create'], ['class' => 'btn btn-success']) ?>
                     <?php else : ?>
-                        <?= Html::a('Update Detail', ['update?id=' . $detailPkl->id], ['class' => 'btn btn-success']) ?>
+                        <?= Html::a('Ubah Detail', ['update?id=' . $detailPkl->id], ['class' => 'btn btn-success']) ?>
                         <?= $this->render('detailmhs', [
                             'model' => $model,
                             'mahasiswa' => $mahasiswa,
@@ -117,18 +117,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'nilai_akhir',
-                        'content' => function ($data) {
+                        'label'=>'Grade',
+                        'value' => function ($data) {
                             if ($data->nilai_akhir != "") {
-                                if ($data->nilai_akhir >=86 || $data->nilai_akhir <=100) {
-                                    echo 'A';
-                                } else if ($data->nilai_akhir >=70 || $data->nilai_akhir <=85) {
-                                    echo 'B';
-                                }else if ($data->nilai_akhir >=69 || $data->nilai_akhir <=56) {
-                                    echo 'C';
-                                }else if ($data->nilai_akhir >=40 || $data->nilai_akhir <=55) {
-                                    echo 'D';
-                                }else if ($data->nilai_akhir >=0|| $data->nilai_akhir <=39) {
-                                    echo 'E';
+                                if ($data->nilai_akhir >=86 && $data->nilai_akhir <=100) {
+                                    return 'A';
+                                } else if ($data->nilai_akhir >=70 && $data->nilai_akhir <=85) {
+                                    return 'B';
+                                }else if ($data->nilai_akhir >=69 && $data->nilai_akhir <=56) {
+                                    return 'C';
+                                }else if ($data->nilai_akhir >=40 && $data->nilai_akhir <=55) {
+                                    return 'D';
+                                }else if ($data->nilai_akhir >=0&& $data->nilai_akhir <=39) {
+                                    return 'E';
                                 } 
                             } else {
                                 return 'belum di input';

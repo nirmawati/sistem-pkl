@@ -8,8 +8,8 @@ use yii\helpers\Url;
 
 use kartik\select2\Select2;
 use app\models\KategoriIndustri;
-use fedemotta\datatables\DataTables;
 use app\modules\pkl\utils\Roles;
+use fedemotta\datatables\DataTables;
 use microinginer\dropDownActionColumn\DropDownActionColumn;
 
 /* @var $this yii\web\View */
@@ -106,7 +106,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]
             ],
-
             // [
             //     'class' => 'yii\grid\ActionColumn',
             //     'template' => '{view} {update} {delete}',

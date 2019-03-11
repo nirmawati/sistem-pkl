@@ -1,11 +1,16 @@
 <?php
 use yii\helpers\Html;
 use app\models\VwmahasiswaProdi;
+use app\models\Dosen;
+use app\modules\pkl\utils\Roles;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 $user = Yii::$app->user->identity;
 $mahasiswa = VwmahasiswaProdi::find()
+    ->where(['user_id' => $user->id])
+    ->one();
+$dosen = Dosen::find()
     ->where(['user_id' => $user->id])
     ->one();
 ?>
@@ -36,10 +41,16 @@ $mahasiswa = VwmahasiswaProdi::find()
                                 <li class="user-header">
                                     <img src="<?= $directoryAsset ?>/img/default.png" class="img-circle"
                                         alt="User Image"/>
-
                                     <p>
-                                        <?= $mahasiswa->nama ?>
-                                        <small><?= $mahasiswa->prodi ?></small>
+                                        <?php if (Roles::currentRole($user) == Roles::MHS) { ?>
+                                            <?= $mahasiswa->nama ?>
+                                            <small><?= $mahasiswa->prodi ?></small>
+                                            <small><?= $mahasiswa->nim ?></small>
+                                        <?php }else{ ?>
+                                            <?= $dosen->nama ?>
+                                            <small><?= $dosen->homebase->nama ?></small>
+                                            <small><?= $dosen->nidn ?></small>
+                                        <?php } ?>
                                     </p>
                                 </li>
                                 

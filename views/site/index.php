@@ -71,6 +71,7 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                 <!-- Tab links -->
                 <div class="tab">
                     <button class="tablinks col-md-3" onclick="openCity(event, 'Prosedur')" id="defaultOpen">Panduan Pengajuan</button>
+                    
                     <button class="tablinks col-md-3" onclick="openCity(event, 'Pedoman')">Panduan Pelaksanaan</button>
                     <button class="tablinks col-md-3" onclick="openCity(event, 'Tatib')">Tata Tertib</button>
                     <button class="tablinks col-md-3" onclick="openCity(event, 'Doc')">Dokumen</button>
@@ -117,8 +118,6 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                             <li>Hal-hal lain dapat menyesuaikan dengan kondisi di tempat PKL.</li>
                         </ol>
                     </div>
-                    
-                    
                 </div>
                 <div id="Doc" class="tabcontent">
                 <h3>Dokumen PKL</h3>
@@ -137,8 +136,6 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                     // Declare all variables
                     var i, tabcontent, tablinks;
 
-                    document.getElementById("defaultOpen").click();
-
                     // Get all elements with class="tabcontent" and hide them
                     tabcontent = document.getElementsByClassName("tabcontent");
                     for (i = 0; i < tabcontent.length; i++) {
@@ -155,6 +152,7 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                     document.getElementById(cityName).style.display = "block";
                     evt.currentTarget.className += " active";
                     }
+                    document.getElementById("defaultOpen").click();
             </script>
             <?php endif; ?>
         </div>

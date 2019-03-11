@@ -191,7 +191,7 @@ class DetailPklController extends Controller
             $model->created_at = date('d-M-Y');
             $model->updated_at = date('d-M-Y');
             if ($model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['/pkl/detail-pkl']);
             } else {
                 var_dump($model->getErrors());
                 die();
@@ -253,7 +253,7 @@ class DetailPklController extends Controller
             }
             $model->updated_at = date('d-M-Y');
             if ($model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['/pkl/detail-pkl']);
             } else {
                 var_dump($model->getErrors());
                 die();
@@ -278,7 +278,7 @@ class DetailPklController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/pkl/detail-pkl']);
     }
 
     /**
