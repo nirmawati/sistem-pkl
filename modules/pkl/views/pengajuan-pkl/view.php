@@ -31,20 +31,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'selesai',
                 'format'=>['Date','php:d-M-Y']
             ],
-            [
-                'attribute' => 'semester',
-                'value' => function ($data) {
-                    if ($data->semester == 0) {
-                        return "Semester 5";
-                    }else if ($data->semester == 1) {
-                        return "Semester 6";
-                    }else if ($data->semester == 2) { 
-                        return "Semester 7";
-                    }else if ($data->semester == 3) { 
-                        return "Semester 8";
-                    }
-                },
-            ],
+            // [
+            //     'attribute' => 'semester_id',
+            //     'value' => function ($data) {
+            //         if ($data->semester == 0) {
+            //             return "Semester 5";
+            //         }else if ($data->semester == 1) {
+            //             return "Semester 6";
+            //         }else if ($data->semester == 2) { 
+            //             return "Semester 7";
+            //         }else if ($data->semester == 3) { 
+            //             return "Semester 8";
+            //         }
+            //     },
+            // ],
             // 'mhs_id',
             [
                 'attribute' => 'dosen_id',

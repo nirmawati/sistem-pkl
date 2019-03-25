@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'topik') ?>
 
-    <?php // echo $form->field($model, 'semester') ?>
+    <?php echo $form->field($model, 'semester_id') ?>
 
     <?php // echo $form->field($model, 'mhs_id') ?>
 

@@ -7,7 +7,7 @@ use yii\bootstrap\Modal;
 use yii\helpers\Url;
 
 use kartik\select2\Select2;
-use app\models\KategoriIndustri;
+use app\modules\pkl\models\KategoriIndustri;
 use app\modules\pkl\utils\Roles;
 use fedemotta\datatables\DataTables;
 use microinginer\dropDownActionColumn\DropDownActionColumn;

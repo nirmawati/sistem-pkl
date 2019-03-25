@@ -8,12 +8,12 @@ use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use kartik\file\FileInput;
 
-use app\models\VwmahasiswaProdi;
-use app\models\KategoriIndustri;
-use app\models\MitraPkl;
-use app\models\TopikPkl;
-use app\models\StatusPkl;
-use app\models\Dosen;
+use app\modules\pkl\models\VwmahasiswaProdi;
+use app\modules\pkl\models\KategoriIndustri;
+use app\modules\pkl\models\MitraPkl;
+use app\modules\pkl\models\TopikPkl;
+use app\modules\pkl\models\StatusPkl;
+use app\modules\pkl\models\Dosen;
 use app\modules\pkl\utils\Roles;
 
 /* @var $this yii\web\View */

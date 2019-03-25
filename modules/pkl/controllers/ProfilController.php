@@ -4,11 +4,11 @@ namespace app\modules\pkl\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use app\models\VwmahasiswaProdi;
-use app\models\Mahasiswa;
-use app\models\PengajuanPkl;
-use app\models\MitraPkl;
-use app\models\KategoriIndustri;
+use app\modules\pkl\models\VwmahasiswaProdi;
+use app\modules\pkl\models\Mahasiswa;
+use app\modules\pkl\models\PengajuanPkl;
+use app\modules\pkl\models\MitraPkl;
+use app\modules\pkl\models\KategoriIndustri;
 
 class ProfilController extends \yii\web\Controller
 {

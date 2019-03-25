@@ -7,7 +7,7 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
 use kartik\select2\Select2;
-use app\models\Prodi;
+use app\modules\pkl\models\Prodi;
 use fedemotta\datatables\DataTables;
 use microinginer\dropDownActionColumn\DropDownActionColumn;
 

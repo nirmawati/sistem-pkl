@@ -10,7 +10,7 @@ use kartik\grid\GridView;
 use fedemotta\datatables\DataTables;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
-use app\models\MitraPkl;
+use app\modules\pkl\models\MitraPkl;
 use microinginer\dropDownActionColumn\DropDownActionColumn;
 
 /* @var $this yii\web\View */

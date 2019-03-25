@@ -3,19 +3,19 @@
 namespace app\modules\pkl\controllers;
 
 use Yii;
-use app\models\DetailPkl;
-use app\models\DetailPklSearch;
+use app\modules\pkl\models\DetailPkl;
+use app\modules\pkl\models\DetailPklSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use yii\web\UploadedFile;
-use app\models\PengajuanPkl;
-use app\models\VwmahasiswaProdi;
-use app\models\MitraPkl;
+use app\modules\pkl\models\PengajuanPkl;
+use app\modules\pkl\models\VwmahasiswaProdi;
+use app\modules\pkl\models\MitraPkl;
 use app\modules\pkl\utils\Roles;
-use app\models\Dosen;
-use app\models\Mahasiswa;
+use app\modules\pkl\models\Dosen;
+use app\modules\pkl\models\Mahasiswa;
 
 
 /**

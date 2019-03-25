@@ -3,18 +3,18 @@
 namespace app\modules\pkl\controllers;
 
 use Yii;
-use app\models\LogPkl;
-use app\models\LogPklSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\VwmahasiswaProdi;
-use app\models\PengajuanPkl;
-use app\models\Dosen;
-use app\modules\pkl\utils\Roles;
 use kartik\mpdf\Pdf;
-use app\models\MitraPkl;
-use app\models\PengajuanPklSearch;
+use app\modules\pkl\models\LogPkl;
+use app\modules\pkl\models\LogPklSearch;
+use app\modules\pkl\models\VwmahasiswaProdi;
+use app\modules\pkl\models\PengajuanPkl;
+use app\modules\pkl\models\Dosen;
+use app\modules\pkl\utils\Roles;
+use app\modules\pkl\models\MitraPkl;
+use app\modules\pkl\models\PengajuanPklSearch;
 
 
 /**
@@ -94,9 +94,6 @@ class LogPklController extends Controller
                 ->where(['mhs_id' => $mahasiswa->mhsid])
                 ->orderBy(['id' => SORT_DESC])
                 ->one();
-
-            var_dump($pengajuanPkl);
-            echo $pengajuanPkl->id;
 
             $dataProvider->query->andWhere(['pkl_id' => $pengajuanPkl->id]);
             $model = LogPkl::find()

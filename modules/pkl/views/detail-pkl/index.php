@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use fedemotta\datatables\DataTables;
 use app\modules\pkl\utils\Roles;
-use app\models\PengajuanPkl;
+use app\modules\pkl\models\PengajuanPkl;
 use microinginer\dropDownActionColumn\DropDownActionColumn;
 
 

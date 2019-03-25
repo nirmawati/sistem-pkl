@@ -3,17 +3,16 @@
 namespace app\modules\pkl\controllers;
 
 use Yii;
+use app\modules\pkl\models\Semester;
+use app\modules\pkl\models\SemesterSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\modules\pkl\models\StatusPkl;
-use app\modules\pkl\models\StatusPklSearch;
-
 
 /**
- * StatusPklController implements the CRUD actions for StatusPkl model.
+ * SemesterController implements the CRUD actions for Semester model.
  */
-class StatusPklController extends Controller
+class SemesterController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,12 +30,12 @@ class StatusPklController extends Controller
     }
 
     /**
-     * Lists all StatusPkl models.
+     * Lists all Semester models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new StatusPklSearch();
+        $searchModel = new SemesterSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class StatusPklController extends Controller
     }
 
     /**
-     * Displays a single StatusPkl model.
+     * Displays a single Semester model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -59,20 +58,16 @@ class StatusPklController extends Controller
     }
 
     /**
-     * Creates a new StatusPkl model.
+     * Creates a new Semester model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new StatusPkl();
+        $model = new Semester();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->created_at = date('d-M-Y');
-            $model->updated_at = date('d-M-Y');
-            if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -81,7 +76,7 @@ class StatusPklController extends Controller
     }
 
     /**
-     * Updates an existing StatusPkl model.
+     * Updates an existing Semester model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -91,11 +86,8 @@ class StatusPklController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->updated_at = date('d-M-Y');
-            if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);                
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -104,7 +96,7 @@ class StatusPklController extends Controller
     }
 
     /**
-     * Deletes an existing StatusPkl model.
+     * Deletes an existing Semester model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -118,15 +110,15 @@ class StatusPklController extends Controller
     }
 
     /**
-     * Finds the StatusPkl model based on its primary key value.
+     * Finds the Semester model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return StatusPkl the loaded model
+     * @return Semester the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StatusPkl::findOne($id)) !== null) {
+        if (($model = Semester::findOne($id)) !== null) {
             return $model;
         }
 

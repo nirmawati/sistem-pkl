@@ -7,8 +7,8 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
 use yii\bootstrap\ButtonDropdown;
 
-use app\models\StatusPkl;
-use app\models\MitraPkl;
+use app\modules\pkl\models\StatusPkl;
+use app\modules\pkl\models\MitraPkl;
 use app\modules\pkl\utils\Roles;
 
 use kartik\date\DatePicker;

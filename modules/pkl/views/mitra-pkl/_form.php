@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\models\KategoriIndustri;
+use app\modules\pkl\models\KategoriIndustri;
 use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */

@@ -3,11 +3,12 @@
 namespace app\modules\pkl\controllers;
 
 use Yii;
-use app\models\MitraPkl;
-use app\models\MitraPklSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\modules\pkl\models\MitraPkl;
+use app\modules\pkl\models\MitraPklSearch;
+
 
 /**
  * MitraPklController implements the CRUD actions for MitraPkl model.

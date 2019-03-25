@@ -3,8 +3,8 @@
 namespace app\modules\pkl\controllers;
 
 use Yii;
-use app\models\KategoriIndustri;
-use app\models\KategoriIndustriSearch;
+use app\modules\pkl\models\KategoriIndustri;
+use app\modules\pkl\models\KategoriIndustriSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
