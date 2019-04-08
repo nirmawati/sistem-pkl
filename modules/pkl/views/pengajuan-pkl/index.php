@@ -9,6 +9,7 @@ use yii\bootstrap\ButtonDropdown;
 
 use app\modules\pkl\models\StatusPkl;
 use app\modules\pkl\models\MitraPkl;
+use app\modules\pkl\models\Prodi;
 use app\modules\pkl\utils\Roles;
 
 use kartik\date\DatePicker;
@@ -113,6 +114,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'label' => 'Prodi',
+                'attribute' => 'mhs_id',
+                'contentOptions' => ['style' => 'width:1000px; white-space: normal;'],
+                'value' => function ($data) {
+                    return $data->viewMhsProdi->prodi;
+                },
+                // 'filter' => Select2::widget([
+                //     'model' => $searchModel,
+                //     'attribute' => 'prodi',
+                //     'data' => ArrayHelper::map(Prodi::find()->all(), 'id', 'nama'),
+                //     'options' => ['placeholder' => ''],
+                //     'pluginOptions' => [
+                //         'allowClear' => true
+                //     ],
+                // ]),
+            ],
+            [
                 'attribute' => 'tanggal',
                 'value' => 'tanggal',
                 'contentOptions' => ['style' => 'width:10px; white-space: normal;'],
@@ -140,7 +158,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
-
                 ]),
             ],
             'topik',

@@ -66,7 +66,7 @@ class PengajuanPklSearch extends PengajuanPkl
             'mitra_id' => $this->mitra_id,
             'mulai' => $this->mulai,
             'selesai' => $this->selesai,
-            'semester_id' => $this->semester,
+            'semester' => $this->semester,
             'mhs_id' => $this->mhs_id,
             'dosen_id' => $this->dosen_id,
             'topik' => $this->topik,
