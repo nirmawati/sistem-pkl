@@ -235,14 +235,18 @@ class DetailPklController extends Controller
             ->where(['user_id' => $userid])
             ->one();
 
-        $listPkl = PengajuanPkl::find()
-            ->where(['mhs_id' => $mahasiswa->mhsid])
-            ->orderBy(['id' => SORT_DESC])
-            ->one();
+        if(Roles::currentRole($userid) == Roles::MHS){
+            $listPkl = PengajuanPkl::find()
+                ->where(['mhs_id' => $mahasiswa->mhsid])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
+            $mitra = MitraPkl::find()
+                ->where(['id' => $listPkl->mitra_id])
+                ->one();
+        }else{
+            $mitra=NULL;
+        }
 
-        $mitra = MitraPkl::find()
-            ->where(['id' => $listPkl->mitra_id])
-            ->one();
 
         if ($model->load(Yii::$app->request->post())) {
             $laporan = UploadedFile::getInstance($model, 'laporan');

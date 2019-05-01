@@ -19,7 +19,7 @@ use yii\helpers\Html;
         $pecahkan = explode('-', $tanggal);
         return $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
     }
-    if($model->viewMhsProdi->prodi == "Informatika"){
+    if($mahasiswa->prodi == "Informatika"){
         $prodi = "Prodi_TI";
     }else{
         $prodi = "Prodi_SI";

@@ -58,7 +58,6 @@ class PengajuanPklController extends Controller
         //nampilin data sesuai user login
         if (Roles::currentRole($userid) == Roles::DOSEN) {
             $dataProvider->query->andWhere(['dosen_id' => $dosen->id])->orderBy(['updated_at'=>SORT_DESC]);
- 
             $model = PengajuanPkl::find()
                 ->where(['dosen_id' => $dosen->id])
                 ->orderBy(['updated_at' => SORT_DESC])

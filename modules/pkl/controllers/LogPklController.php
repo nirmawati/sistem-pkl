@@ -89,12 +89,8 @@ class LogPklController extends Controller
                     ->where(['pkl_id' => $pengajuanPkl->id])
                     ->orderBy(['id' => SORT_DESC])
                     ->one();
-            }else{
-                $model = NULL;
             }
-
         }
-        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -137,17 +133,11 @@ class LogPklController extends Controller
             'pageSize' => 10
         ];
 
-        $model = LogPkl::find()
-            ->where(['dosen_id' => $dosen->id])
-            ->orderBy(['id' => SORT_DESC])
-            ->one();
-
         return $this->render('detail', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'mahasiswa' => $mahasiswa,
-            'id' => $id,
-            'userid' => $userid,
+            'id' => $id
         ]);
     }
 
@@ -176,7 +166,9 @@ class LogPklController extends Controller
             $model->tanggal = date('d-M-Y');
             $model->created_at = date('d-M-Y');
             $model->updated_at = date('d-M-Y');
-            // return $this->redirect(['view', 'id' => $model->id]);
+            if($model->ket == 0){
+                $model->kegiatan = "";
+            }
             if ($model->save()) {
                 return $this->redirect(['/pkl/log-pkl']);
             }
