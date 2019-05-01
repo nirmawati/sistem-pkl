@@ -41,7 +41,12 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
     <div class="container-fluid">
         <div class="row">
             <?php if (Roles::currentRole($userid) == Roles::MHS) : {
-                if ($model->status_surat == 3 && $model->status_pelaksanaan == 2) {
+                if($model == NULL){
+                    echo '<div class="alert alert-danger alert-dismissible">
+                    <h4><i class="icon fa fa-check"></i> BELUM DAFTAR !</h4> Anda belum terdaftar sebagai Mahasiswa PKL, silahkan daftar terlebih dahulu untuk memulai kegiatan PKL..
+                </div>';
+                }
+                else if ($model->status_surat == 3 && $model->status_pelaksanaan == 2) {
                     echo '<div class="alert alert-success alert-dismissible">
                             <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
                             <h4><i class="icon fa fa-check"></i> Surat Pengajuan Selesai!</h4>Silahkan Ambil Surat Pengantar PKL Anda diruang BAAK...
@@ -61,10 +66,6 @@ if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) ==
                             <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
                             <h4><i class="icon fa fa-check"></i> Tunggu ya!</h4>Surat Pengantar PKL Anda sedang diproses...
                         </div>';
-                } else {
-                    echo '<div class="alert alert-danger alert-dismissible">
-                    <h4><i class="icon fa fa-check"></i> BELUM DAFTAR !</h4> Anda belum terdaftar sebagai Mahasiswa PKL, silahkan daftar terlebih dahulu untuk memulai kegiatan PKL..
-                </div>';
                 }
             } ?>
             <div class="col-md-12">

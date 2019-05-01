@@ -40,7 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
         //$status_kegiatan = $model->status_kegiatan == NULL || $model->status_kegiatan != 3; //status kegiatan ditolak
         
         if (Roles::currentRole($userid) == Roles::MHS) {
-            if ($model->status_surat == 3 && $model->status_pelaksanaan == 2) {
+            if($model == NULL){
+                echo '<div class="alert alert-danger alert-dismissible">
+                    <h4><i class="icon fa fa-check"></i> BELUM DAFTAR !</h4> Anda belum terdaftar sebagai Mahasiswa PKL, silahkan daftar terlebih dahulu untuk memulai kegiatan PKL..
+                </div>';
+                echo Html::button('Daftar Sekarang', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']);
+            }
+            else if ($model->status_surat == 3 && $model->status_pelaksanaan == 2) {
                 echo '<div class="alert alert-success alert-dismissible">
                         <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
                         <h4><i class="icon fa fa-check"></i> Surat Pengajuan Selesai!</h4>Silahkan Ambil Surat Pengantar PKL Anda diruang BAAK...
@@ -60,11 +66,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         <!-- <button type="button" class="close" aria-hidden="true">×</button> -->
                         <h4><i class="icon fa fa-check"></i> Tunggu ya!</h4>Surat Pengantar PKL Anda sedang diproses...
                     </div>';
-            }else {
-                echo '<div class="alert alert-danger alert-dismissible">
-                    <h4><i class="icon fa fa-check"></i> BELUM DAFTAR !</h4> Anda belum terdaftar sebagai Mahasiswa PKL, silahkan daftar terlebih dahulu untuk memulai kegiatan PKL..
-                </div>';
-                echo Html::button('Daftar Sekarang', ['value' => Url::to('pengajuan-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']);
             }
         }
     ?>
@@ -90,9 +91,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     if (Roles::currentRole($userid) == Roles::BAAK) {
         $isBAAK = false;
-    } elseif (Roles::currentRole($userid) == Roles::DOSEN && $model->status_kegiatan!=6) {
+    } elseif (Roles::currentRole($userid) == Roles::DOSEN && $model != NULL && $model->status_kegiatan!=6) {
         $isDosen = false;
-    } elseif (Roles::currentRole($userid) == Roles::MHS && $model->status_pelaksanaan!=6) {
+    } elseif (Roles::currentRole($userid) == Roles::MHS && $model != NULL && $model->status_pelaksanaan!=6 ) {
         $isMhs = false;
     }
 ?>
@@ -167,7 +168,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'readonly' => $isBAAK,
                 'format' => Editable::FORMAT_BUTTON,
                 'editableOptions' => [
-                    'disabled' => $model->status_surat == 3,
+                    'disabled' => function($data){
+                        if($data->status_surat == 3){
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    },
                     'inputType' => Editable::INPUT_DROPDOWN_LIST,
                     'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 2], ['id' => 3]])->all(), 'id', 'nama'),
                 ],

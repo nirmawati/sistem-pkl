@@ -44,31 +44,13 @@ class LogPklController extends Controller
      */
     public function actionIndex()
     {
-        $pengajuanPkl;
         $userid = Yii::$app->user->identity->id;
         if (Roles::currentRole($userid) == Roles::DOSEN) {
             $searchModel = new PengajuanPklSearch();
-
-        } elseif (Roles::currentRole($userid) == Roles::MHS) {
-            $searchModel = new LogPklSearch();
-        }
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $mahasiswa = VwmahasiswaProdi::find()
-            ->where(['user_id' => $userid])
-            ->one();
-
-        $listPkl = PengajuanPkl::find()
-            ->where(['mhs_id' => $mahasiswa->mhsid])
-            ->orderBy(['id' => SORT_DESC])
-            ->one();
-
-        $dataProvider->pagination = [
-            'pageSize' => 10
-        ];
-
-        //nampilin data sesuai user login
-        if (Roles::currentRole($userid) == Roles::DOSEN) {
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $dataProvider->pagination = [
+                'pageSize' => 10
+            ];
             $dosen = Dosen::find()
                 ->where(['user_id' => $userid])
                 ->one();
@@ -83,31 +65,42 @@ class LogPklController extends Controller
 
             $dataProvider->query->andWhere(['dosen_id' => $dosen->id, 'status_kegiatan' => 5]);
 
-
             $model = LogPkl::find()
                 ->where(['dosen_id' => $dosen->id])
                 ->orderBy(['id' => SORT_DESC])
                 ->one();
 
         } elseif (Roles::currentRole($userid) == Roles::MHS) {
+            $searchModel = new LogPklSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $dataProvider->pagination = [
+                'pageSize' => 10
+            ];
+            $mahasiswa = VwmahasiswaProdi::find()
+                ->where(['user_id' => $userid])
+                ->one();
             $pengajuanPkl = PengajuanPkl::find()
                 ->where(['mhs_id' => $mahasiswa->mhsid])
                 ->orderBy(['id' => SORT_DESC])
                 ->one();
+            if($pengajuanPkl != NULL){
+                $dataProvider->query->andWhere(['pkl_id' => $pengajuanPkl->id]);
+                $model = LogPkl::find()
+                    ->where(['pkl_id' => $pengajuanPkl->id])
+                    ->orderBy(['id' => SORT_DESC])
+                    ->one();
+            }else{
+                $model = NULL;
+            }
 
-            $dataProvider->query->andWhere(['pkl_id' => $pengajuanPkl->id]);
-            $model = LogPkl::find()
-                ->where(['pkl_id' => $pengajuanPkl->id])
-                ->orderBy(['id' => SORT_DESC])
-                ->one();
         }
-
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'pengajuanPkl' => $pengajuanPkl,
             'userid' => $userid,
-            'listPkl' => $listPkl,
+            'model' => $model,
         ]);
     }
 

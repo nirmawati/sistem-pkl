@@ -9,9 +9,10 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\AuthAssignment;
-use app\models\VwmahasiswaProdi;
-use app\models\PengajuanPkl;
+use app\modules\pkl\models\AuthAssignment;
+use app\modules\pkl\models\VwmahasiswaProdi;
+use app\modules\pkl\models\PengajuanPkl;
+use app\modules\pkl\utils\Roles;
 
 class SiteController extends Controller
 {
@@ -78,19 +79,26 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $userid = Yii::$app->user->identity->id;
-        $mahasiswa = VwmahasiswaProdi::find()
-            ->where(['user_id' => $userid])
-            ->one();
-        $model = PengajuanPkl::find()
-            ->where(['mhs_id' => $mahasiswa->mhsid])
-            ->orderBy(['id' => SORT_DESC])
-            ->one();
+        if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) == Roles::DOSEN) {
+            return $this->render('index', [
+                'userid' => $userid
+            ]);
+        }else{
+            $mahasiswa = VwmahasiswaProdi::find()
+                ->where(['user_id' => $userid])
+                ->one();
+            $model = PengajuanPkl::find()
+                ->where(['mhs_id' => $mahasiswa->mhsid])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
             
-        return $this->render('index', [
-            'mahasiswa' => $mahasiswa,
-            'userid' => $userid,
-            'model' => $model,
-        ]);
+            return $this->render('index', [
+                'mahasiswa' => $mahasiswa,
+                'userid' => $userid,
+                'model' => $model,
+            ]);
+        }
+
     }
 
     /**

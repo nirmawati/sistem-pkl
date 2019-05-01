@@ -16,7 +16,7 @@ use microinginer\dropDownActionColumn\DropDownActionColumn;
 /* @var $searchModel app\models\MitraPklSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Mitra Pkl';
+$this->title = 'Mitra PKL';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mitra-pkl-index">

@@ -71,13 +71,18 @@ class StatusPklController extends Controller
             $model->created_at = date('d-M-Y');
             $model->updated_at = date('d-M-Y');
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['/pkl/status-pkl']);
             }
+        }else if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('create', [
+                'model' => $model
+            ]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
