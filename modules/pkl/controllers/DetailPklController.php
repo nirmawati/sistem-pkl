@@ -47,55 +47,68 @@ class DetailPklController extends Controller
     {
         $searchModel = new DetailPklSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         $userid = Yii::$app->user->identity->id;
-        $mahasiswa = VwmahasiswaProdi::find()
-            ->where(['user_id' => $userid])
-            ->one();
-
-        $dosen = Dosen::find()
-            ->where(['user_id' => $userid])
-            ->one();
-
-        $listPkl = PengajuanPkl::find()
-            ->where(['mhs_id' => $mahasiswa->mhsid])
-            ->orderBy(['id' => SORT_DESC])
-            ->one();
 
         // nampilin data sesuai user login
         if (Roles::currentRole($userid) == Roles::DOSEN) {
+            $dosen = Dosen::find()
+                ->where(['user_id' => $userid])
+                ->one();
             $dataProvider->query->andWhere(['dosen_id' => $dosen->id]);
             $model = DetailPkl::find()
                 ->where(['dosen_id' => $dosen->id])
                 ->orderBy(['id' => SORT_DESC])
                 ->one();
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'userid' => $userid,
+                'model' => $model,
+                'dosen' => $dosen,
+            ]);
+        }else if (Roles::currentRole($userid) == Roles::MHS) {
+            $mahasiswa = VwmahasiswaProdi::find()
+                ->where(['user_id' => $userid])
+                ->one();
+
+            $model = PengajuanPkl::find()
+                ->where(['mhs_id' => $mahasiswa->mhsid])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();  
+            
+            if($model != NULL){
+                $tgl_mulai = Yii::$app->formatter->format($model->mulai, 'date');
+                $tgl_selesai = Yii::$app->formatter->format($model->selesai, 'date');
+    
+                $mitra = MitraPkl::find()
+                    ->where(['id' => $model->mitra_id])
+                    ->one();
+    
+                $detailPkl = DetailPkl::find()
+                    ->where(['pkl_id' => $model->id])
+                    ->orderBy(['id' => SORT_DESC])
+                    ->one();
+            }else{
+                $mitra = NULL;
+                $tgl_mulai = NULL;
+                $tgl_selesai = NULL;
+                $detailPkl = NULL;
+            }
+                
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'userid' => $userid,
+                'model' => $model,
+                'mahasiswa' => $mahasiswa,
+                'mitra' => $mitra,
+                'tgl_mulai' => $tgl_mulai,
+                'tgl_selesai' => $tgl_selesai,
+                'detailPkl' => $detailPkl
+            ]);
         }
 
-        $tgl_mulai = Yii::$app->formatter->format($listPkl->mulai, 'date');
-        $tgl_selesai = Yii::$app->formatter->format($listPkl->selesai, 'date');
-
-        $mitra = MitraPkl::find()
-            ->where(['id' => $listPkl->mitra_id])
-            ->one();
-
-        $detailPkl = DetailPkl::find()
-            ->where(['pkl_id' => $listPkl->id])
-            ->orderBy(['id' => SORT_DESC])
-            ->one();
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'userid' => $userid,
-            'model' => $model,
-            'mahasiswa' => $mahasiswa,
-            'listPkl' => $listPkl,
-            'dosen' => $dosen,
-            'mitra' => $mitra,
-            'tgl_mulai' => $tgl_mulai,
-            'tgl_selesai' => $tgl_selesai,
-            'detailPkl' => $detailPkl
-        ]);
     }
 
     /**
@@ -222,14 +235,18 @@ class DetailPklController extends Controller
             ->where(['user_id' => $userid])
             ->one();
 
-        $listPkl = PengajuanPkl::find()
-            ->where(['mhs_id' => $mahasiswa->mhsid])
-            ->orderBy(['id' => SORT_DESC])
-            ->one();
+        if(Roles::currentRole($userid) == Roles::MHS){
+            $listPkl = PengajuanPkl::find()
+                ->where(['mhs_id' => $mahasiswa->mhsid])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
+            $mitra = MitraPkl::find()
+                ->where(['id' => $listPkl->mitra_id])
+                ->one();
+        }else{
+            $mitra=NULL;
+        }
 
-        $mitra = MitraPkl::find()
-            ->where(['id' => $listPkl->mitra_id])
-            ->one();
 
         if ($model->load(Yii::$app->request->post())) {
             $laporan = UploadedFile::getInstance($model, 'laporan');

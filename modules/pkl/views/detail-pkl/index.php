@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="detail-pkl-index">
         <?php if (Roles::currentRole($userid) == Roles::MHS) : ?>
             <p>
-                <?php if ($listPkl->status_kegiatan == 6 || $listPkl->status_kegiatan == null) : ?>
+                <?php if ($model == NULL || $model->status_kegiatan == 6 || $model->status_kegiatan == null) : ?>
                     <div class="alert alert-danger alert-dismissible">
                         <h4><i class="icon fa fa-check"></i> Maaf Anda Belum Diterima di Perusahaan Manapun !</h4>Anda tidak dapat menambah detail PKL...
                     </div>
@@ -34,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= $this->render('detailmhs', [
                             'model' => $model,
                             'mahasiswa' => $mahasiswa,
-                            'listPkl' => $listPkl,
                             'mitra' => $mitra,
                             'tgl_mulai' => $tgl_mulai,
                             'tgl_selesai' => $tgl_selesai,

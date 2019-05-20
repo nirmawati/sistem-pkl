@@ -46,10 +46,12 @@ $dosen = Dosen::find()
                                             <?= $mahasiswa->nama ?>
                                             <small><?= $mahasiswa->prodi ?></small>
                                             <small><?= $mahasiswa->nim ?></small>
-                                        <?php }else if(Roles::currentRole($user) == Roles::DOSEN){ ?>
+                                        <?php }else if (Roles::currentRole($user) == Roles::DOSEN){ ?>
                                             <?= $dosen->nama ?>
                                             <small><?= $dosen->homebase->nama ?></small>
                                             <small><?= $dosen->nidn ?></small>
+                                        <?php }else{ ?>
+                                            <?= "BAAK" ?>
                                         <?php } ?>
                                     </p>
                                 </li>

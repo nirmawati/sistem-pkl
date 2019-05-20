@@ -54,18 +54,13 @@ class PengajuanPklController extends Controller
         $dosen = Dosen::find()
             ->where(['user_id' => $userid])
             ->one();
- 
-        $dosenProdi = Dosen::find()
-            ->where(['homebase_id' => $mahasiswa1->prodi_id])
-            ->one();
         
         //nampilin data sesuai user login
         if (Roles::currentRole($userid) == Roles::DOSEN) {
             $dataProvider->query->andWhere(['dosen_id' => $dosen->id])->orderBy(['updated_at'=>SORT_DESC]);
- 
             $model = PengajuanPkl::find()
                 ->where(['dosen_id' => $dosen->id])
-                ->orderBy(['updated_at' => SORT_DSC])
+                ->orderBy(['updated_at' => SORT_DESC])
                 ->one();
                 
         } elseif (Roles::currentRole($userid) == Roles::MHS) {
@@ -77,7 +72,6 @@ class PengajuanPklController extends Controller
         }elseif (Roles::currentRole($userid) == Roles::BAAK) {
             $dataProvider->query->orderBy(['updated_at'=>SORT_DESC]);
             $model = PengajuanPkl::find()
-                ->where(['mhs_id' => $mahasiswa->mhsid])
                 ->orderBy(['id' => SORT_DESC])
                 ->one();
         }
@@ -161,17 +155,17 @@ class PengajuanPklController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->mhs_id = $mahasiswa->mhsid;
+            echo $model->mhs_id;
             $model->tanggal = date('d-M-Y');
             $model->created_at = date('d-M-Y');
             $model->updated_at = date('d-M-Y');
             $model->status_surat = 2;
             $model->status_pelaksanaan = 6;
             $model->status_kegiatan = 6;
-            if ($model->save()) {
+            if ($model->save(false)) {
                 return $this->redirect(['/pkl/pengajuan-pkl']);
             }
         }
-
         return $this->renderAjax('create', [
             'model' => $model,
             'mahasiswaProdi' => $mahasiswaProdi,

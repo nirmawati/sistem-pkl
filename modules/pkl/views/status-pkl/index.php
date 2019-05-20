@@ -2,33 +2,48 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
+use fedemotta\datatables\DataTables;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatusPklSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Status Pkls';
+$this->title = 'Status PKL';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="status-pkl-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Status Pkl', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Tambah Status PKL', ['value' => Url::to('status-pkl/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?php 
+        Modal::begin([
+            'header' => '<h4>Tambah Status PKL</h4>',
+            'id' => 'modal',
+            'size' => 'modal-lg'
+        ]);
+        echo "<div id='modalContent'></div>";
+        Modal::end();
+    ?>
+
+    <?= DataTables::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            // 'id',
             'nama',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}'
+            ],
         ],
     ]); ?>
 </div>

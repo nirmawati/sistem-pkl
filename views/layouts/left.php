@@ -30,6 +30,7 @@ $userid = Yii::$app->user->identity->id;
                 $menus[] = ['label' => 'Kategori ', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']];
                 $menus[] = ['label' => 'Mitra', 'icon' => 'building', 'url' => ['/pkl/mitra-pkl']];
                 $menus[] = ['label' => 'Riwayat', 'icon' => 'bookmark', 'url' => ['/pkl/riwayat-pkl']];
+                $menus[] = ['label' => 'Status', 'icon' => 'bookmark', 'url' => ['/pkl/status-pkl']];
 
 
             } elseif(Roles::currentRole($userid) == Roles::MHS) {

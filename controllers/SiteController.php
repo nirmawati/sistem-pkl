@@ -12,6 +12,9 @@ use app\models\ContactForm;
 use app\models\AuthAssignment;
 use app\models\VwmahasiswaProdi;
 use app\models\PengajuanPkl;
+use app\modules\pkl\models\AuthAssignment;
+use app\modules\pkl\models\VwmahasiswaProdi;
+use app\modules\pkl\models\PengajuanPkl;
 use app\modules\pkl\utils\Roles;
 
 class SiteController extends Controller
@@ -79,26 +82,26 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $userid = Yii::$app->user->identity->id;
-        $user = Yii::$app->user->identity;
-        if (Roles::currentRole($user) != Roles::BAAK) {  
+        if (Roles::currentRole($userid) == Roles::BAAK || Roles::currentRole($userid) == Roles::DOSEN) {
+            return $this->render('index', [
+                'userid' => $userid
+            ]);
+        }else{
             $mahasiswa = VwmahasiswaProdi::find()
-            ->where(['user_id' => $userid])
-            ->one();
+                ->where(['user_id' => $userid])
+                ->one();
             $model = PengajuanPkl::find()
                 ->where(['mhs_id' => $mahasiswa->mhsid])
                 ->orderBy(['id' => SORT_DESC])
                 ->one();
-                
+            
             return $this->render('index', [
                 'mahasiswa' => $mahasiswa,
                 'userid' => $userid,
                 'model' => $model,
             ]);
-        }else{
-            return $this->render('index',[
-                'userid' => $userid,
-            ]);
         }
+
     }
 
     /**

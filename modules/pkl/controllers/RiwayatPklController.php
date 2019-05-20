@@ -54,10 +54,6 @@ class RiwayatPklController extends Controller
         $dosen = Dosen::find()
             ->where(['user_id' => $userid])
             ->one();
- 
-        $dosenProdi = Dosen::find()
-            ->where(['homebase_id' => $mahasiswa1->prodi_id])
-            ->one();
 
         $dataProvider->pagination = [
             'pageSize' => 10
@@ -83,7 +79,6 @@ class RiwayatPklController extends Controller
             'dataProvider' => $dataProvider,
             'userid' => $userid,
             'mahasiswa' => $mahasiswa,
-            'detailPkl' => $detailPkl,
             'dosen' => $dosen,
             'model' => $model
         ]);
