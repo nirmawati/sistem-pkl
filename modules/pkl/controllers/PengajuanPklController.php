@@ -153,6 +153,18 @@ class PengajuanPklController extends Controller
             ->where(['user_id' => $userid])
             ->one();
 
+
+        $curYear = (string)date('Y');
+        $curMonth = (int)date('m');
+
+        if($curMonth <=6){
+            $semester = $curYear;
+            $semester .= "1";
+        }else{
+            $semester = $curYear;
+            $semester .= "2";
+        }
+
         if ($model->load(Yii::$app->request->post())) {
             $model->mhs_id = $mahasiswa->mhsid;
             echo $model->mhs_id;
@@ -162,6 +174,8 @@ class PengajuanPklController extends Controller
             $model->status_surat = 2;
             $model->status_pelaksanaan = 6;
             $model->status_kegiatan = 6;
+            $model->status_kegiatan = 6;
+            $model->semester = $semester;
             if ($model->save(false)) {
                 return $this->redirect(['/pkl/pengajuan-pkl']);
             }
@@ -170,6 +184,7 @@ class PengajuanPklController extends Controller
             'model' => $model,
             'mahasiswaProdi' => $mahasiswaProdi,
             'userid' => $userid,
+            'semester' => $semester,
             'mahasiswa' => $mahasiswa,
         ]);
     }

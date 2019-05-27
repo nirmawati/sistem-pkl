@@ -33,6 +33,11 @@ use app\modules\pkl\utils\Roles;
     <?= $form->field($model, 'mhs_id')->textInput([
         'disabled' => true,
         'value' => $mahasiswa->nama
+    ]); ?>   
+
+    <?= $form->field($model, 'semester')->textInput([
+        'disabled' => true,
+        'value' => $semester
     ]); ?>    
 
     <?= $form->field($model, 'semester')->dropDownList(
