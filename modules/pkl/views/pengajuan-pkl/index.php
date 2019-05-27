@@ -126,15 +126,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($data) {
                     return $data->viewMhsProdi->prodi;
                 },
-                // 'filter' => Select2::widget([
-                //     'model' => $searchModel,
-                //     'attribute' => 'prodi',
-                //     'data' => ArrayHelper::map(Prodi::find()->all(), 'id', 'nama'),
-                //     'options' => ['placeholder' => ''],
-                //     'pluginOptions' => [
-                //         'allowClear' => true
-                //     ],
-                // ]),
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'mhs_id',
+                    'data' => ArrayHelper::map(Prodi::find()->all(), 'id', 'nama'),
+                    'options' => ['placeholder' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
             ],
             [
                 'attribute' => 'tanggal',
@@ -170,6 +170,19 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'status_surat',
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'status_surat',
+                    'data'=>[    
+                        1 => 'Ditolak',
+                        2 => 'Menunggu',
+                        3 => 'Selesai',
+                    ],
+                    'options' => ['placeholder' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
                 'readonly' => $isBAAK,
                 'format' => Editable::FORMAT_BUTTON,
                 'editableOptions' => [
@@ -192,12 +205,25 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'status_pelaksanaan',
+                'filterType' => GridView::FILTER_SELECT2,
                 'format' => Editable::FORMAT_BUTTON,
                 'readonly' => $isMhs,
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'status_pelaksanaan',
+                    'data'=>[    
+                        1 => 'Ditolak',
+                        2 => 'Menunggu',
+                        3 => 'Selesai',
+                    ],
+                    'options' => ['placeholder' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
                 'editableOptions' => [
                     'inputType' => Editable::INPUT_DROPDOWN_LIST,
                     'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 1], ['id' => 2]])->all(), 'id', 'nama'),
-
                 ],
                 'content' => function ($data) {
                     if ($data->statusPelaksanaan->id == 1) { //ditolak
@@ -217,8 +243,22 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'status_kegiatan',
+                'filterType' => GridView::FILTER_SELECT2,
                 'format' => Editable::FORMAT_BUTTON,
                 'readonly' => $isDosen,
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'status_kegiatan',
+                    'data'=>[    
+                        1 => 'Ditolak',
+                        2 => 'Menunggu',
+                        3 => 'Selesai',
+                    ],
+                    'options' => ['placeholder' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
                 'editableOptions' => [
                     'inputType' => Editable::INPUT_DROPDOWN_LIST,
                     'data' => ArrayHelper::map(StatusPkl::find()->where(['or', ['id' => 3],['id' => 5]])->all(), 'id', 'nama'),
