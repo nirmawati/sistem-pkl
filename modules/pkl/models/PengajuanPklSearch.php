@@ -5,13 +5,15 @@ namespace app\modules\pkl\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\PengajuanPkl;
+use app\modules\pkl\models\PengajuanPkl;
 
 /**
  * PengajuanPklSearch represents the model behind the search form of `app\models\PengajuanPkl`.
  */
 class PengajuanPklSearch extends PengajuanPkl
 {
+    public $nama;
+    public $prodi;
     /**
      * {@inheritdoc}
      */
@@ -19,7 +21,7 @@ class PengajuanPklSearch extends PengajuanPkl
     {
         return [
             [['id', 'mitra_id', 'semester', 'mhs_id', 'dosen_id', 'status_pelaksanaan', 'status_kegiatan', 'status_surat'], 'integer'],
-            [['tanggal', 'mulai','created_at', 'updated_at', 'selesai', 'topik','bukti'], 'safe'],
+            [['tanggal', 'mulai','created_at', 'updated_at', 'selesai', 'topik','bukti','prodi','nama'], 'safe'],
         ];
     }
 
@@ -41,7 +43,9 @@ class PengajuanPklSearch extends PengajuanPkl
      */
     public function search($params)
     {
-        $query = PengajuanPkl::find();
+        // $query = PengajuanPkl::find();
+        
+        $query = PengajuanPkl::find()->innerJoinWith('viewMhsProdi', true);
 
         // add conditions that should always apply here
 
@@ -75,7 +79,9 @@ class PengajuanPklSearch extends PengajuanPkl
             'status_surat' => $this->status_surat,
         ]);
 
-        $query->andFilterWhere(['ilike', 'bukti', $this->bukti]);
+        $query->andFilterWhere(['ilike', 'bukti', $this->bukti])
+            ->andFilterWhere(['like', 'nama', $this->nama])
+            ->andFilterWhere(['like', 'prodi', $this->prodi]);
 
         return $dataProvider;
     }

@@ -113,7 +113,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'id',
             [
                 'label' => 'Mahasiswa',
-                'attribute' => 'mhs_id',
+                'attribute' => 'nama',
                 'contentOptions' => ['style' => 'width:1000px; white-space: normal;'],
                 'content' => function ($data) {
                     return $data->viewMhsProdi->nama;
@@ -121,15 +121,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => 'Prodi',
-                'attribute' => 'mhs_id',
+                'attribute' => 'prodi',
                 'contentOptions' => ['style' => 'width:1000px; white-space: normal;'],
                 'value' => function ($data) {
                     return $data->viewMhsProdi->prodi;
                 },
                 'filter' => Select2::widget([
                     'model' => $searchModel,
-                    'attribute' => 'mhs_id',
-                    'data' => ArrayHelper::map(Prodi::find()->all(), 'id', 'nama'),
+                    'attribute' => 'prodi',
+                    'data' => ArrayHelper::map(Prodi::find()->all(), 'nama', 'nama'),
                     'options' => ['placeholder' => ''],
                     'pluginOptions' => [
                         'allowClear' => true
