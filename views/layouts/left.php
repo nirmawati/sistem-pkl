@@ -25,7 +25,8 @@ $userid = Yii::$app->user->identity->id;
             // $menus = [];
 
             if(Roles::currentRole($userid) == Roles::BAAK) {
-                $menus [] =['label' => 'Home', 'icon' => 'home', 'url' => ['/']];                
+                $menus [] =['label' => 'Home', 'icon' => 'home', 'url' => ['/']];    
+                $menus [] =['label' => 'Panduan', 'icon' => 'book', 'url' => ['/pkl/panduan']];                    
                 $menus [] = ['label' => 'Daftar Mahasiswa ', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']];
                 $menus[] = ['label' => 'Kategori ', 'icon' => 'th-list', 'url' => ['/pkl/kategori-industri']];
                 $menus[] = ['label' => 'Mitra', 'icon' => 'building', 'url' => ['/pkl/mitra-pkl']];
@@ -34,7 +35,8 @@ $userid = Yii::$app->user->identity->id;
 
 
             } elseif(Roles::currentRole($userid) == Roles::MHS) {
-                $menus [] =['label' => 'Home', 'icon' => 'home', 'url' => ['/']];                
+                $menus [] =['label' => 'Home', 'icon' => 'home', 'url' => ['/']];   
+                $menus [] =['label' => 'Panduan', 'icon' => 'book', 'url' => ['/pkl/panduan']];              
                 $menus[] = ['label' => 'Pengajuan', 'icon' => 'edit', 'url' => ['/pkl/pengajuan-pkl']];
                 // $menus[] = ['label' => 'Mitra', 'icon' => 'road', 'url' => ['/pkl/mitra-pkl']];
                 $menus[] = ['label' => 'Laporan Harian', 'icon' => 'tasks', 'url' => ['/pkl/log-pkl']];
@@ -42,7 +44,8 @@ $userid = Yii::$app->user->identity->id;
                 
 
             }elseif(Roles::currentRole($userid) == Roles::DOSEN) {
-                $menus [] =['label' => 'Home', 'icon' => 'home', 'url' => ['/']];                
+                $menus [] =['label' => 'Home', 'icon' => 'home', 'url' => ['/']];  
+                $menus [] =['label' => 'Panduan', 'icon' => 'book', 'url' => ['/pkl/panduan']];               
                 $menus[] = ['label' => 'Daftar Mahasiswa', 'icon' => 'users', 'url' => ['/pkl/pengajuan-pkl']];    
                 $menus[] = ['label' => 'Absensi Mahasiswa', 'icon' => 'tasks', 'url' => ['/pkl/log-pkl']];
                 $menus[] = ['label' => 'Penilaian', 'icon' => 'check-square-o', 'url' => ['/pkl/detail-pkl']];                

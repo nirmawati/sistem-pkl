@@ -68,27 +68,6 @@ $config = [
         'pkl' => [
             'class' => 'app\modules\pkl\Module',
         ],
-        'mitrapkl' => [
-            'class' => 'app\modules\mitrapkl\Module',
-        ],
-        'topikpkl' => [
-            'class' => 'app\modules\topikpkl\Module',
-        ],
-        'kategoripkl' => [
-            'class' => 'app\modules\kategoripkl\Module',
-        ],
-        'pengajuanpkl' => [
-            'class' => 'app\modules\pengajuanpkl\Module',
-        ],
-        'logpkl' => [
-            'class' => 'app\modules\logpkl\Module',
-        ],
-        'detailpkl' => [
-            'class' => 'app\modules\detailpkl\Module',
-        ],
-        'riwayatpkl' => [
-            'class' => 'app\modules\riwayatpkl\Module',
-        ],
         'user' => [
             'class' => 'dektrium\user\Module',
             'enableUnconfirmedLogin' => true,
