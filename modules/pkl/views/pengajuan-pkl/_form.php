@@ -40,10 +40,10 @@ use app\modules\pkl\utils\Roles;
         'value' => $semester
     ]); ?>    
 
-    <?= $form->field($model, 'semester')->dropDownList(
+    <!-- <?= $form->field($model, 'semester')->dropDownList(
         ['0' => 'Semester 5', '1' => 'Semester 6', '2' => 'Semester 7'],
         ['prompt' => 'Pilih Semester']
-    ); ?>
+    ); ?> -->
 
     <?= $form->field($model, 'dosen_id')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Dosen::find()->where(['homebase_id' => $mahasiswaProdi->prodi_id])->all(), 'id', 'nama'),
