@@ -80,8 +80,8 @@ class PengajuanPklSearch extends PengajuanPkl
         ]);
 
         $query->andFilterWhere(['ilike', 'bukti', $this->bukti])
-            ->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'prodi', $this->prodi]);
+            ->andFilterWhere(['ilike', 'nama', $this->nama])
+            ->andFilterWhere(['ilike', 'prodi', $this->prodi]);
 
         return $dataProvider;
     }
